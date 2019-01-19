@@ -70,7 +70,9 @@ Simplex >> > aSimplex [
 { #category : #comparing }
 Simplex >> >= aSimplex [
 	"Answer true if the receiver containes aSimplex as a face."
-	^ vertices size >= aSimplex vertices size and: [vertices includesAllOf: aSimplex vertices]
+
+	^ vertices size >= aSimplex vertices size
+		and: [ vertices includesAll: aSimplex vertices ]
 ]
 
 { #category : #converting }

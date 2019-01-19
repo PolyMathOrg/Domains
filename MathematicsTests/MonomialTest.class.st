@@ -48,10 +48,12 @@ MonomialTest >> testHash [
 { #category : #'as yet unclassified' }
 MonomialTest >> testLocalMonomialOrderings [
 	"Examples from Magma handbook."
+
 	| f |
 	"f := ZZ polynomialsIn: #(x y z) ordering: #llex :: generate: [:x :y :z| 1 + x + y + z + (x^7) + (x^8*(y^7)) + (y^5) + (z^10)].
 		self assert: f printString = '1 + x + x^7 + y + y^5 + x^8y^7 + z + z^{10}'.
 		self assert: (f orderedBy: #lgrevlex) printString = '1 + z + y + x + y^5 + x^7 + z^{10} + x^8y^7'"
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -92,20 +94,16 @@ MonomialTest >> testMonomialLCM [
 MonomialTest >> testMonomialOrderings [
 	| P x y z f lex glex grevlex |
 	P := ZZ polynomialsIn: 3.
-
 	x := P x.
 	y := P y.
 	z := P z.
-
-	f := '10*x - (7*(y^4)) + (11*(y^3)*z)'.
-
+	f := 10*x - (7*(y raiseTo: 4)) + (11*(y raiseTo: 3)*z).
 	lex := MonomialOrdering lex: 3.
 	glex := MonomialOrdering glex: 3.
 	grevlex := MonomialOrdering grevlex: 3.
-
 	self assert: (f orderedBy: lex) leadingCoefficient = 10.
 	self assert: (f orderedBy: glex) leadingCoefficient = -7.
-	self assert: (f orderedBy: grevlex) leadingCoefficient = -7 "this matches the definition in Singular"
+	self assert: (f orderedBy: grevlex) leadingCoefficient = -7	"this matches the definition in Singular"
 ]
 
 { #category : #'as yet unclassified' }

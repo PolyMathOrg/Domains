@@ -174,7 +174,7 @@ RationalIntegerRing >> primeIdealsDo: aBlock [
 
 { #category : #printing }
 RationalIntegerRing >> printOn: aStream [
-	aStream nextPut: Character ZZ
+	aStream nextPutAll: 'ZZ'
 ]
 
 { #category : #operations }

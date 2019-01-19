@@ -13,7 +13,7 @@ GroupTest >> smallGroupAtRandom [
 	[Group quaternions]} atRandom value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testActionOrbitOf [
 	| G |
 	G := PermutationGroup on: (1 to: 8) generators: {#((1 3 2) (4 6 5)). #((1 2 3) (4 5 6)). #((7 8))}.
@@ -22,7 +22,7 @@ GroupTest >> testActionOrbitOf [
 	self assert: (G action orbitOf: 7) = #(7 8) asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testActionStabilizerOf [
 	| G g1 g2 g3 id H |
 	G := SymmetricGroup new: 8.
@@ -35,7 +35,7 @@ GroupTest >> testActionStabilizerOf [
 	self assert: (H action stabilizerOf: 7) asSet = {id. g1. g2} asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testAlternatingIsSymmetricCommutator [
 	| S A |
 	S := Group symmetric: (1 to: 3).
@@ -44,30 +44,35 @@ GroupTest >> testAlternatingIsSymmetricCommutator [
 	self assert: (S indexOf: A) = 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testAlternatingOrder [
 	| A |
 	A := Group alternating: (1 to: 3).
-	self assert: A order = (3 factorial / 2)
+	self assert: A order equals: 3 factorial / 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testBigOrder1 [
-	"Test fast computation of group order with Schreier-Sims algorithm.
-	This is Sym(10), with order 10!."
+	"Test fast computation of group order with Schreier-Sims algorithm. This is Sym(10), with order 10!."
+
 	| G |
-	G := PermutationGroup new: 10 generators: {#((1 2)). #(10 1 2 3 4 5 6 7 8 9)}.
-	self assert: G order = 10 factorial
+	G := PermutationGroup
+		new: 10
+		generators:
+			{#(#(1 2)).
+			#(10 1 2 3 4 5 6 7 8 9)}.
+	self assert: G order equals: 10 factorial
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testBigOrder2 [
-	"Test fast computation of group order with Schreier-Sims algorithm.
-	This is the Mathieu group on 12 points, the second smallest of the 26 sporadic simple groups, with order 95040."
-	self assert: PermutationGroup M12 order = 95040
+"Test fast computation of group order with Schreier-Sims algorithm.
+This is the Mathieu group on 12 points, the second smallest of the 26 sporadic simple groups, with order 95040."
+
+	self assert: PermutationGroup M12 order equals: 95040
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testCauchyFrobeniusLemma [
 	"Also called Brunside's lemma, Burnside counting theorem, or orbit-counting theorem."
 	| X G phi sum |
@@ -78,26 +83,26 @@ GroupTest >> testCauchyFrobeniusLemma [
 	self assert: phi orbits size * G order = sum
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testConjugacyClasses [
 	"From wikipedia article on conjugacy classes."
 	self assert: (SymmetricGroup new: 3) conjugacyClasses size = 3.
 	self assert: (SymmetricGroup new: 4) conjugacyClasses size = 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testD3 [
 	| D S A |
-	D := PermutationGroup dihedral: 2*3.
+	D := PermutationGroup dihedral: 2 * 3.
 	self testGroup: D.
 	S := SymmetricGroup new: 3.
-	self assert: D = S.
+	self assert: D equals: S.
 	A := AlternatingGroup new: 3.
 	self assert: D commutator = A.
 	self assert: D center isTrivial
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testDirectProduct [
 	| S A G g |
 	S := self smallGroupAtRandom.
@@ -110,7 +115,7 @@ GroupTest >> testDirectProduct [
 	self testGroupHomomorphism: (G projection: 2)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testGroup: G [
 	| op inv e a b c |
 	e := G identity.
@@ -126,7 +131,7 @@ GroupTest >> testGroup: G [
 	self assert: (op value: {op value: {a. b}. c}) = (op value: {a. op value: {b. c}})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testGroupAction: phi [
 	| G X e g h x |
 	G := phi group.
@@ -139,7 +144,7 @@ GroupTest >> testGroupAction: phi [
 	self assert: (phi value: {g. phi value: {h. x}}) = (phi value: {G operation value: {g. h}. x})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testGroupHomomorphism: phi [
 	| G H a b |
 	G := phi domain.
@@ -150,7 +155,7 @@ GroupTest >> testGroupHomomorphism: phi [
 	self assert: (phi value: (G operation value: {a. b})) = (H operation value: {phi value: a. phi value: b})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testGroupRing [
 	| G R a b c xa xb xc |
 	G := self smallGroupAtRandom.
@@ -166,7 +171,7 @@ GroupTest >> testGroupRing [
 	'self assert: (xa + xb) * (xa - xb) = (xa^2 - (xb^2) + (xb*xa) - (xa*xb))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testGroupRingIsARing [
 	| G R a a2 b b2 c c2 e e2 |
 	G := self smallGroupAtRandom.
@@ -186,7 +191,7 @@ GroupTest >> testGroupRingIsARing [
 	G isCommutative ifTrue: [self assert: a2 * b2 = (b2 * a2)].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testHessian [
 	| H |
 	H := PermutationGroup hessian.
@@ -194,21 +199,21 @@ GroupTest >> testHessian [
 	self testGroup: H
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testIsSolvable [
 	| G |
 	G := Group symmetric: (1 to: 3).
 	self assert: G isSolvable
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testIsSolvableNot [
 	| G |
 	G := Group alternating: (1 to: 5).
 	self assert: G isSolvable not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testKleinFour [
 	| V S A |
 	V := PermutationGroup klein.
@@ -219,7 +224,7 @@ GroupTest >> testKleinFour [
 	self assert: (V isNormalIn: A)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testLagrangeTheorem [
 	"G finite group, H subgroup of G, then |H| divides |G|."
 	| G H |
@@ -228,17 +233,16 @@ GroupTest >> testLagrangeTheorem [
 	self assert: H order | G order
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testModularIntegersUnits [
 	| m R U |
 	m := (2 to: 100) atRandom.
 	R := ZZ / m.
 	U := R units.
-	self assert: U size = (Sequence phi value: m).
-"	self testGroup: U"
+	self assert: U size equals: (Sequence phi value: m)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testOrbitStabilizerTheorem [
 	| X G phi p |
 	X := 1 to: 4.
@@ -248,13 +252,13 @@ GroupTest >> testOrbitStabilizerTheorem [
 	self assert: (phi stabilizerOf: p) order * (phi orbitOf: p) size = G order
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testPermutationGroupAction [
 	self testGroupAction: (SymmetricGroup new: 10) action.
 	self testGroupAction: (PermutationGroup cyclic: 15) action
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testPermutationGroupHomomorphism [
 	"Magma Handbook, Example H57E2."
 	| C15 h im |
@@ -266,7 +270,7 @@ GroupTest >> testPermutationGroupHomomorphism [
 	self assert: im isCyclic
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testQuotientGroup [
 	| G N Q pi h |
 	G := Group integersMod: 6.
@@ -281,17 +285,17 @@ GroupTest >> testQuotientGroup [
 	self testGroupHomomorphism: pi
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testSymmetricOrder [
 	| G |
 	G := Group symmetric: (1 to: 4).
 	self assert: G order = 4 factorial
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 GroupTest >> testTrivial [
 	| G |
 	G := PermutationGroup new: 4 generators: #().
-	self assert: G size = 1.
+	self assert: G size equals: 1.
 	self assert: G isTrivial
 ]

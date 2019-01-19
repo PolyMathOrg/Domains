@@ -55,7 +55,7 @@ Group class >> symmetric: aCollection [
 		xi := X at: i.
 		i+1 to: X size do: [:j|
 			generators add: (Permutation transposing: xi with: (X at: j))]].
-	^ TransformationGroup new generators: generators; name: 'Sym(', aCollection printText, ')'
+	^ TransformationGroup new generators: generators; name: 'Sym(', aCollection asString, ')'
 ]
 
 { #category : #operations }

@@ -397,7 +397,7 @@ RingTest >> testZZ [
 
 { #category : #general }
 RingTest >> testZZPrimeNotMaximalIdeal [
-	| I |
+| I |
 	I := ZZ * 0.
 	self assert: I isPrime.
 	self assert: I isMaximal not
