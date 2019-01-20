@@ -149,9 +149,17 @@ PermutationGroup >> asLinearGroupOver: aRing [
 PermutationGroup >> asMatrixGroup [
 	"Return a matrix group isomorphic to the receiver.
 	Assume the space of the receiver is an interval (1 to: n)."
+
 	| n generators |
 	n := self degree.
-	generators := self generators collect: [:g| QQ matrix: n@n evaluating: [:i :j| (g at: i) = j ifTrue: [1] ifFalse: [0]]].
+	generators := self generators
+		collect: [ :g | 
+			QQ
+				matrix: n @ n
+				evaluating: [ :i :j | 
+					(g at: i) = j
+						ifTrue: [ 1 ]
+						ifFalse: [ 0 ] ] ].
 	^ MatrixGroup generators: generators
 ]
 
@@ -182,7 +190,8 @@ PermutationGroup >> degree [
 
 { #category : #private }
 PermutationGroup >> generators: aCollection [
-	super generators: (aCollection asSet reject: [:each| each isIdentity])
+	super
+		generators: (aCollection asSet reject: [ :each | each isIdentity ])
 ]
 
 { #category : #accessing }
@@ -199,6 +208,7 @@ PermutationGroup >> includes: aPermutation [
 { #category : #testing }
 PermutationGroup >> isStandard [
 	"Answer true if the domain of the receiver is an interval [1..n]."
+
 	^ self ambient isStandard
 ]
 
@@ -230,8 +240,10 @@ PermutationGroup >> polynomialActionOver: aRing [
 
 { #category : #accessing }
 PermutationGroup >> size [
-	self propertyAt: #elements ifPresent: [:aCollection| ^ aCollection size].
-	^ self propertyAt: #size ifAbsentPut: [self computeSize]
+	self
+		propertyAt: #elements
+		ifPresent: [ :aCollection | ^ aCollection size ].
+	^ self propertyAt: #size ifAbsentPut: [ self computeSize ]
 ]
 
 { #category : #accessing }
