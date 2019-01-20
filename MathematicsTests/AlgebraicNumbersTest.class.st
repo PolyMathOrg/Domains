@@ -4,17 +4,17 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 AlgebraicNumbersTest >> testArithmetic [
 	| sqrt2 sqrt3 sqrt5 sqrt6 |
 	sqrt2 := ComplexAlgebraicNumber sqrt2.
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
 	sqrt5 := ComplexAlgebraicNumber sqrt: 5.
 	sqrt6 := ComplexAlgebraicNumber sqrt: 6.
-	self assert: sqrt2 squared = 2.
-	self assert: (sqrt2 + sqrt3) * sqrt2 = (2 + sqrt6).
-	self assert: (sqrt3 / sqrt5) squared reciprocal = (5/3).
-"	self assert: (((5 root: 3) + sqrt2 - sqrt2) ^ 3) asRational = 5"
+	self assert: sqrt2 squared equals: 2.
+	self assert: (sqrt2 + sqrt3) * sqrt2 equals: 2 + sqrt6.
+	self assert: (sqrt3 / sqrt5) squared reciprocal equals: 5 / 3.
+	"self assert: ((5 root: 3) + sqrt2 - sqrt2 raiseTo: 3) asRational = 5"
 ]
 
 { #category : #'as yet unclassified' }

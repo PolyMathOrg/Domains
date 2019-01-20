@@ -149,7 +149,7 @@ RationalField >> positiveDo: aBlock [
 
 { #category : #printing }
 RationalField >> printOn: aStream [
-	aStream nextPut: Character QQ
+	aStream nextPutAll: 'QQ'
 ]
 
 { #category : #operations }

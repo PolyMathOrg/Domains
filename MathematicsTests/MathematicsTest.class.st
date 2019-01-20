@@ -4,39 +4,39 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testAlgebraicExtension [
 	| x E a b |
 	x := QQ polynomials x.
-	E := 'QQ extension: x^4 - 2'.
+	E := QQ extension: (x raiseTo: 4) - 2.
 	a := E x.
-	'self assert: (a^4) representative asScalar = 2.
-		b := a^2 + (E embed: 3).
-		self assert: b minimalPolynomial = (x^2 - (x*6) + 7)'
+	self assert: (a raiseTo: 4) representative asScalar equals: 2.
+	b := (a raiseTo: 2) + (E embed: 3).
+	self assert: b minimalPolynomial equals: (x raiseTo: 2) - (x * 6) + 7
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testBitCount [
 	| v |
 	v := '1 << 3000 :: atRandom'.
 	'self assert: (v printStringBase: 2 :: count: [:x| x = $1]) = v bitCount'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testBitParity [
 	| v |
 	v := '1 << 3000 :: atRandom'.
 	'self assert: ((v printStringBase: 2 :: count: [:x| x = $1]) bitAnd: 1) = v bitParity'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testCRT [
 	| crt |
 	crt := CRT mod: #(2 5 7).
 	self assert: (crt solve: #(0 2 0)) = 42
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testCartesianProduct [
 	| P x |
 	P := CartesianProduct components: {PrimeField new: 3. GaloisField new: 4. SymmetricGroup new: 5}.
@@ -45,7 +45,7 @@ MathematicsTest >> testCartesianProduct [
 	self assert: (P elements includes: x)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractions [
 	| x |
 	x := ContinuedFraction fromFraction: 415/93.
@@ -53,13 +53,13 @@ MathematicsTest >> testContinuedFractions [
 	self assert: x asFraction = (415/93)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractions2 [
 	-2 to: 2 by: 1/2 do:
 		[:x| self assert: (ContinuedFraction fromFraction: x) asFraction = x]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractionsE [
 	| x e |
 	e := ContinuedFraction e.
@@ -67,7 +67,7 @@ MathematicsTest >> testContinuedFractionsE [
 	self assert: (x asFloat - 1 exp) abs < 0.0000001
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractionsGoldenRatio [
 	| x phi |
 	phi := ContinuedFraction phi.
@@ -75,7 +75,7 @@ MathematicsTest >> testContinuedFractionsGoldenRatio [
 	self assert: (x asFloat - 1.6180339887) abs < 0.000001
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractionsGoldenRatio2 [
 	| phi denominators |
 	phi := ContinuedFraction phi.
@@ -83,28 +83,28 @@ MathematicsTest >> testContinuedFractionsGoldenRatio2 [
 	self assert: (denominators equals: Sequence fibonacci << 1 upTo: 100)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractionsNegated [
 	| x |
 	x := ContinuedFraction fromFraction: 415/93.
 	self assert: x negated asFraction = (-415/93)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testContinuedFractionsReciprocal [
 	| x |
 	x := ContinuedFraction fromFraction: 415/93.
 	self assert: x reciprocal asFraction = (93/415)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testCyclotomicPolynomials [
 	| P |
 	P := QQ polynomials.
 	1 to: 20 do: [:n| self assert: (P cyclotomic: n) degree = n phi]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testCyclotomicPolynomials2 [
 	| P x n |
 	P := QQ polynomials.
@@ -113,7 +113,7 @@ MathematicsTest >> testCyclotomicPolynomials2 [
 	'self assert: (n divisors product: [:d| P cyclotomic: d]) = (x^n - 1)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testExtendedEuclid [
 	| a b euclid |
 	a := '-1000 to: 1000 :: atRandom'.
@@ -126,12 +126,12 @@ MathematicsTest >> testExtendedEuclid [
 	self assert: euclid verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFieldAutomorphisms [
 	self assert: QQ automorphisms isTrivial
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFreeAlgebra [
 	| A f g h |
 	A := QQ freeAlgebraIn: #(x y z).
@@ -144,7 +144,7 @@ MathematicsTest >> testFreeAlgebra [
 	self assert: A one * f = f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFunctionComposition [
 	| f g a |
 	f := Function from: ZZ to: ZZ evaluating: [:x| x * 2].
@@ -154,7 +154,7 @@ MathematicsTest >> testFunctionComposition [
 		self assert: (g î f value: a) = (g value: (f value: a))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFunctionComposition2 [
 	| f g a |
 	f := Function from: ZZ to: QQ evaluating: [:x| x / 2].
@@ -164,7 +164,7 @@ MathematicsTest >> testFunctionComposition2 [
 		self assert: (g î f value: a) = (g value: (f value: a))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFunctionComposition3 [
 	| f g |
 	f := Function from: ZZ to: QQ evaluating: [:x| x / 2].
@@ -172,7 +172,7 @@ MathematicsTest >> testFunctionComposition3 [
 	'self should: [g î f] raise: DomainError'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFunctionNewFrom [
 	| f g |
 	'f := QQ^3 :: endomorphisms atRandomBits: 1000'. "f is a LinearMap"
@@ -180,14 +180,14 @@ MathematicsTest >> testFunctionNewFrom [
 	self assert: (g as: LinearMap) = f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testFundamentalDiscriminant [
 	self assert: ((1 to: 33) select: [:each| each isFundamentalDiscriminant]) =  #(1 5 8 12 13 17 21 24 28 29 33).
 	self assert: ((0 to: -31 by: -1) select: [:each| each isFundamentalDiscriminant]) = #(-3 -4 -7 -8 -11 -15 -19 -20 -23 -24 -31) 
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testGaloisFields [
 	| GF pi x one a |
 	GF := GaloisField new: (3 raiseTo: 3).
@@ -202,7 +202,7 @@ MathematicsTest >> testGaloisFields [
 	self assert: a * a reciprocal = GF one
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testInfinity [
 	self assert: Infinity positive > Infinity negative.
 	self assert: Infinity positive > 127934879182734.
@@ -213,7 +213,7 @@ MathematicsTest >> testInfinity [
 	self assert: 91872123948719 < Infinity positive
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testInfinityUndeterminates [
 	self should: [Infinity positive + Infinity negative] raise: Error.
 	self should: [Infinity positive * 0] raise: Error.
@@ -222,13 +222,13 @@ MathematicsTest >> testInfinityUndeterminates [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testIntegerDivisors [
 	self assert: 12 numberOfDivisors = 6.
 	self assert: 12 divisors size = 6
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testIntegerIdealsPrimePrimarySemiprime [
 	self assert: (ZZ*5) isPrime.
 	self assert: (ZZ*6) isPrime not.
@@ -238,7 +238,7 @@ MathematicsTest >> testIntegerIdealsPrimePrimarySemiprime [
 	self assert: (ZZ*12) isSemiprime not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testIteratorCovering [
 	| F |
 	F := ZZ / 3.
@@ -246,7 +246,7 @@ MathematicsTest >> testIteratorCovering [
 		self assert: (ZZ^3 upTo: 100) asSet size = 100'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testIteratorCovering2 [
 	| F |
 	F := GaloisField new: 9.
@@ -254,7 +254,7 @@ MathematicsTest >> testIteratorCovering2 [
 		self assert: ((F^3) upTo: 9^3+100) asSet size = (9^3)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testIteratorCovering3 [
 	| F |
 	F := GaloisField new: 3.
@@ -262,7 +262,7 @@ MathematicsTest >> testIteratorCovering3 [
 		self assert: ((F^4) upTo: 3^4+100) asSet size = (3^4)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testJacobiAndLegendreSymbols [
 	| a p |
 	10 timesRepeat:
@@ -271,7 +271,7 @@ MathematicsTest >> testJacobiAndLegendreSymbols [
 		self assert: (a legendre: p) = (a jacobi: p)]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testKroneckerAndLegendreSymbols [
 	| a p |
 	10 timesRepeat:
@@ -280,7 +280,7 @@ MathematicsTest >> testKroneckerAndLegendreSymbols [
 		self assert: (a legendre: p) = (a kronecker: p)]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testKroneckerSymbol [
 	| a b c |
 	a := (-100 to: 100) atRandom.
@@ -291,17 +291,17 @@ MathematicsTest >> testKroneckerSymbol [
 	b*c = 0 ifFalse: [self assert: (a kronecker: b*c) = ((a kronecker: b) * (a kronecker: c))]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testLegendreSymbol [
 	self assert: ((1 to: 10) collect: [:k| k legendre: 43]) = #(1 -1 -1 1 -1 1 -1 -1 1 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testModularIntegerLift [
 	'self assert: (2 to: 100 :: allSatisfy: [:m| 1 to: m :: allSatisfy: [:x| x % m :: lift % m = (x % m)]])'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testModularIntegersField [
 	| F a b |
 	F := ZZ / 7.
@@ -311,15 +311,15 @@ MathematicsTest >> testModularIntegersField [
 	b := F projection value: 5.
 	self assert: a * a reciprocal = F one.
 	self assert: a * 7 = F zero.
-	self assert: 'b ^ (F size - 1) = F one' "Euler's theorem"
+	self assert: (b raisedTo:( (F size - 1))) = F one	"Euler's theorem"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPartitions [
 	self assert: 42 partitions size =  53174
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPermutationProduct [
 	| G a b |
 	G := SymmetricGroup new: 5.
@@ -329,7 +329,7 @@ MathematicsTest >> testPermutationProduct [
 	self assert: a*a = (G ! #((1 5 4)))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPermutationProduct2 [
 	| G a b |
 	G := SymmetricGroup new: 5.
@@ -339,7 +339,7 @@ MathematicsTest >> testPermutationProduct2 [
 	self assert: a*a = (G ! #((1 5 4)))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPermutationProduct3 [
 	| G a b |
 	G := SymmetricGroup new: 4.
@@ -349,7 +349,7 @@ MathematicsTest >> testPermutationProduct3 [
 	self assert: a*b = (G ! #((1 3 2)))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPolynomialVectorSpace [
 	| Qx V S x |
 	Qx := QQ polynomials.
@@ -361,7 +361,7 @@ MathematicsTest >> testPolynomialVectorSpace [
 		self assert: (S orthogonalProjection value: x^3 - (x^2) + (x*2) + 3) = ((x^2) negated + (x*2) + 3)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testPrimeSignature [
 	self assert: 1 primeSignature = #().
 	self assert: 7 primeSignature = #(1).
@@ -372,7 +372,7 @@ MathematicsTest >> testPrimeSignature [
 	self assert: 16 primeSignature = #(4)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testQuadraticResiduesModp [
 	| F |
 	F := PrimeField new: 1000 atRandom nextPrime.
@@ -380,14 +380,14 @@ MathematicsTest >> testQuadraticResiduesModp [
 	self assert: ((1000 count: [F atRandom isQuadraticResidue]) between: 400 and: 600)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testRadicalAndIsSquareFree [
 	| n |
 	n := (-1000 to: 1000) atRandom.
 	self assert: n isSquareFree = (n radical = n)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testRealIntervalIntersects [
 	| I J |
 	I := RealInterval open: -1 closed: 0.
@@ -399,7 +399,7 @@ MathematicsTest >> testRealIntervalIntersects [
 	self assert: (I intersects: J) not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testSmallPrimeField [
 	| p F E |
 	p := 20 atRandom nextPrime.
@@ -417,7 +417,7 @@ MathematicsTest >> testSmallPrimeField [
 				self assert: b reciprocal representative = d reciprocal representative]]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testSmallPrimeFieldTables [
 	| p F g |
 	p := 20 atRandom nextPrime.
@@ -427,7 +427,7 @@ MathematicsTest >> testSmallPrimeFieldTables [
 	0 to: p-2 do: [:n| self assert: (F logTable at: (g raiseTo: n) representative) = n]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testSquareRootModp [
 	| F a |
 	100 timesRepeat:
@@ -437,7 +437,7 @@ MathematicsTest >> testSquareRootModp [
 		self assert: a squareRoot * a squareRoot = a]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testWord [
 	| x y |
 	x := Word x: #x.
@@ -449,7 +449,7 @@ MathematicsTest >> testWord [
 	self assert: (x*y * (x*y) reciprocal) isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testWordOrdering [
 	| F p q r |
 	F := FreeMonoid new: 3.
@@ -463,7 +463,7 @@ MathematicsTest >> testWordOrdering [
 	self assert: (p > r or: [p = r and: [q isEmpty]])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testYoungTableauxSemistandard [
 	| T |
 	T := YoungTableau rows: #((1 1 2 2 3) (2 3 4 4) (4) (5)).
@@ -471,7 +471,7 @@ MathematicsTest >> testYoungTableauxSemistandard [
 	self assert: T shape = #(5 4 1 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testYoungTableauxStandard [
 	| T |
 	T := YoungTableau rows: #((1 4 6 8) (2 5 7) (3)).
@@ -480,7 +480,7 @@ MathematicsTest >> testYoungTableauxStandard [
 	self assert: T shape = #(4 3 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MathematicsTest >> testZ6IsNotPID [
 	self assert: (ZZ/6) isPID not
 ]

@@ -48,7 +48,7 @@ AbstractPermutation >> cycles [
 AbstractPermutation >> cyclesDo: aBlock [
 	"Iterate over the cycles of the receiver."
 	| left first next cycle |
-	left := self changes copyAs: Set.
+	left := self changes asSet.
 	[left size > 0] whileTrue:
 		[first := left anyOne.
 		cycle := OrderedCollection new.

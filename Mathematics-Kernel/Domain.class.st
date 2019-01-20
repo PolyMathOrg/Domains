@@ -36,7 +36,8 @@ Class {
 Domain class >> example1asSet [
 	"The ring Z/5Z as a Smalltalk Set.
 	This is possible because the ring is finite."
-	^ (ZZ/5) asSet
+
+	^ (ZZ / 5) asSet
 ]
 
 { #category : #examples }
@@ -46,19 +47,22 @@ Domain class >> example1atRandom [
 	at most 2^50 different matrices, and their bitsize doesn't exceed 50
 	bits (where bitsize is losely defined, in this case it's the sum
 	of bitsize of the coefficients of the matrix)."
-	^ 'ZZ^(3@3) atRandom: (Random seed: 12345) bits: 50'
+
+	^ (ZZ raisedTo: 3 @ 3) atRandom: (Random seed: 12345) bits: 50
 ]
 
 { #category : #examples }
 Domain class >> example21VectorSpace [
 	"The vector space of 3-tuples with rational coefficients."
-	^ 'QQ ^ 3'
+
+	^ QQ raisedTo: 3
 ]
 
 { #category : #examples }
 Domain class >> example21VectorSpace2 [
 	"The vector space of 3x3 matrices with complex coefficients."
-	^ 'CC ^ (3@3)'
+
+	^ CC raisedTo: (3@3)
 ]
 
 { #category : #examples }
@@ -114,7 +118,8 @@ Domain class >> example5GL [
 	on the vector space of 3-tuples with rational coefficients.
 	This is the automorphisms group of the vector space, and
 	its elements are linear maps, not matrices."
-	^ '(QQ ^ 3) automorphisms'
+
+	^ (QQ raisedTo: 3) automorphisms
 ]
 
 { #category : #examples }
@@ -501,7 +506,7 @@ Domain >> isAlgebra [
 
 { #category : #'testing-category' }
 Domain >> isCommutativeRing [
-	^ self isRing and: [self isCommutative]
+	^ self isRing and: [ self isCommutative ]
 ]
 
 { #category : #'testing-category' }
@@ -570,7 +575,7 @@ Domain >> isModule [
 
 { #category : #'testing-category' }
 Domain >> isMonoid [
-	^ self isGroup
+	^ self isGroup 
 ]
 
 { #category : #testing }
@@ -587,7 +592,7 @@ Domain >> isQuotient [
 
 { #category : #'testing-category' }
 Domain >> isReal [
-	^ false
+	^ false 
 ]
 
 { #category : #'testing-category' }
