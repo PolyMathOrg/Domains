@@ -19,24 +19,26 @@ Word class >> empty [
 
 { #category : #'instance creation' }
 Word class >> new [
-	^ self shouldNotImplement
+	^ self shouldNotImplement 
 ]
 
 { #category : #'instance creation' }
 Word class >> syllables: anArray [
-	^ self basicNew syllables: anArray
+	^ self basicNew syllables: anArray 
 ]
 
 { #category : #'instance creation' }
 Word class >> x: i [
-	^ self x: i to: 1
+	^ self x: i to: 1 
 ]
 
 { #category : #'instance creation' }
 Word class >> x: i to: k [
 	"Answer a new instance of the receiver with only one indeterminate, xi, raised to n."
-	k = 0 ifTrue: [^ self empty].
-	^ self syllables: {i -> k}
+
+	k = 0
+		ifTrue: [ ^ self empty ].
+	^ self syllables: {(i -> k)}
 ]
 
 { #category : #arithmetic }

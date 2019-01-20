@@ -57,10 +57,13 @@ Magma >> multiplicationTable2 [
 
 { #category : #accessing }
 Magma >> operation [
-	^ self propertyAt: #operation ifAbsentPut: [((self, self) to: self evaluatingWithArguments: [:x :y| x * y]) name: '*']
+	^ self
+		propertyAt: #operation
+		ifAbsentPut: [ (self , self to: self evaluatingWithArguments: [ :x :y | x * y ])
+				name: '*' ]
 ]
 
 { #category : #'accessing-private' }
 Magma >> operation: aFunction [
-	self propertyAt: #operation put: ((self, self) hom: self) ! aFunction
+	self propertyAt: #operation put: (self , self hom: self) ! aFunction
 ]
