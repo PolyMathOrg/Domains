@@ -44,7 +44,7 @@ SymmetricGroup >> ! anObject [
 { #category : #comparing }
 SymmetricGroup >> >= anObject [
 	(anObject isKindOf: PermutationGroup)
-		ifTrue: [^ self space >= anObject space].
+		ifTrue: [ ^ self space >= anObject space ].
 	^ super >= anObject
 ]
 
@@ -105,7 +105,8 @@ SymmetricGroup >> degree [
 SymmetricGroup >> do: aBlock [
 	| domain |
 	domain := self space asArray.
-	domain permutationsDo: [:each| aBlock value: (Permutation keys: domain values: each)]
+	domain
+		permutationsDo: [ :each | aBlock value: (Permutation keys: domain values: each) ]
 ]
 
 { #category : #elements }

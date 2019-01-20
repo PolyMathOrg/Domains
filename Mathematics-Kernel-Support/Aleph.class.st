@@ -76,7 +76,9 @@ Aleph >> order: anInteger [
 
 { #category : #printing }
 Aleph >> printOn: aStream [
-	aStream nextPut: Character aleph; nextPutAll: order printString sub
+	aStream
+		nextPutAll: 'aleph';
+		nextPutAll: order printString sub
 ]
 
 { #category : #arithmetic }

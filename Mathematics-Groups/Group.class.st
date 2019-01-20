@@ -691,15 +691,19 @@ Group >> order [
 Group >> orderOf: anElement [
 	"Answer the order of the argument in the receiver, i.e. the minimum e such that g^e = 1.
 	COHEN Algorithm 1.4.3 (Order of an Element)."
+
 	| h factors id e g1 |
 	h := self size.
 	factors := h factors.
 	e := h.
 	id := self identity.
-	factors asSet do: [:p|
-		e := 'e / (p ^ (factors occurrencesOf: p))'.
-		g1 := self raise: anElement to: e.
-		[g1 = id] whileFalse: [g1 := self raise: g1 to: p. e := e*p]].
+	factors asSet
+		do: [ :p | 
+			e := e / (p raisedTo: (factors occurrencesOf: p)).
+			g1 := self raise: anElement to: e.
+			[ g1 = id ]
+				whileFalse: [ g1 := self raise: g1 to: p.
+					e := e * p ] ].
 	^ e
 ]
 
@@ -721,7 +725,7 @@ Group >> outerAutomorphisms [
 { #category : #operations }
 Group >> perfectCore [
 	| answer |
-	self derivedSeriesDo: [:each| answer := each].
+	self derivedSeriesDo: [ :each | answer := each ].
 	^ answer
 ]
 
@@ -820,6 +824,7 @@ Group >> to: aGroup evaluating: aBlock [
 { #category : #accessing }
 Group >> trivial [
 	"Answer the trivial subgroup."
+
 	^ self null
 ]
 

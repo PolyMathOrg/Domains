@@ -830,15 +830,6 @@ Polynomial >> pseudoRem: aPolynomial [
 ]
 
 { #category : #arithmetic }
-Polynomial >> raiseTo: anInteger [
-	"Answer the receiver raised to the power anInteger."
-	anInteger = 1 ifTrue: [^ self].
-	anInteger = 0 ifTrue: [^ self one].
-	anInteger < 0 ifTrue: [^ '(self ^ anInteger negated) reciprocal'].
-	^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
-]
-
-{ #category : #arithmetic }
 Polynomial >> raisedTo2: anInteger modulo: anObject [
 	"Answer the receiver raised to the power anInteger modulo anObject.
 	The argument anInteger must be positive."
@@ -853,6 +844,19 @@ Polynomial >> raisedTo2: anInteger modulo: anObject [
 			y := y squared \\ anObject.
 			n := n // 2].
 	^ anInteger negative ifTrue: [result reciprocal] ifFalse: [result]
+]
+
+{ #category : #arithmetic }
+Polynomial >> raisedTo: anInteger [
+	"Answer the receiver raised to the power anInteger."
+
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	anInteger = 0
+		ifTrue: [ ^ self one ].
+	anInteger < 0
+		ifTrue: [ ^ '(self ^ anInteger negated) reciprocal' ].
+	^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
 ]
 
 { #category : #arithmetic }

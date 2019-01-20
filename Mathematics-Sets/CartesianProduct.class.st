@@ -28,8 +28,8 @@ CartesianProduct class >> components: anArray [
 CartesianProduct class >> example [
 	"The cartesian product of the ring of rational integers
 	and the field of rational numbers (as sets)."
-	^ (ZZ, QQ)
 
+	^ ZZ , QQ
 ]
 
 { #category : #operations }
