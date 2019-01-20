@@ -347,13 +347,16 @@ Ideal >> radical [
 ]
 
 { #category : #operations }
-Ideal >> raiseTo: anInteger [
+Ideal >> raisedTo: anInteger [
 	"Answer the receiver raised to the power anInteger."
-	anInteger <= 0 ifTrue: [self error: 'exponent is not positive'].
-	anInteger = 1 ifTrue: [^ self].
-"	anInteger = 0 ifTrue: [^ self ring oneIdeal].
-	'anInteger < 0 ifTrue: [^ (self ^ anInteger negated) reciprocal]."
-		^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
+
+	anInteger <= 0
+		ifTrue: [ self error: 'exponent is not positive' ].
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	"	anInteger = 0 ifTrue: [^ self ring oneIdeal].
+		anInteger < 0 ifTrue: [^ (self ^ anInteger negated) reciprocal]."
+	^ ((self squared) raisedTo: (anInteger // 2)) * (self raisedTo: (anInteger \\ 2))
 ]
 
 { #category : #'operations-elements' }
@@ -380,7 +383,8 @@ Ideal >> scalars [
 
 { #category : #operations }
 Ideal >> squareFree [
-	^ self scalars * (self generators collect: [:each| each squareFree])
+	^ self scalars
+		* (self generators collect: [ :each | each squareFree ])
 ]
 
 { #category : #testing }

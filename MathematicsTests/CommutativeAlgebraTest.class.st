@@ -534,23 +534,23 @@ CommutativeAlgebraTest >> testIdealMembership3 [
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealMembership4 [
 	| R x y z I |
-	R := ZZ/127 polynomialsIn: #(x y z) ordering: #glex.
+	R := ZZ / 127 polynomialsIn: #(x y z) ordering: #glex.
 	x := R x.
 	y := R y.
 	z := R z.
-	I := 'R * {x*y + z. y^3 + 1. z^2 - (x*5) - 1}'.
-	'self assert: (I includes: (x*y + z) + (y^3 + 1)).
-		self assert: (I includes: x*z*(z^2 - (x*5) - 1))'
+	I := R * {x*y + z. (y  raisedTo: 3) + 1. (z raisedTo: 2) - (x*5) - 1}.
+	self assert: (I includes: (x*y + z) + ((y raisedTo: 3) + 1)).
+		self assert: (I includes: x*z*((z raisedTo:2) - (x*5) - 1))
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealMembership5 [
 	| R x y I |
-	R := ZZ/7 polynomialsIn: #(x y) ordering: #glex.
+	R := ZZ / 7 polynomialsIn: #(x y) ordering: #glex.
 	x := R x.
 	y := R y.
-	I := 'R * {x*y + 1. y^2 - 1}'.
-	self assert: (I includes: x+y)
+	I := R * {x*y + 1. (y raisedTo: 2) - 1}.
+	self assert: (I includes: x + y)
 ]
 
 { #category : #'ideal operations' }

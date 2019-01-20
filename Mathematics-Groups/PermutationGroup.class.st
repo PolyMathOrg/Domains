@@ -120,17 +120,29 @@ PermutationGroup >> = anObject [
 { #category : #accessing }
 PermutationGroup >> action [
 	"Answer the natural action that sends (s, x) to s(x)."
-	^ GroupAction from: (self, self space) to: self space evaluatingWithArguments: [:s :x| s value: x]
+	
+	^ GroupAction
+		from: self , self space
+		to: self space
+		evaluatingWithArguments: [ :s :x | s value: x ]
 ]
 
 { #category : #converting }
 PermutationGroup >> asLinearGroupOver: aRing [
 	"Return a linear group over aRing isomorphic to the receiver.
 	Assume the space of the receiver is an interval (1 to: n)."
+	
 	| n V |
 	n := self degree.
-	V := 'aRing ^ n'.
-	^ LinearGroup on: V generators: (self generators collect: [:g| V to: V evaluating: [:x| x withIndexCollect: [:xi :i| x at: (g value: i)]]])
+	V := aRing raisedTo: n.
+	^ LinearGroup
+		on: V
+		generators:
+			(self generators
+				collect: [ :g | 
+					V
+						to: V
+						evaluating: [ :x | x withIndexCollect: [ :xi :i | x at: (g value: i) ] ] ])
 ]
 
 { #category : #converting }
