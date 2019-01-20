@@ -745,7 +745,7 @@ Domain >> select: aBlock [
 
 { #category : #accessing }
 Domain >> size [
-	^ self propertyAt: #size ifAbsentPut: [self elements size]
+^ self propertyAt: #size ifAbsentPut: [ self elements size ]
 ]
 
 { #category : #private }

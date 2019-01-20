@@ -28,8 +28,13 @@ Group class >> integersMod: anInteger [
 
 { #category : #examples }
 Group class >> quaternions [
-	"Answer the quaternionic group."
-	^ Group new generators: {Quaternion i. Quaternion j}
+	"Answer the quaternionic group.
+	https://en.wikipedia.org/wiki/Quaternion_group"
+
+	^ Group new
+		generators:
+			{Quaternion i.
+			Quaternion j}
 ]
 
 { #category : #examples }
@@ -119,7 +124,17 @@ Group >> additiveOperation [
 
 { #category : #morphisms }
 Group >> adjointAction [
-	^ GroupAction from: (self, self) to: self evaluatingWithArguments: [:x :y| self operation value: {self operation value: {x. y}. self inverseMap value: x}]
+	^ GroupAction
+		from: self , self
+		to: self
+		evaluatingWithArguments: [ :x :y | 
+			self operation
+				value:
+					{(self operation
+						value:
+							{x.
+							y}).
+					(self inverseMap value: x)} ]
 ]
 
 { #category : #random }
@@ -342,8 +357,10 @@ Group >> cycleGraph2 [
 Group >> cycleGraphMorph [
 	| answer |
 	answer := self cycleGraph asMorph.
-"	answer hideLabels."
-	(answer nodeAt: self identity) color: Color white; shape: #square.
+	"	answer hideLabels."
+	(answer nodeAt: self identity)
+		color: Color white;
+		shape: #square.
 	^ answer
 ]
 
@@ -666,6 +683,7 @@ Group >> operation [
 
 { #category : #accessing }
 Group >> order [
+	"The order of a group is its cardinality, i.e., the number of elements in its set."
 	^ self size
 ]
 

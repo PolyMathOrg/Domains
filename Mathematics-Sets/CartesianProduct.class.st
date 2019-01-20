@@ -105,7 +105,8 @@ CartesianProduct >> isProduct [
 
 { #category : #printing }
 CartesianProduct >> printOn: aStream [
-	components do: [:each| aStream print: each] separatedBy: [aStream nextPut: Character times]
+
+	components do: [:each| aStream print: each] separatedBy: [aStream nextPut: $X]
 ]
 
 { #category : #morphisms }
