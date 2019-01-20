@@ -176,8 +176,8 @@ Infinity >> positive [
 { #category : #printing }
 Infinity >> printOn: aStream [
 	self negative ifTrue: [aStream nextPut: $-].
-	aStream nextPut: Character infinity
-"	aStream nextPutAll: 'infinity'"
+	"aStream nextPut: Character infinity"
+	aStream nextPutAll: 'infinity'
 ]
 
 { #category : #arithmetic }

@@ -715,7 +715,7 @@ Group >> orderOf: anElement boundedBy: n [
 
 { #category : #morphisms }
 Group >> outerAutomorphisms [
-	^ self automorphisms / self innerAutomorphisms
+	^ self automorphisms / self innerAutomorphisms 
 ]
 
 { #category : #operations }
@@ -763,7 +763,14 @@ Group >> random [
 
 { #category : #morphisms }
 Group >> rightAction [
-	^ GroupAction from: (self, self) to: self evaluatingWithArguments: [:x :y| self operation value: {y. self inverseMap value: x}]
+	^ GroupAction
+		from: self , self
+		to: self
+		evaluatingWithArguments: [ :x :y |
+			self operation
+				value:
+					{y.
+					(self inverseMap value: x)} ]
 ]
 
 { #category : #morphisms }

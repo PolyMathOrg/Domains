@@ -243,7 +243,8 @@ Domain >> asSet [
 { #category : #random }
 Domain >> atRandom [
 	"Answer an element in the receiver choosen at random. This will fail if the receiver is not finite."
-	^ Random withDefaultDo: [:aRandom| self atRandom: aRandom]
+	"^ Random withDefaultDo: [:aRandom| self atRandom: aRandom]" "Cuis specific"
+	^self atRandom: Random new
 ]
 
 { #category : #random }
@@ -263,7 +264,8 @@ Domain >> atRandom: aRandom bits: bitSize [
 { #category : #random }
 Domain >> atRandomBits: bitSize [
 	"Answer an element of the receiver of at most n bits (as measured by #bitSize). The total number of elements that could be returned shouldn't exceed 2^n."
-	^ Random withDefaultDo: [:aRandom| self atRandom: aRandom bits: bitSize]
+	"^ Random withDefaultDo: [:aRandom| self atRandom: aRandom bits: bitSize]" "Cuis specific"
+	^ self atRandom: Random new bits: bitSize
 ]
 
 { #category : #morphisms }

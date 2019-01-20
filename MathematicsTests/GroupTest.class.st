@@ -166,9 +166,13 @@ GroupTest >> testGroupRing [
 	xa := R embed: a.
 	xb := R embed: b.
 	xc := R embed: c.
-	self assert: xa*xb = (R embed: a*b).
-	self assert: xa*2 + xb*xc - (xa*xc) - (xb*xc) = (R embed: a*c).
-	'self assert: (xa + xb) * (xa - xb) = (xa^2 - (xb^2) + (xb*xa) - (xa*xb))'
+	self assert: xa * xb equals: (R embed: a * b).
+	self
+		assert: (xa * 2 + xb) * xc - (xa * xc) - (xb * xc)
+		equals: (R embed: a * c).
+	self
+		assert: (xa + xb) * (xa - xb)
+		equals: (xa raisedTo: 2) - (xb raisedTo: 2) + (xb * xa) - (xa * xb)
 ]
 
 { #category : #tests }
@@ -274,14 +278,14 @@ GroupTest >> testPermutationGroupHomomorphism [
 GroupTest >> testQuotientGroup [
 	| G N Q pi h |
 	G := Group integersMod: 6.
-	N := G span: {3 % 6}.
+	N := G span: {(3 % 6)}.
 	Q := G / N.
-	self assert: Q size = 3.
+	self assert: Q size equals: 3.
 	self testGroup: Q.
 	pi := Q projection.
 	self assert: (Q includes: (pi value: G atRandom)).
 	h := Q atRandom.
-	self assert: (pi value: (pi section value: h)) = h.
+	self assert: (pi value: (pi section value: h)) equals: h.
 	self testGroupHomomorphism: pi
 ]
 

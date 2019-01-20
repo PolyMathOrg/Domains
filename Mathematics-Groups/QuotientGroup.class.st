@@ -35,7 +35,7 @@ QuotientGroup >> buildProjection [
 	"Answer the natural projection, or quotient map, or canonical homomorphism. This takes elements from the base group to the corresponding coset in the quotient group."
 	| answer |
 	answer := self base to: self evaluating: [:each| self project: each].
-	answer name: Character pi asString.
+	answer name: 'Pi'. "Character pi asString"
 	answer properties
 		at: #kernel put: self relations;
 		at: #image put: self;
