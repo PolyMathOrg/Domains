@@ -4,19 +4,19 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 QuadraticFormTest >> newQuadraticForm [
 	^ self newQuadraticForm: (2 to: 5) atRandom
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 QuadraticFormTest >> newQuadraticForm: n [
 	| V |
 	V := 'QQ^n'.
 	^ 'QuadraticForm from: V coefficients: (QQ^(n + 1 * n / 2) atRandomBits: 100)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 QuadraticFormTest >> testArithmetic [
 	| n Q1 Q2 p a |
 	n := (1 to: 5) atRandom.
@@ -29,7 +29,7 @@ QuadraticFormTest >> testArithmetic [
 	self assert: Q1 + Q2 + Q2 negated = Q1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 QuadraticFormTest >> testAsPolynomial [
 	| Q f p |
 	Q := self newQuadraticForm.
@@ -39,7 +39,7 @@ QuadraticFormTest >> testAsPolynomial [
 	self assert: (f degree = 2 and: [f isHomogeneous])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 QuadraticFormTest >> testAssociatedBilinearForm [
 	"Example from Sage."
 	| Q B |
@@ -48,7 +48,7 @@ QuadraticFormTest >> testAssociatedBilinearForm [
 	self assert: (B value: {(1,2,0) over: ZZ. (0,1,1) over: ZZ}) = 8
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 QuadraticFormTest >> testAssociatedBilinearForm2 [
 	"Example from Sage."
 	| Q B |
@@ -57,12 +57,13 @@ QuadraticFormTest >> testAssociatedBilinearForm2 [
 	self assert: (B value: {(1,1). (1/2,2)}) = (19/4)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 QuadraticFormTest >> testEvaluation [
 	"Example from Sage."
+
 	| Q |
-	Q := QuadraticForm from: 'QQ^3' coefficients: (0 to: 5).
-	self assert: (Q value: (1,2,3)) = 89.
-	self assert: (Q value: (1,0,0)) = 0.
-	self assert: (Q value: (1,1,1)) = 15
+	Q := QuadraticForm from: (QQ raisedTo: 3) coefficients: (0 to: 5).
+	self assert: (Q value: 1 , 2 , 3) equals: 89.
+	self assert: (Q value: 1 , 0 , 0) equals: 0.
+	self assert: (Q value: 1 , 1 , 1) equals: 15
 ]

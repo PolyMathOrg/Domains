@@ -9,7 +9,10 @@ Class {
 
 { #category : #'as yet unclassified' }
 ArithmeticGroup >> action [
-	^ GroupAction from: (self, CC) to: CC evaluating: [:f :z| f value: z]
+	^ GroupAction
+		from: self , CC
+		to: CC
+		evaluating: [ :f :z | f value: z ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -42,5 +45,8 @@ ArithmeticGroup >> size [
 
 { #category : #'as yet unclassified' }
 ArithmeticGroup >> upperHalfPlaneAction [
-	^ GroupAction from: (self, HH) to: HH evaluating: [:f :z| f value: z]
+	^ GroupAction
+		from: self , HH
+		to: HH
+		evaluating: [ :f :z | f value: z ]
 ]

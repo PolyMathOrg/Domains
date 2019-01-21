@@ -29,19 +29,24 @@ PrincipalCongruenceSubgroup >> dot: aGroup [ " ï "
 { #category : #'as yet unclassified' }
 PrincipalCongruenceSubgroup >> index [
 	"Answer the index of the receiver in the modular group."
+
 	| answer |
 	answer := 1.
-	self level factors withOccurrencesDo: [:p :e| 'answer := answer * (p ^ (e*3 - 2) * (p*p - 1))'].
+	self level factors
+		withOccurrencesDo: [ :p :e | answer := answer * ((p raisedTo: (e*3 - 2)) * (p*p - 1)) ].
 	^ answer
 ]
 
 { #category : #'as yet unclassified' }
 PrincipalCongruenceSubgroup >> numberOfCusps [
 	| count |
-	self level = 1 ifTrue: [^ 1].
-	self level = 2 ifTrue: [^ 3].
+	self level = 1
+		ifTrue: [ ^ 1 ].
+	self level = 2
+		ifTrue: [ ^ 3 ].
 	count := 1.
-	self level factors withOccurrencesDo: [:p :e| 'count := count * (p ^ (e*2) - (p ^ (e*2 - 2)))'].
+	self level factors
+		withOccurrencesDo: [ :p :e | count := count * ((p raisedTo: (e*2)) - (p raisedTo: (e*2 - 2))) ].
 	^ count // 2
 ]
 
@@ -52,6 +57,6 @@ PrincipalCongruenceSubgroup >> numberOfIrregularCusps [
 
 { #category : #'as yet unclassified' }
 PrincipalCongruenceSubgroup >> printOn: aStream [
-	aStream nextPut: Character Gamma.
+	aStream nextPutAll: 'Gamma'.
 	self level ~= 1 ifTrue: [aStream nextPut: $(; print: self level; nextPut: $)]
 ]

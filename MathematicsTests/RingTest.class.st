@@ -153,7 +153,7 @@ RingTest >> testKrullDimension [
 	self assert: QQ dimension = 0.
 	self assert: (ZZ polynomialsIn: 2) dimension = 3.
 	R := QQ polynomialsIn: #(x y).
-	I := 'R * {R x ^ 2 + (R y ^ 2) - 1}'.
+	I := R * {((R x) raisedTo: 2) + ((R y) raisedTo: 2) - 1}.
 	self assert: (R / I) dimension = 1
 ]
 
@@ -213,8 +213,8 @@ RingTest >> testMultivariatePolynomialRing [
 
 { #category : #general }
 RingTest >> testNilradical [
-	self assert: ZZ nilradical = (ZZ*0).
-	self assert: (ZZ/12) nilradical = (ZZ/12*6)
+	self assert: ZZ nilradical equals: ZZ * 0.
+	self assert: (ZZ / 12) nilradical = (ZZ / 12 * 6)
 ]
 
 { #category : #polynomials }

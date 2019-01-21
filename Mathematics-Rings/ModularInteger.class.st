@@ -163,6 +163,15 @@ ModularInteger >> printOn: aStream [
 ]
 
 { #category : #operations }
+ModularInteger >> raiseTo: anInteger [ "^ "
+	^ self class in: parent representative: (representative raisedTo: anInteger modulo: self modulus)
+"	anInteger = 1 ifTrue: [^ self].
+	anInteger = 0 ifTrue: [^ self one].
+	anInteger < 0 ifTrue: [^ self reciprocal ^ anInteger negated].
+	^ (self * self ^ (anInteger // 2)) * (self ^ (anInteger \\ 2))"
+]
+
+{ #category : #operations }
 ModularInteger >> raisedTo: anInteger [
 
 	^ self class

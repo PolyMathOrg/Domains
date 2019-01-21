@@ -8,11 +8,11 @@ Class {
 MathematicsTest >> testAlgebraicExtension [
 	| x E a b |
 	x := QQ polynomials x.
-	E := QQ extension: (x raiseTo: 4) - 2.
+	E := QQ extension: (x raisedTo: 4) - 2.
 	a := E x.
-	self assert: (a raiseTo: 4) representative asScalar equals: 2.
-	b := (a raiseTo: 2) + (E embed: 3).
-	self assert: b minimalPolynomial equals: (x raiseTo: 2) - (x * 6) + 7
+	self assert: (a raisedTo: 4) representative asScalar equals: 2.
+	b := (a raisedTo: 2) + (E embed: 3).
+	self assert: b minimalPolynomial equals: (x raisedTo: 2) - (x * 6) + 7
 ]
 
 { #category : #tests }
@@ -215,11 +215,10 @@ MathematicsTest >> testInfinity [
 
 { #category : #tests }
 MathematicsTest >> testInfinityUndeterminates [
-	self should: [Infinity positive + Infinity negative] raise: Error.
-	self should: [Infinity positive * 0] raise: Error.
-	self should: [Infinity positive / Infinity positive] raise: Error.
-	self should: ['Infinity positive ^ 0'] raise: Error
-
+	self should: [ Infinity positive + Infinity negative ] raise: Error.
+	self should: [ Infinity positive * 0 ] raise: Error.
+	self should: [ Infinity positive / Infinity positive ] raise: Error.
+	self should: [ Infinity positive raisedTo: 0 ] raise: Error
 ]
 
 { #category : #tests }
@@ -444,7 +443,7 @@ MathematicsTest >> testWord [
 	y := Word x: #y.
 	self assert: (x*y) * y reciprocal = x.
 	self assert: (x*y * (y reciprocal * x reciprocal)) isEmpty.
-	self assert: x*y*y * (y reciprocal * y reciprocal * x) = (x raiseTo: 2).
+	self assert: x*y*y * (y reciprocal * y reciprocal * x) = (x raisedTo: 2).
 	self assert: x * (y * y * x) = (x * y * (y * x)).
 	self assert: (x*y * (x*y) reciprocal) isEmpty
 ]
@@ -474,13 +473,13 @@ MathematicsTest >> testYoungTableauxSemistandard [
 { #category : #tests }
 MathematicsTest >> testYoungTableauxStandard [
 	| T |
-	T := YoungTableau rows: #((1 4 6 8) (2 5 7) (3)).
+	T := YoungTableau rows: #(#(1 4 6 8) #(2 5 7) #(3)).
 	self assert: T isStandard.
-	self assert: T weight = #(1 1 1 1 1 1 1 1).
-	self assert: T shape = #(4 3 1)
+	self assert: T weight equals: #(1 1 1 1 1 1 1 1).
+	self assert: T shape equals: #(4 3 1)
 ]
 
 { #category : #tests }
 MathematicsTest >> testZ6IsNotPID [
-	self assert: (ZZ/6) isPID not
+	self assert: (ZZ / 6) isPID not
 ]
