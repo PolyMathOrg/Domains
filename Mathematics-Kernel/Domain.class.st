@@ -134,7 +134,7 @@ Domain class >> newFrom: anObject [
 ]
 
 { #category : #elements }
-Domain >> !! anObject [
+Domain >> ! anObject [
 	"Coerce anObject to an element of the receiver. Subclasses should extend."
 
 	(self includes: anObject)
@@ -143,7 +143,7 @@ Domain >> !! anObject [
 		ifTrue: [ ^ self project: anObject ].
 	self isEmbedded
 		ifTrue: [ | element |
-			element := self ambient !! anObject.
+			element := self ambient ! anObject.
 			(self contains: element)
 				ifTrue: [ ^ element ] ].
 	^ DomainError signal: 'coercion failed'

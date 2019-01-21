@@ -12,7 +12,7 @@ Class {
 { #category : #elements }
 AffineRing >> ! anObject [
 	(self scalars includes: anObject)
-		ifTrue: [^ self project: (self base constant: anObject)].
+		ifTrue: [ ^ self project: (self base constant: anObject) ].
 	^ super ! anObject
 ]
 

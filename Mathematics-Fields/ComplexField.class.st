@@ -75,7 +75,7 @@ ComplexField >> one [
 
 { #category : #printing }
 ComplexField >> printOn: aStream [
-	aStream nextPut: Character CC
+	aStream nextPutAll: 'CC'
 ]
 
 { #category : #accessing }

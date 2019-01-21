@@ -91,7 +91,8 @@ WeierstrassEquation >> discriminant [
 
 { #category : #accessing }
 WeierstrassEquation >> homogeneousPolynomial [
-	^ (self scalars polynomialsIn: #(x y z)) !! self polynomial homogenizedIn: 3
+	^ (self scalars polynomialsIn: #(x y z)) ! self polynomial
+		homogenizedIn: 3
 ]
 
 { #category : #invariants }

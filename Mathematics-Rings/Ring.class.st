@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : #elements }
-Ring >> !! anObject [
+Ring >> ! anObject [
 	anObject isInteger
 		ifTrue: [ ^ self one * anObject ].
 	anObject isFraction
@@ -31,7 +31,7 @@ Ring >> !! anObject [
 			[ ^ self one * anObject numerator / (self one * anObject denominator) ].
 	(anObject isKindOf: Ideal)
 		ifTrue: [ ^ self * (anObject generators collect: [ :each | self ! each ]) ].
-	^ super !! anObject
+	^ super ! anObject
 ]
 
 { #category : #operations }

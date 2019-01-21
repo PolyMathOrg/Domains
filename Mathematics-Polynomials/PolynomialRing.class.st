@@ -74,7 +74,7 @@ PolynomialRing class >> new: anInteger over: aRing ordering: aMonomialOrdering [
 ]
 
 { #category : #elements }
-PolynomialRing >> !! anObject [
+PolynomialRing >> ! anObject [
 	| f parts |
 	(anObject isKindOf: Polynomial)
 		ifFalse: [ (anObject isInteger or: [ anObject isFraction ])
@@ -83,7 +83,7 @@ PolynomialRing >> !! anObject [
 				ifTrue: [ ^ self constant: anObject ].
 			anObject isEvaluable
 				ifTrue: [ ^ self evaluating: anObject ].
-			^ super !! anObject ].
+			^ super ! anObject ].
 	f := anObject.
 	f parent scalars = self scalars
 		ifFalse: [ f := f over: self scalars ].
@@ -98,7 +98,7 @@ PolynomialRing >> !! anObject [
 					coefficient isZero
 						ifFalse: [ parts add: (monomials x: 1 to: i - 1) -> coefficient ] ] ]
 		ifFalse: [ parts := f parts
-				collect: [ :each | each copy key: self monomials !! each key ] ].
+				collect: [ :each | each copy key: self monomials ! each key ] ].
 	parts sort.
 	^ self parts: parts
 ]
