@@ -80,7 +80,7 @@ PermutationGroup class >> dihedral: order [
 	G := SymmetricGroup new: n.
 	r := G ! {(1 to: n)}.
 	s := G ! [:i| n - i + 1].
-	^ (G span: {s. r}) name: 'Dih', order printString sub
+	^ (G span: {s. r}) name: 'Dih', order printString
 ]
 
 { #category : #examples }

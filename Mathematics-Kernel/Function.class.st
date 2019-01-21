@@ -119,8 +119,14 @@ Function >> * anObject [
 { #category : #operations }
 Function >> + anObject [
 	^ (self codomain includes: anObject)
-		ifTrue: [self species from: self domain to: self codomain evaluating: [:each| (self value: each) + anObject]]
-		ifFalse: [self species from: self domain to: self codomain evaluating: [:each| (self value: each) + (anObject value: each)]]
+		ifTrue: [ self species
+				from: self domain
+				to: self codomain
+				evaluating: [ :each | (self value: each) + anObject ] ]
+		ifFalse: [ self species
+				from: self domain
+				to: self codomain
+				evaluating: [ :each | (self value: each) + (anObject value: each) ] ]
 ]
 
 { #category : #operations }
@@ -154,10 +160,12 @@ Function >> = aFunction [
 
 { #category : #operations }
 Function >> backwardDifference: n at: h [
-	^ 'self species
-			from: self domain
-			to: self codomain
-			evaluating: [:x| (0 to: n) sum: [:i| (-1)^i * (n choose: i) * (self value: x + (i*h))]]'
+^ self species
+		from: self domain
+		to: self codomain
+		evaluating: [ :x | 
+			(0 to: n)
+				sum: [ :i | (-1 raisedTo: i) * (n choose: i) * (self value: x + (i * h)) ] ]
 ]
 
 { #category : #operations }
@@ -233,7 +241,7 @@ Function >> is: aSymbol [
 
 { #category : #testing }
 Function >> isBiyective [
-	^ self isInjective and: [self isSurjective]
+	^ self isInjective and: [ self isSurjective ]
 ]
 
 { #category : #testing }
@@ -268,12 +276,12 @@ Function >> isSurjective [
 
 { #category : #operations }
 Function >> leftInverse [
-	^ self propertyAt: #leftInverse
+^ self propertyAt: #leftInverse
 ]
 
 { #category : #printing }
 Function >> name [
-	^ self propertyAt: #name ifAbsent: [super name]
+	^ self propertyAt: #name ifAbsent: [ super name ]
 ]
 
 { #category : #printing }
@@ -283,7 +291,10 @@ Function >> name: aString [
 
 { #category : #operations }
 Function >> negated [
-	^ self species from: self domain to: self codomain evaluating: [:each| (self value: each) negated]
+	^ self species
+		from: self domain
+		to: self codomain
+		evaluating: [ :each | (self value: each) negated ]
 ]
 
 { #category : #morphic }
@@ -348,7 +359,10 @@ Function >> reciprocal [
 
 { #category : #operations }
 Function >> restrictedTo: aDomain [
-	^ self species from: aDomain to: self codomain evaluating: [:x| self value: x]
+	^ self species
+		from: aDomain
+		to: self codomain
+		evaluating: [ :x | self value: x ]
 ]
 
 { #category : #operations }

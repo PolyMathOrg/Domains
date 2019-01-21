@@ -199,8 +199,10 @@ Polynomial >> content [
 { #category : #'accessing monomials' }
 Polynomial >> degree [
 	"Answer the total degree of the receiver, i.e. the maximum of the degree of its monomials."
-	self isZero ifTrue: [^ Infinity negative].
-	^ self monomials max: [:each| each degree]
+	
+	self isZero
+		ifTrue: [ ^ Infinity negative ].
+	^ (self monomials collect: [ :each | each degree ]) max
 ]
 
 { #category : #'accessing monomials' }

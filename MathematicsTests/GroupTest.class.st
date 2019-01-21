@@ -98,7 +98,7 @@ GroupTest >> testD3 [
 	S := SymmetricGroup new: 3.
 	self assert: D equals: S.
 	A := AlternatingGroup new: 3.
-	self assert: D commutator = A.
+	self assert: D commutator equals: A.
 	self assert: D center isTrivial
 ]
 
@@ -188,18 +188,19 @@ GroupTest >> testGroupRingIsARing [
 	a2 := R embed: a.
 	b2 := R embed: b.
 	c2 := R embed: c.
-	self assert: e2 = R one.
-	self assert: e2 * a2 = a2.
-	self assert: a2 * e2 = a2.
-	self assert: (a2 * b2 * c2) = (a2 * (b2 * c2)).
-	G isCommutative ifTrue: [self assert: a2 * b2 = (b2 * a2)].
+	self assert: e2 equals: R one.
+	self assert: e2 * a2 equals: a2.
+	self assert: a2 * e2 equals: a2.
+	self assert: a2 * b2 * c2 equals: a2 * (b2 * c2).
+	G isCommutative
+		ifTrue: [ self assert: a2 * b2 equals: b2 * a2 ]
 ]
 
 { #category : #tests }
 GroupTest >> testHessian [
 	| H |
 	H := PermutationGroup hessian.
-	self assert: H elements size = 216.
+	self assert: H elements size equals: 216.
 	self testGroup: H
 ]
 

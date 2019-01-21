@@ -116,7 +116,8 @@ FreeHomModule >> isEndomorphisms [
 { #category : #private }
 FreeHomModule >> matrices [
 	"Answer the vector space of the matrices associated to the transformations of the receiver."
-	^ 'self scalars ^ (self codomain rank @ self domain rank)'
+
+	^ self scalars raisedTo: (self codomain rank @ self domain rank)
 ]
 
 { #category : #private }
