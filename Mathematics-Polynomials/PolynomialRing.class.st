@@ -202,8 +202,12 @@ PolynomialRing >> atRandom: aRandom bits: bitSize maxDegree: d [
 
 { #category : #random }
 PolynomialRing >> atRandom: aRandom maxDegree: d [
-	self isUnivariate ifFalse: [^ self notYetImplemented].
-	^ self coefficients: ('self scalars ^ (d+1)' evaluating: [:i| self scalars atRandom: aRandom])
+	self isUnivariate
+		ifFalse: [ ^ self notYetImplemented ].
+	^ self
+		coefficients:
+			((self scalars raisedTo: (d+1))
+				evaluating: [ :i | self scalars atRandom: aRandom ])
 ]
 
 { #category : #random }
@@ -388,7 +392,7 @@ PolynomialRing >> do: aBlock [
 	self isUnivariate ifFalse: [^ self notYetImplemented].
 	aBlock value: self zero.
 	k := 1.
-	[('self scalars ^ k') do: [:t| t last isZero ifFalse: [aBlock value: (self coefficients: t)]].
+	[(self scalars raisedTo: k) do: [:t| t last isZero ifFalse: [aBlock value: (self coefficients: t)]].
 	k := k + 1] repeat
 ]
 

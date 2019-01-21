@@ -50,13 +50,17 @@ GroupRingElement >> one [
 ]
 
 { #category : #arithmetic }
-GroupRingElement >> raiseTo:anInteger [
+GroupRingElement >> raisedTo: anInteger [
 	"Answer the receiver raised to the power anInteger."
-	(anInteger isInteger and: [anInteger >= 0])
-		ifFalse: [^ DomainError signal: 'undefinted'].
-	anInteger = 0 ifTrue: [^ self one].
-	anInteger = 1 ifTrue: [^ self].
-	^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
+
+	(anInteger isInteger and: [ anInteger >= 0 ])
+		ifFalse: [ ^ DomainError signal: 'undefinted' ].
+	anInteger = 0
+		ifTrue: [ ^ self one ].
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	^ (self squared raisedTo: anInteger // 2)
+		* (self raisedTo: anInteger \\ 2)
 ]
 
 { #category : #arithmetic }

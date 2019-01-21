@@ -191,10 +191,13 @@ Word >> printOn: aStream [
 
 { #category : #arithmetic }
 Word >> raisedTo: anInteger [
-	anInteger = 1 ifTrue: [^ self].
-	anInteger = 0 ifTrue: [^ self class empty].
-	anInteger < 0 ifTrue: [^ 'self reciprocal ^ anInteger negated'].
-	^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	anInteger = 0
+		ifTrue: [ ^ self class empty ].
+	anInteger < 0
+		ifTrue: [ ^ self reciprocal raisedTo: anInteger negated ].
+	^ ((self squared) raisedTo: (anInteger // 2)) * (self raisedTo: (anInteger \\ 2))
 ]
 
 { #category : #arithmetic }

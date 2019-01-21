@@ -25,32 +25,32 @@ RingTest >> testCanonicalMorphisms [
 	| R x Q |
 	R := QQ polynomials.
 	x := R x.
-	Q := 'R / (x^2 + 1)'.
-	'self assert: (ZZ  R value: 4) = (R embed: 4)'. "canonical morphism from initial object"
-	'self assert: (R  Q value: x^2 + 2) = Q one'. "canonical morphism to quotient object"
+	Q := R / ((x raisedTo: 2) + 1).
+	'self assert: (ZZ  R value: 4) = (R embed: 4)'.	"canonical morphism from initial object"
+	'self assert: (R  Q value: x^2 + 2) = Q one'	"canonical morphism to quotient object"
 ]
 
 { #category : #'finite rings' }
 RingTest >> testFiniteRing [
 	| R |
-	R := (ZZ/2) polynomials.
-	R := 'R / (R x^3 - R x)'.
+	R := (ZZ / 2) polynomials.
+	R := R / ((R x raisedTo: 3) - R x).
 	self assert: R isField not.
-	self assert: R size = 8.
-	self assert: R units size = 2.
-	self assert: R zeroDivisors size = 6
+	self assert: R size equals: 8.
+	self assert: R units size equals: 2.
+	self assert: R zeroDivisors size equals: 6
 	"also, this ring has two maximal ideals, and the Jacobson radical is {0, x^2 + x}"
 ]
 
 { #category : #'finite rings' }
 RingTest >> testFiniteRing2 [
 	| R |
-	R := (ZZ/2) polynomials.
+	R := (ZZ / 2) polynomials.
 	R := R / (R x * (R x + 1)).
 	self assert: R isField not.
-	self assert: R size = 4.
-	self assert: R zeroDivisors size = 3.
-	self assert: R characteristic = 2.
+	self assert: R size equals: 4.
+	self assert: R zeroDivisors size equals: 3.
+	self assert: R characteristic equals: 2.
 	self assert: R isLocal not
 	"more about this ring: two maximal (and princial as well) ideals (so not a local ring)"
 ]
@@ -82,8 +82,8 @@ RingTest >> testFiniteRing3 [
 { #category : #'finite rings' }
 RingTest >> testFiniteRing4 [
 	| R S |
-	R := ZZ/6. "this is not a Galois ring, the zero-divisors dont form an ideal"
-	S := ZZ/8. "this is a Galois ring"
+	R := ZZ / 6.	"this is not a Galois ring, the zero-divisors dont form an ideal"
+	S := ZZ / 8.	"this is a Galois ring"
 	self assert: R isLocal not.
 	self assert: S isLocal
 ]
@@ -92,8 +92,8 @@ RingTest >> testFiniteRing4 [
 RingTest >> testGaloisRing [
 	| R |
 	R := GaloisRing new: 3 to: 3 to: 2.
-	'self assert: R characteristic = (3^3).
-		self assert: R size = (3^3^2)'.
+	self assert: R characteristic equals: (3 raisedTo: 3).
+	self assert: R size equals: ((3 raisedTo: 3) raisedTo: 2).
 	self assert: R isLocal.
 	self assert: R isEuclidean.
 	self testRing: R
@@ -192,7 +192,7 @@ RingTest >> testLocalizationOfZAt2 [
 
 { #category : #general }
 RingTest >> testMatrixRing [
-	self testRing: '(ZZ ^ (5@5))' asRing
+	self testRing: (ZZ raisedTo: (5@5)) asRing
 ]
 
 { #category : #'finite rings' }
@@ -344,7 +344,7 @@ RingTest >> testQuotientRing2 [
 RingTest >> testQuotientRingNotIntegralDomain [
 	| R |
 	R := QQ polynomials.
-	'R := R / (R x^2 - 1)'.
+	R := R / (((R x) raisedTo: 2) - 1).
 	self assert: R isField not.
 	self assert: R isIntegralDomain not
 ]
@@ -353,7 +353,7 @@ RingTest >> testQuotientRingNotIntegralDomain [
 RingTest >> testQuotientRingWhichIsAField [
 	| R |
 	R := QQ polynomials.
-	'R := R / (R x^2 + (R x * 2) + 2)'.
+	R := R / (((R x) raisedTo: 2) + (R x * 2) + 2).
 	self assert: R isField
 ]
 

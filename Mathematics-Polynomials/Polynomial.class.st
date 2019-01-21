@@ -855,8 +855,8 @@ Polynomial >> raisedTo: anInteger [
 	anInteger = 0
 		ifTrue: [ ^ self one ].
 	anInteger < 0
-		ifTrue: [ ^ '(self ^ anInteger negated) reciprocal' ].
-	^ 'self squared ^ (anInteger // 2) * (self ^ (anInteger \\ 2))'
+		ifTrue: [ ^ (self raisedTo: anInteger negated) reciprocal ].
+	^ (self squared raisedTo: (anInteger // 2)) * (self raisedTo: (anInteger \\ 2))
 ]
 
 { #category : #arithmetic }

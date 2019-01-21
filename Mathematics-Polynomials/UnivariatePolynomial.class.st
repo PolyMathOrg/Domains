@@ -715,7 +715,8 @@ UnivariatePolynomial >> isIrreducibleHeuristic: anInteger [
 { #category : #testing }
 UnivariatePolynomial >> isIrreducibleRabin [
 	| Fx x one f n h g q |
-	(self independentCoefficient isZero and: [self degree > 1]) ifTrue: [^ false].
+	(self independentCoefficient isZero and: [ self degree > 1 ])
+		ifTrue: [ ^ false ].
 	"Rabin's algorithm:"
 	f := self.
 	Fx := f parent.
@@ -723,12 +724,15 @@ UnivariatePolynomial >> isIrreducibleRabin [
 	x := Fx x.
 	one := Fx one.
 	n := f degree.
-	n factors asSet do: [:p|
-		h := ('x raisedTo: q^(n/p) modulo: f') - x \\ f.
-		g := f gcd: h.
-		g ~= one ifTrue: [^ false]].
-	'g := (x raisedTo: q^n modulo: f) - x \\ f'.
-	g isZero ifFalse: [^ false].
+	n factors asSet
+		do: [ :p | 
+			h := (x raisedTo: (q raisedTo: n / p) modulo: f - x) \\ f.
+			g := f gcd: h.
+			g ~= one
+				ifTrue: [ ^ false ] ].
+	g := (x raisedTo: (q raisedTo: n) modulo: f) - x \\ f.
+	g isZero
+		ifFalse: [ ^ false ].
 	^ true
 ]
 
