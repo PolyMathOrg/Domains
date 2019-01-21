@@ -115,24 +115,39 @@ CodesTest >> testSingletonBoundTetracode [
 { #category : #tests }
 CodesTest >> testTetracode [
 	| C P x y |
-	C := LinearCode subspace: ('ZZ/3 ^ 4' span: {(1,1,1,0) % 3. (0,1,2,1) % 3}).
+	C := LinearCode
+		subspace:
+			((ZZ / 3 raisedTo: 4)
+				span:
+					{((1 , 1 , 1 , 0) % 3).
+					((0 , 1 , 2 , 1) % 3)}).
 	self assert: C isSelfDual.
 	self assert: C minimumDistance = 3.
 	P := ZZ polynomialsIn: #(x y).
 	x := P x.
 	y := P y.
-	'self assert: C weightEnumerator = (x^4 + (x*(y^3)*8))'
+	self assert: C weightEnumerator = ((x raisedTo: 4) + (x*(y raisedTo: 3)*8))
 ]
 
 { #category : #tests }
 CodesTest >> testWeightEnumerator [
 	"From youtube, Neil Sloane 'error correcting codes, group theory and invariant theory part 1' 19:30."
+
 	| F C w x y |
-	F := ZZ/2.
-	C := 'LinearCode subspace: (F^5 span: {(0,0,0,0,0) % 2. (1,1,1,1,1) % 2})'.
+	F := ZZ / 2.
+	C := LinearCode
+		subspace:
+			((F raisedTo: 5)
+				span:
+					{((0 , 0 , 0 , 0 , 0) % 2).
+					((1 , 1 , 1 , 1 , 1) % 2)}).
 	w := C weightEnumerator.
 	x := w parent x.
 	y := w parent y.
-	'self assert: w = (x^5 + (y^5))'.
-	'self assert: C dual weightEnumerator = (x^5 + (x^3*(y^2)*10) + (y^4*x*5))'
+	self assert: w equals: (x raisedTo: 5) + (y raisedTo: 5).
+	self
+		assert: C dual weightEnumerator
+		equals:
+			(x raisedTo: 5) + ((x raisedTo: 3) * (y raisedTo: 2) * 10)
+				+ ((y raisedTo: 4) * x * 5)
 ]
