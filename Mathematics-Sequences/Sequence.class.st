@@ -22,7 +22,8 @@ Class {
 { #category : #examples }
 Sequence class >> Omega [
 	"Number of prime divisors of n counted with multiplicity. A001222."
-	^ Sequence evaluating: [:n| n factors size]
+	
+	^ Sequence evaluating: [ :n | n factors size ]
 ]
 
 { #category : #examples }
@@ -30,41 +31,55 @@ Sequence class >> aliquot [
 	"This is the aliquot function a(n) or s(n).
 	It is the sum of the proper divisors of n (aliquot parts of n).
 	If a(n) = n, n is a perfect number. If a(n) = n - 1, it is almost perfect. If a(n) > n, it is an abundant number."
-	^ Sequence evaluating: [:n| n divisors sum - n]
+
+	^ Sequence evaluating: [ :n | n divisors sum - n ]
 ]
 
 { #category : #examples }
 Sequence class >> bbs: s p: p q: q [
 	"Answer the Blum Blum Shub sequence for the given parameters."
+
 	| lambda m |
 	lambda := p - 1 lcm: q - 1.
 	m := p * q.
-	^ self evaluating: [:i| s raisedTo: (2 raisedTo: i modulo: lambda) modulo: m]
+	^ self
+		evaluating: [ :i | s raisedTo: (2 raisedTo: i modulo: lambda) modulo: m ]
 ]
 
 { #category : #examples }
 Sequence class >> bellNumbers [
 	"The Bell numbers."
-	^ (Sequence evaluating: [:n| (0 to: n) sum: [:k| n Stirling: k]]) startIndex: 0
+	^ (Sequence
+		evaluating: [ :n | (0 to: n) sum: [ :k | n Stirling: k ] ])
+		startIndex: 0
 ]
 
 { #category : #examples }
 Sequence class >> bernoulli [
 	"This is the sequence of Bernoulli numbers (starting at 1), computed via a recurrence."
-	^ Sequence to: QQ initialValues: #(1) recurrence: [:f :n| (n>4 and: [n even]) ifTrue: [0] ifFalse: [((0 to: n-2) sum: [:k| (n choose: k) * (f at: k+1)]) / n negated]]
+	
+	^ Sequence
+		to: QQ
+		initialValues: #(1)
+		recurrence: [ :f :n | 
+			(n > 4 and: [ n even ])
+				ifTrue: [ 0 ]
+				ifFalse: [ ((0 to: n - 2) sum: [ :k | (n choose: k) * (f at: k + 1) ])
+						/ n negated ] ]
 ]
 
 { #category : #examples }
 Sequence class >> calkinWilf [
 	"The Calkin-Wilf sequence.
 	It enumerates the positive rational numbers by a breadth-first traversal of the Calkin-Wilf tree."
+
 	^ Sequence
 		to: QQ
-		evaluating:
-			[:n| | q |
+		evaluating: [ :n | 
+			| q |
 			q := 1.
-			n-1 timesRepeat: [q := 1 / (2 * q floor - q + 1)].
-			q]
+			n - 1 timesRepeat: [ q := 1 / (2 * q floor - q + 1) ].
+			q ]
 ]
 
 { #category : #examples }
@@ -76,7 +91,7 @@ Sequence class >> catalanNumbers [
 { #category : #'intance creation' }
 Sequence class >> constant: anInteger [
 	anInteger isInteger
-		ifFalse: [^ DomainError signal: 'argument is not integer'].
+		ifFalse: [ ^ DomainError signal: 'argument is not integer' ].
 	^ self to: ZZ constant: anInteger
 ]
 
@@ -93,7 +108,10 @@ Sequence class >> evaluating: aBlock [
 { #category : #examples }
 Sequence class >> fibonacci [
 	"The Fibonacci sequence defined as a recurrence."
-	^ Sequence initialValues: #(0 1) recurrence: [:f :n| (f at: n-1) + (f at: n-2)]
+	
+	^ Sequence
+		initialValues: #(0 1)
+		recurrence: [ :f :n | (f at: n - 1) + (f at: n - 2) ]
 ]
 
 { #category : #examples }

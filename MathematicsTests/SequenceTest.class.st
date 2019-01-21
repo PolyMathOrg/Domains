@@ -6,15 +6,21 @@ Class {
 
 { #category : #'as yet unclassified' }
 SequenceTest >> testBellNumbers [
-	self assert: (Sequence bellNumbers beginsWith: #(1 2 5 15 52 203 877)).
+	self
+		assert: (Sequence bellNumbers beginsWith: #(1 2 5 15 52 203 877)).
 	"The binomial transform is the shift operator for the Bell numbers:"
-	self assert: (Sequence bellNumbers binomialTransform2 beginsWith: #(2 5 15 52 203 877)).
+	self
+		assert:
+			(Sequence bellNumbers binomialTransform2
+				beginsWith: #(2 5 15 52 203 877))
 ]
 
 { #category : #'as yet unclassified' }
 SequenceTest >> testDirichletConvolution [
-	self assert: ((Sequence phi dirichlet: Sequence one) beginsWith: #(1 2 3 4 5)).
-	self assert: ((Sequence moebius dirichlet: Sequence one) beginsWith: #(1 0 0 0 0))
+	self
+		assert: ((Sequence phi dirichlet: Sequence one) beginsWith: #(1 2 3 4 5)).
+	self
+		assert: ((Sequence moebius dirichlet: Sequence one) beginsWith: #(1 0 0 0 0))
 ]
 
 { #category : #'as yet unclassified' }
