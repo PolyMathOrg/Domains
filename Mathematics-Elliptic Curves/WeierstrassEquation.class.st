@@ -71,7 +71,7 @@ WeierstrassEquation >> c4 [
 
 { #category : #invariants }
 WeierstrassEquation >> c6 [
-	^ ((self b2) raiseTo: 3) negated + (self b2 * self b4 * 36) - (self b6 * 216)
+	^ ((self b2) raisedTo: 3) negated + (self b2 * self b4 * 36) - (self b6 * 216)
 ]
 
 { #category : #'accessing-private' }
@@ -91,7 +91,7 @@ WeierstrassEquation >> discriminant [
 
 { #category : #accessing }
 WeierstrassEquation >> homogeneousPolynomial [
-	^ (self scalars polynomialsIn: #(x y z)) ! self polynomial homogenizedIn: 3
+	^ (self scalars polynomialsIn: #(x y z)) !! self polynomial homogenizedIn: 3
 ]
 
 { #category : #invariants }

@@ -74,29 +74,31 @@ PolynomialRing class >> new: anInteger over: aRing ordering: aMonomialOrdering [
 ]
 
 { #category : #elements }
-PolynomialRing >> ! anObject [
+PolynomialRing >> !! anObject [
 	| f parts |
 	(anObject isKindOf: Polynomial)
-		ifFalse:
-			[(anObject isInteger or: [anObject isFraction])
-				ifTrue: [^ self constant: self scalars ! anObject].
+		ifFalse: [ (anObject isInteger or: [ anObject isFraction ])
+				ifTrue: [ ^ self constant: self scalars ! anObject ].
 			(self scalars includes: anObject)
-				ifTrue: [^ self constant: anObject].
+				ifTrue: [ ^ self constant: anObject ].
 			anObject isEvaluable
-				ifTrue: [^ self evaluating: anObject].
-			^ super ! anObject].
+				ifTrue: [ ^ self evaluating: anObject ].
+			^ super !! anObject ].
 	f := anObject.
-	f parent scalars = self scalars ifFalse: [f := f over: self scalars].
-	(f indeterminates allSatisfy: [:each| each <= self rank])
-		ifFalse: [self error: 'unknown indeterminates are present'].
+	f parent scalars = self scalars
+		ifFalse: [ f := f over: self scalars ].
+	(f indeterminates allSatisfy: [ :each | each <= self rank ])
+		ifFalse: [ self error: 'unknown indeterminates are present' ].
 	(f isKindOf: UnivariatePolynomial)
-		ifTrue:
-			[self isUnivariate ifTrue: [^ self coefficients: f coefficients].
+		ifTrue: [ self isUnivariate
+				ifTrue: [ ^ self coefficients: f coefficients ].
 			parts := OrderedCollection new: f coefficients size.
-			f coefficients withIndexDo: [:coefficient :i|
-				coefficient isZero ifFalse: [parts add: (monomials x: 1 to: i-1) -> coefficient]]]
-		ifFalse:
-			[parts := f parts collect: [:each| each copy key: self monomials ! each key]].
+			f coefficients
+				withIndexDo: [ :coefficient :i | 
+					coefficient isZero
+						ifFalse: [ parts add: (monomials x: 1 to: i - 1) -> coefficient ] ] ]
+		ifFalse: [ parts := f parts
+				collect: [ :each | each copy key: self monomials !! each key ] ].
 	parts sort.
 	^ self parts: parts
 ]

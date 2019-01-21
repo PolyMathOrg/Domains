@@ -116,7 +116,8 @@ LinearCode >> <= aLinearCode [
 
 { #category : #comparing }
 LinearCode >> = aLinearCode [
-	^ (aLinearCode isKindOf: LinearCode) and: [self asVectorSpace = aLinearCode asVectorSpace]
+	^ (aLinearCode isKindOf: LinearCode)
+		and: [ self asVectorSpace = aLinearCode asVectorSpace ]
 ]
 
 { #category : #accessing }
@@ -149,6 +150,7 @@ LinearCode >> atRandom: aRandom bits: bitSize [
 LinearCode >> automorphisms [
 	"Answer the subgroup of Perm(F^k) (permutation of coordinates) that leave the receiver invariant.
 	The automorphisms of a code and it's dual are the same."
+	
 	self notYetImplemented
 ]
 
@@ -352,6 +354,7 @@ LinearCode >> weightDistribution: aCodeword [
 { #category : #accessing }
 LinearCode >> weightEnumerator [
 	"Answer the Hamming weight enumerator polynomial."
+
 	| P x y weights answer n |
 	P := ZZ polynomialsIn: #(x y).
 	x := P x.
@@ -359,6 +362,6 @@ LinearCode >> weightEnumerator [
 	answer := P zero.
 	n := self ambient dimension.
 	weights := self weightDistribution.
-	'weights asSet do: [:i| answer := x ^ (n - i) * (y ^ i) * (weights occurrencesOf: i) + answer]'.
+	weights asSet do: [:i| answer := (x  raisedTo: (n - i)) * (y raisedTo: i) * (weights occurrencesOf: i) + answer].
 	^ answer
 ]

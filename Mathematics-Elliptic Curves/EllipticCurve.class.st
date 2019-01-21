@@ -46,7 +46,8 @@ EllipticCurve class >> cremona37a [
 { #category : #examples }
 EllipticCurve class >> cremona389a1 [
 	"Elliptic curve 389a1 from the Cremona database."
-	^ EllipticCurve coefficients: (0,1,1,-2,0)
+	"http://www.lmfdb.org/EllipticCurve/Q/389/a/1"
+	^ EllipticCurve coefficients: (0, 1 , 1 , -2, 0)
 ]
 
 { #category : #'instance creation' }
