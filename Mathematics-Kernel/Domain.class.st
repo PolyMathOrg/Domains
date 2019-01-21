@@ -691,13 +691,24 @@ Domain >> postCopy [
 { #category : #printing }
 Domain >> printOn: aStream [
 	"Subclasses should reimplement defaultPrintOn: instead of this method."
-	self propertyAt: #name ifPresent: [:aString| aStream nextPutAll: aString italic. ^ self].
-	self propertyAt: #elements ifPresent: [:aCollection|
-		(aCollection isKindOf: Domain) ifTrue: [aStream print: aCollection. ^ self].
-		aStream nextPut: ${. "Wildberger notation for unordered sets: elements separated by spaces"
-		aCollection asSet do: [:each| aStream print: each] separatedBy: [aStream nextPutAll: ' '].
-		aStream nextPut: $}.
-		^ self].
+
+	self
+		propertyAt: #name
+		ifPresent: [ :aString | 
+			aStream nextPutAll: aString italic.
+			^ self ].
+	self
+		propertyAt: #elements
+		ifPresent: [ :aCollection | 
+			(aCollection isKindOf: Domain)
+				ifTrue: [ aStream print: aCollection.
+					^ self ].
+			aStream nextPut: ${.	"Wildberger notation for unordered sets: elements separated by spaces"
+			aCollection asSet
+				do: [ :each | aStream print: each ]
+				separatedBy: [ aStream nextPutAll: ' ' ].
+			aStream nextPut: $}.
+			^ self ].
 	^ super printOn: aStream
 ]
 

@@ -13,11 +13,12 @@ Class {
 { #category : #examples }
 AffineVariety class >> circle [
 	"The unit circle in the rational affine plane:"
+
 	| R x y I |
 	R := QQ polynomialsIn: #(x y).
 	x := R x.
 	y := R y.
-	'I := R * (x^2 + (y^2) - 1)'.
+	I := R * ((x raisedTo:2) + (y raisedTo: 2) - 1).
 	^ (R / I) spec
 ]
 
@@ -59,10 +60,16 @@ AffineVariety class >> romanSurface [
 	"The Roman surface or Steiner surface.
 	This is a self-intersecting mapping of the real projective plane into affine 3-space.
 	It was discovered by Jakob Steiner when he was in Rome in 1844."
+	
 	| A r |
 	A := AffineSpace new: #(x y z) over: QQ.
 	r := 1.
-	^ 'A subscheme: A coordinateRing ! [:x :y :z| x*y^2 + (y*z^2) + (z*x^2) - (x*y*z*r squared)]'
+	^ A
+		subscheme:
+			A coordinateRing
+				! [ :x :y :z | 
+					x * (y raisedTo: 2) + (y * z raisedTo: 2) + (z * x raisedTo: 2)
+						- (x * y * z * r squared) ]
 ]
 
 { #category : #examples }
@@ -79,9 +86,10 @@ AffineVariety class >> twistedCubic [
 { #category : #examples }
 AffineVariety class >> whitneyUmbrella [
 	"This is Whitney's umbrella in affine space Q^3."
+
 	| A |
 	A := AffineSpace new: #(x y z) over: QQ.
-	^ 'A subscheme: A coordinateRing ! [:x :y :z| x^2*y - (z^2)]'
+	^ A subscheme: A coordinateRing ! [:x :y :z| (x raisedTo:2)*y - (z raisedTo: 2)]
 ]
 
 { #category : #operations }

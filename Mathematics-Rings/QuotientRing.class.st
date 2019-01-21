@@ -231,9 +231,14 @@ QuotientRing >> primeIdealsDo: aBlock [
 { #category : #printing }
 QuotientRing >> printOn: aStream [
 	(self base printString includes: $/)
-		ifTrue: [aStream nextPut: $(; print: self base; nextPut: $)]
-		ifFalse: [aStream print: self base].
-	aStream nextPut: $/; print: self relations
+		ifTrue: [ aStream
+				nextPut: $(;
+				print: self base;
+				nextPut: $) ]
+		ifFalse: [ aStream print: self base ].
+	aStream
+		nextPut: $/;
+		print: self relations
 ]
 
 { #category : #morphisms }

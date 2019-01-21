@@ -286,9 +286,9 @@ Monomial >> printExponent: anInteger on: aStream [
 { #category : #printing }
 Monomial >> printIndeterminate: indeterminate on: aStream [
 	indeterminate isInteger
-		ifFalse: [aStream nextPutAll: indeterminate displayStringOrText. ^ self].
+		ifFalse: [aStream nextPutAll: indeterminate printString. ^ self].
 	aStream isText
-		ifTrue: [aStream nextPut: $x; nextPutAll: indeterminate printString sub]
+		ifTrue: [aStream nextPut: $x; nextPutAll: indeterminate printString]
 		ifFalse:[aStream nextPutAll: '{x', indeterminate printString, '}']
 ]
 

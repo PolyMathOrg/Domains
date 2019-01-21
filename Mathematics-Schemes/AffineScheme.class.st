@@ -151,7 +151,9 @@ AffineScheme >> over: aRing [
 
 { #category : #printing }
 AffineScheme >> printOn: aStream [
-	aStream nextPutAll: 'Spec '; print: self coordinateRing
+	aStream
+		nextPutAll: 'Spec ';
+		print: self coordinateRing
 ]
 
 { #category : #accessing }
