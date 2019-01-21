@@ -18,17 +18,20 @@ AlgebraicExtensionAsModule class >> on: anAlgebraicExtension [
 { #category : #basis }
 AlgebraicExtensionAsModule >> coordinatesOf: anElement [
 	"why not just anElement representative coefficients? must complete with 0"
-	^ self scalars tuple: self rank evaluating: [:i| anElement representative coefficientAtDegree: i-1]
+
+	^ self scalars
+		tuple: self rank
+		evaluating: [ :i | anElement representative coefficientAtDegree: i - 1 ]
 ]
 
 { #category : #basis }
 AlgebraicExtensionAsModule >> e: anInteger [
-	^ 'extension x ^ (anInteger-1)'
+	^( extension x)  raisedTo:(anInteger-1)
 ]
 
 { #category : #initialization }
 AlgebraicExtensionAsModule >> extension: anAlgebraicExtension [
-	extension := anAlgebraicExtension
+	extension := anAlgebraicExtension 
 ]
 
 { #category : #basis }
@@ -43,5 +46,5 @@ AlgebraicExtensionAsModule >> scalars [
 
 { #category : #elements }
 AlgebraicExtensionAsModule >> zero [
-	^ extension zero
+	^ extension zero 
 ]

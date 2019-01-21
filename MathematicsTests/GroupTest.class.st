@@ -6,11 +6,11 @@ Class {
 
 { #category : #'as yet unclassified' }
 GroupTest >> smallGroupAtRandom [
-	^ {[SymmetricGroup new: 3].
-	[AlternatingGroup new: 3].
-	[PermutationGroup klein].
-	[MatrixGroup klein].
-	[Group quaternions]} atRandom value
+	^ {[ SymmetricGroup new: 3 ].
+	[ AlternatingGroup new: 3 ].
+	[ PermutationGroup klein ].
+	[ MatrixGroup klein ].
+	[ Group quaternions ]} atRandom value
 ]
 
 { #category : #tests }

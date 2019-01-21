@@ -50,7 +50,7 @@ AlgebraicNumbersBenchmark >> testComplexAlgebraicNumberAddition [
 	sqrt2 := ComplexAlgebraicNumber sqrt: 2.
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
 	sqrt5 := ComplexAlgebraicNumber sqrt: 5.
-	10 timesRepeat: [sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5]
+	10 timesRepeat: [ sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 ]
 ]
 
 { #category : #'as yet unclassified' }
