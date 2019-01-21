@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #accessing }
+{ #category : #tests }
 AlgebraicNumbersTest >> testArithmetic [
 	| sqrt2 sqrt3 sqrt5 sqrt6 |
 	sqrt2 := ComplexAlgebraicNumber sqrt2.
@@ -17,7 +17,7 @@ AlgebraicNumbersTest >> testArithmetic [
 	"self assert: ((5 root: 3) + sqrt2 - sqrt2 raiseTo: 3) asRational = 5"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testDivision [
 	| sqrt3 sqrt5 |
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
@@ -25,29 +25,29 @@ AlgebraicNumbersTest >> testDivision [
 	self assert: sqrt3 / sqrt5 / sqrt3 / sqrt5 = (1/5)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testMultiplicationByi [
 	| a |
 	a := ComplexAlgebraicNumber sqrt2.
 	self assert: a i i = a negated
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testNorm [
 	| a |
 	a := ComplexAlgebraicNumber phi.
 	self assert: a norm = a conjugates product
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testProduct [
 	| sqrt3 sqrt5 |
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
 	sqrt5 := ComplexAlgebraicNumber sqrt: 5.
-	self assert: sqrt3 * sqrt5 * sqrt3 * sqrt5 = 15
+	self assert: sqrt3 * sqrt5 * sqrt3 * sqrt5 equals: 15
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealArithmetic [
 	| sqrt2 sqrt3 sqrt5 sqrt6 |
 	sqrt2 := RealAlgebraicNumber sqrt2.
@@ -60,7 +60,7 @@ AlgebraicNumbersTest >> testRealArithmetic [
 "	self assert: (((five root: 3) + sqrt2 - sqrt2) ^ 3) asRational = 5"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealDivision [
 	| sqrt3 sqrt5 |
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
@@ -68,7 +68,7 @@ AlgebraicNumbersTest >> testRealDivision [
 	self assert: (sqrt3 / sqrt5 / sqrt3 / sqrt5) asRational = (1/5)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealNormalizationBug [
 	| f interval x |
 	x := QQ polynomials x.
@@ -77,7 +77,7 @@ AlgebraicNumbersTest >> testRealNormalizationBug [
 	RealAlgebraicNumber polynomial: f bounds: interval
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealProduct [
 	| sqrt3 sqrt5 |
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
@@ -85,21 +85,21 @@ AlgebraicNumbersTest >> testRealProduct [
 	self assert: (sqrt3 * sqrt5 * sqrt3 * sqrt5) asRational = 15
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealSquare [
 	| sqrt2 |
 	sqrt2 := RealAlgebraicNumber sqrt2.
 	self assert: sqrt2 squared asRational = 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealSquareRoot [
 	| a |
 	a := RealAlgebraicNumber sqrt2.
 	self assert: a squareRoot squared = a
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testRealSum [
 	| sqrt2 sqrt3 sqrt5 |
 	sqrt2 := RealAlgebraicNumber sqrt: 2.
@@ -108,21 +108,21 @@ AlgebraicNumbersTest >> testRealSum [
 	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 = sqrt2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testSquare [
 	| sqrt2 |
 	sqrt2 := ComplexAlgebraicNumber sqrt2.
 	self assert: sqrt2 squared = 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testSquareRoot [
 	| a |
 	a := ComplexAlgebraicNumber sqrt2.
 	self assert: a squareRoot squared = a
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testSum [
 	| sqrt2 sqrt3 sqrt5 |
 	sqrt2 := ComplexAlgebraicNumber sqrt: 2.
@@ -131,9 +131,9 @@ AlgebraicNumbersTest >> testSum [
 	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 = sqrt2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AlgebraicNumbersTest >> testTrace [
 	| a |
 	a := ComplexAlgebraicNumber phi.
-	self assert: a trace = a conjugates sum
+	self assert: a trace equals: a conjugates sum
 ]

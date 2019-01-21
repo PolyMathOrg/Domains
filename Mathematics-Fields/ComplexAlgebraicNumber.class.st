@@ -49,7 +49,10 @@ ComplexAlgebraicNumber class >> phi [
 	"Answer the Phidias number or Golden Ratio."
 	| x |
 	x := QQ polynomials x.
-	^ self minimalPolynomial: x raiseTo: 2 - x - 1 approximation: 2.0 radius: 1
+	^ self
+		minimalPolynomial: (x raisedTo: 2) - x - 1
+		approximation: 2.0
+		radius: 1
 ]
 
 { #category : #'instance creation' }

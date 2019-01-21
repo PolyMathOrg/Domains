@@ -25,7 +25,7 @@ ComplexRootIsolator >> T2: K at: m radius: r [
 	1 to: self derivatives size - 1 do: [:j|
 		| f |
 		f := derivatives at: j+1.
-		t := (f value: m) abs * (r raiseTo: j) / j factorial + t].
+		t := (f value: m) abs * (r raisedTo: j) / j factorial + t].
 	^ (derivatives first value: m) abs > (K * t)
 ]
 

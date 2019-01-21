@@ -483,40 +483,55 @@ UnivariatePolynomial >> factorizationIntegers2 [
 { #category : #'factorization-private' }
 UnivariatePolynomial >> factorizationZassenhauss [
 	"Zassenhauss algorithm. Answer the irreducible factors of a square-free primitive polynomial with integer coefficients."
+
 	| f n A b B C gamma df p fp dfp k factors r answer |
 	f := self.
 	n := f degree.
-	n = 1 ifTrue: [^ {f}].
+	n = 1
+		ifTrue: [ ^ {f} ].
 	A := f normMax.
 	b := f leadingCoefficient.
-	B := (n+1) sqrt * (1<<n) * A * b. "float will fail"
-	C := '(n+1)^(2*n)*(A^(2*n-1))'.
-"	gamma := (2 * (C log: 2)) ceiling."
-	gamma := 2 * C highBit. "+1?"
+	B := (n + 1) sqrt * (1 << n) * A * b.	"float will fail"
+	C := ((n+1) raisedTo:(2*n))*(A raisedTo:(2*n-1)).
+	"	gamma := (2 * (C log: 2)) ceiling."
+	gamma := 2 * C highBit.	"+1?"
 	df := f derivative.
-	[[p := (2*gamma*gamma ln) asInteger atRandom nextPrime.
-	p | b] whileTrue.
+	[ [ p := (2 * gamma * gamma ln) asInteger atRandom nextPrime.
+	p | b ] whileTrue.
 	fp := f % p.
 	dfp := df % p.
-	(fp gcd: dfp) isConstant] whileFalse.
+	(fp gcd: dfp) isConstant ] whileFalse.
 	"modular factorization"
 	factors := fp monic factors.
-	r := factors size. "should repeat this 5 times and choose smallest r"
-	r = 1 ifTrue: [^ {f}]. "if irreducible mod p, also irreducible over Z"
+	r := factors size.	"should repeat this 5 times and choose smallest r"
+	r = 1
+		ifTrue: [ ^ {f} ].	"if irreducible mod p, also irreducible over Z"
 	self assert: (self % p - (factors product * b)) isZero.
 	"hensel lifting"
-	k := ((2*B+1) log: p) abs ceiling. "p^k > 2B"
-	factors := f henselLift: factors asArray to: k. "lift to p^k" "<- about 20% of time is spent here"
-	1 to: k do: [:i|
-		self assert: (self - ((factors product: [:fi| fi lift]) * b) % (p raiseTo: i)) isZero].
+	k := (2 * B + 1 log: p) abs ceiling.	"p^k > 2B"
+	factors := f henselLift: factors asArray to: k.	"lift to p^k"	"<- about 20% of time is spent here"
+	1 to: k do: [ :i | 
+		self
+			assert:
+				((self - ((factors product: [ :fi | fi lift ]) * b)) % (p raiseTo: i))
+					isZero ].
 	"recombination"
 	answer := Bag new.
-	1 to: r do: [:j|
-		(factors combinations: j) do: [:each| | g division | "<- about 50% of time is spent in this recombination step"
-			g := (each product * b) lift primitive.
-			division := f divisionBy: g.
-			division remainder isZero ifTrue: [answer add: g. f := division quotient. f isConstant ifTrue: [^ answer]]]].
-	^ answer add: f; yourself
+	1 to: r do: [ :j | 
+		(factors combinations: j)
+			do: [ :each | 
+				| g division |
+				"<- about 50% of time is spent in this recombination step"
+				g := (each product * b) lift primitive.
+				division := f divisionBy: g.
+				division remainder isZero
+					ifTrue: [ answer add: g.
+						f := division quotient.
+						f isConstant
+							ifTrue: [ ^ answer ] ] ] ].
+	^ answer
+		add: f;
+		yourself
 ]
 
 { #category : #'factorization-private' }

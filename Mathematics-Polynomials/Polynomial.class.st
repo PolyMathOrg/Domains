@@ -208,8 +208,11 @@ Polynomial >> degree [
 { #category : #'accessing monomials' }
 Polynomial >> degreeIn: anIndeterminate [
 	"Answer the degree of the receiver in the given indeterminate."
-	self isZero ifTrue: [^ Infinity negative].
-	^ self monomials max: [:each| each degreeIn: anIndeterminate]
+	
+	self isZero
+		ifTrue: [ ^ Infinity negative ].
+	^ (self monomials collect: [ :each | each degreeIn: anIndeterminate ])
+		max
 ]
 
 { #category : #operations }
