@@ -91,7 +91,7 @@ PrimeField >> primitiveRoot [
 
 { #category : #printing }
 PrimeField >> printOn: aStream [
-	aStream nextPutAll: 'FF'; nextPutAll: self modulus printString sub
+	aStream nextPutAll: 'FF'; nextPutAll: self modulus printString
 ]
 
 { #category : #morphisms }

@@ -4,18 +4,22 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testDual [
 	| C |
-	C :=' LinearCode subspace: (ZZ/2^5 span: {(0,0,0,0,0) % 2. (1,1,1,1,1) % 2})'.
-	self assert: C dual size = (C ambient size / C size).
-	C dual do: [:v|
-		"check each codeword of the dual has an even number of 1's, because it must be perpendicular to 11111 (and 00000 of course)."
-		self assert: (v count: [:each| each = (1 % 2)]) even]
-
+	C := LinearCode
+		subspace:
+			((ZZ / 2 raisedTo: 5)
+				span:
+					{((0 , 0 , 0 , 0 , 0) % 2).
+					((1 , 1 , 1 , 1 , 1) % 2)}).
+	self assert: C dual size equals: C ambient size / C size.
+	C dual
+		do:
+			[ :v | "check each codeword of the dual has an even number of 1's, because it must be perpendicular to 11111 (and 00000 of course)." self assert: (v count: [ :each | each = (1 % 2) ]) even ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testGolay24 [
 	| C W x y |
 	C := LinearCode G24.
@@ -23,10 +27,15 @@ CodesTest >> testGolay24 [
 	W := C weightEnumerator.
 	x := W parent x.
 	y := W parent y.
-	'self assert: W = (x^24 + (x^16*(y^8)*759) + (x^12*(y^12)*2576) + (x^8*(y^16)*759) + (y^24))' "typo in neil's video 22:20"
+	self
+		assert: W
+		equals:
+			(x raisedTo: 24) + ((x raisedTo: 16) * (y raisedTo: 8) * 759)
+				+ ((x raisedTo: 12) * (y raisedTo: 12) * 2576)
+				+ ((x raisedTo: 8) * (y raisedTo: 16) * 759) + (y raisedTo: 24)	"typo in neil's video 22:20"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testHamming743 [
 	| H7 |
 	H7 := LinearCode H7.
@@ -36,7 +45,7 @@ CodesTest >> testHamming743 [
 	self assert: H7 dual minimumDistance = 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testHamming844 [
 	| C P x y |
 	C := LinearCode H8.
@@ -49,7 +58,7 @@ CodesTest >> testHamming844 [
 	'self assert: C weightEnumerator = (x^8 + (x*y^4*14) + (y^8))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testMacWilliamsTheorem [
 	"(MacWilliams, 1962) the theorem relates the weight enumerator of a linear code to the weight enumerator of its dual."
 	"From youtube, Neil Sloane 'Error Correcting Codes, Group Theory and Invariant Theory, Part 1' 20:30."
@@ -62,7 +71,7 @@ CodesTest >> testMacWilliamsTheorem [
 	self assert: Wperp = ((W value: {x+y. x-y}) / C size)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testParityCheckMatrix [
 	| H7 M |
 	H7 := LinearCode H7.
@@ -70,7 +79,7 @@ CodesTest >> testParityCheckMatrix [
 	self assert: (M * H7 atRandom) isZero
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testSelfDual [
 	| F C |
 	F := ZZ/2.
@@ -81,7 +90,7 @@ CodesTest >> testSelfDual [
 	"TODO: test other examples of self-dual codes: H8, G24"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testSingletonBound: C [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
 	| n k d |
@@ -91,19 +100,19 @@ CodesTest >> testSingletonBound: C [
 	self assert: k + d <= (n + 1).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testSingletonBoundH7 [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
 	self testSingletonBound: LinearCode H7
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testSingletonBoundTetracode [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
 	self testSingletonBound: LinearCode tetracode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testTetracode [
 	| C P x y |
 	C := LinearCode subspace: ('ZZ/3 ^ 4' span: {(1,1,1,0) % 3. (0,1,2,1) % 3}).
@@ -115,7 +124,7 @@ CodesTest >> testTetracode [
 	'self assert: C weightEnumerator = (x^4 + (x*(y^3)*8))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 CodesTest >> testWeightEnumerator [
 	"From youtube, Neil Sloane 'error correcting codes, group theory and invariant theory part 1' 19:30."
 	| F C w x y |

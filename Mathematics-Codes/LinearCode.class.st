@@ -105,7 +105,8 @@ LinearCode class >> subspace: aLinearSubspace [
 { #category : #examples }
 LinearCode class >> tetracode [
 	"Answer the tetracode, a self dual code of minimum distance 3."
-	^ 'self subspace: ((ZZ/3)^4 span: {(1,1,1,0) % 3. (0,1,2,1) % 3})'
+
+	^ self subspace: (((ZZ/3) raisedTo: 4) span: {(1,1,1,0) % 3. (0,1,2,1) % 3})
 ]
 
 { #category : #comparing }
