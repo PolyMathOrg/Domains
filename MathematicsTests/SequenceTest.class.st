@@ -38,14 +38,16 @@ SequenceTest >> testPowerSeries [
 	self assert: ((cos squared + sin squared) coefficients beginsWith: #(1 0 0 0 0 0 0 0 0))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SequenceTest >> testRecursive [
 	| f g |
 	f := Sequence fibonacci.
 	g := CFiniteSequence to: ZZ evaluating: f maxOrder: 5.
 	self assert: (f equals: g upTo: 20).
-	self assert: g order = 2.
-	self assert: g characteristicPolynomial coefficients asArray = #(-1 -1 1)
+	self assert: g order equals: 2.
+	self
+		assert: g characteristicPolynomial coefficients asArray
+		equals: #(-1 -1 1)
 ]
 
 { #category : #'as yet unclassified' }

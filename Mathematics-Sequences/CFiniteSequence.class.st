@@ -158,10 +158,12 @@ CFiniteSequence >> = aSequence [
 
 { #category : #accessing }
 CFiniteSequence >> at: n [
-	self order = 0 ifTrue: [^ self codomain zero].
-	n <= initialValues size ifTrue: [^ initialValues at: n].
-	^' (self matrix ^ (n - self order) * initialValues) last'
-"	answer := 0.
+	self order = 0
+		ifTrue: [ ^ self codomain zero ].
+	n <= initialValues size
+		ifTrue: [ ^ initialValues at: n ].
+	^ ((self matrix raisedTo: n - self order) * initialValues) last
+	"	answer := 0.
 	1 to: self order do: [:i |
 		answer := (self at: n - self order + i - 1) * (coefficients at: i) + answer].
 	^ answer"

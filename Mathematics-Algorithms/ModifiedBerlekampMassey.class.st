@@ -43,7 +43,7 @@ ModifiedBerlekampMassey >> run [
 	m := 2*n - 1.
 	Fx := field polynomials.
 	x := Fx x.
-	R0 := x raiseTo: (2*n). R1 := (0 to: m) sum: [:i| 'x^i*(input at: m-i+1)'].
+	R0 := x raisedTo: (2*n). R1 := (0 to: m) sum: [:i| (x raisedTo: i)*(input at: m-i+1)].
 	V0 := Fx zero. V1 := Fx one.
 	[n <= R1 degree]
 		whileTrue:
