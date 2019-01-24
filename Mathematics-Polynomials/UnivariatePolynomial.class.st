@@ -1082,7 +1082,7 @@ UnivariatePolynomial >> squareFreeFactorizationFiniteField [
 	[w = one]
 		whileFalse:
 			[y := w gcd: c. z := w // y.
-			(z raiseTo: i) = one ifFalse: [answer add: z withOccurrences: i].
+			(z raisedTo: i) = one ifFalse: [answer add: z withOccurrences: i].
 			i := i + 1.
 			w := y. c := c // y].
 	c = one

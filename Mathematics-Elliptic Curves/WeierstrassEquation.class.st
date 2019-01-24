@@ -107,8 +107,10 @@ WeierstrassEquation >> over: aRing [
 
 { #category : #accessing }
 WeierstrassEquation >> polynomial [
-	^ '(self scalars polynomialsIn: #(x y)) ! [:x :y|
-				y^2 + (x*y * self a1) + (y * self a3) - (x^3) - (x^2 * self a2) - (x * self a4) - self a6]'
+^ (self scalars polynomialsIn: #(x y))
+		! [ :x :y | 
+			(y raisedTo: 2) + (x * y * self a1) + (y * self a3) - (x raisedTo: 3)
+				- ((x raisedTo: 2) * self a2) - (x * self a4) - self a6 ]
 ]
 
 { #category : #printing }

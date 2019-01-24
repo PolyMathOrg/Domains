@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #accessing }
+{ #category : #tests }
 EllipticCurvesTest >> testBInvariants [
 	| W |
 	W := WeierstrassEquation coefficients: 1 , 2 , 3 , 4 , 5.
@@ -14,7 +14,7 @@ EllipticCurvesTest >> testBInvariants [
 	self assert: W b8 equals: 35
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 EllipticCurvesTest >> testCInvariants [
 	| W |
 	W := WeierstrassEquation coefficients: 0 , -1 , 1 , -10 , -20.
@@ -22,7 +22,7 @@ EllipticCurvesTest >> testCInvariants [
 	self assert: W c6 equals: 20008
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 EllipticCurvesTest >> testGroupLaw [
 	| E P Q O |
 	E := EllipticCurve cremona389a1.
@@ -39,7 +39,7 @@ EllipticCurvesTest >> testGroupLaw [
 	self assert: P - P equals: O
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 EllipticCurvesTest >> testPointAtX [
 	| E p |
 	E := EllipticCurve secp256k1.
@@ -49,7 +49,7 @@ EllipticCurvesTest >> testPointAtX [
 				allSatisfy: [ :each | E satisfies: each coordinates ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 EllipticCurvesTest >> testWeierstrassEquationInvariants [
 	| W |
 	W := WeierstrassEquation

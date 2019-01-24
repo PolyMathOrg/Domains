@@ -344,7 +344,7 @@ Monomial >> support [
 Monomial >> value: anObject [
 	| answer next |
 	1 to: exponents size do: [:i|
-		next := (anObject at: i) raiseTo: (exponents at: i).
+		next := (anObject at: i) raisedTo: (exponents at: i).
 		answer := answer ifNil: [next] ifNotNil: [next * answer]].
 	^ answer
 ]
