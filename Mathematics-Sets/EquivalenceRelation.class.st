@@ -65,7 +65,7 @@ EquivalenceRelation >> isTransitive [
 
 { #category : #printing }
 EquivalenceRelation >> printOn: aStream [
-	((self hasProperty: #name) or: [self hasProperty: #elements])
-		ifTrue: [^ super printOn: aStream].
+	((self hasProperty: #name) or: [ self hasProperty: #elements ])
+		ifTrue: [ ^ super printOn: aStream ].
 	aStream nextPut: $~
 ]

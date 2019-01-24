@@ -29,7 +29,13 @@ EquivalenceClass >> = anEquivalenceClass [
 
 { #category : #enumerating }
 EquivalenceClass >> do: aBlock [
-	self relation domain do: [:each| (self relation includes: {each. self representative}) ifTrue: [aBlock value: each]]
+	self relation domain
+		do: [ :each | 
+			(self relation
+				includes:
+					{each.
+					self representative})
+				ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #comparing }
@@ -39,12 +45,18 @@ EquivalenceClass >> hash [
 
 { #category : #testing }
 EquivalenceClass >> includes: anElement [
-	^ self relation includes: {anElement. self representative}
+	^ self relation
+		includes:
+			{anElement.
+			self representative}
 ]
 
 { #category : #printing }
 EquivalenceClass >> printOn: aStream [
-	aStream nextPut: $[; print: self representative; nextPut: $]
+	aStream
+		nextPut: $[;
+		print: self representative;
+		nextPut: $]
 ]
 
 { #category : #accessing }
