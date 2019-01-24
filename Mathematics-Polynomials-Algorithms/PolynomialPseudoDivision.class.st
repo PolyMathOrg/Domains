@@ -43,7 +43,7 @@ PolynomialPseudoDivision >> divide [
 	quotient := P zero.
 	e := m - n + 1.
 	[remainder degree < n
-		ifTrue: [| q | q := d raiseTo: e. quotient := quotient * q. remainder := remainder * q. ^ self].
+		ifTrue: [| q | q := d raisedTo: e. quotient := quotient * q. remainder := remainder * q. ^ self].
 	lc := remainder leadingCoefficient.
 	m := remainder degree.
 	s := P coefficient: lc degree: remainder degree - n.

@@ -9,9 +9,9 @@ CommutativeAlgebraTest >> testAffineRingElementOperations [
 	"Magma handbook example H105E1."
 	| R A x y |
 	R := QQ polynomialsIn: #(x y).
-	'A := R / (R generate: [:x1 :y1| {x1^2 - (y1^2) + 2. y1^3 - 5}])'.
+	A := R / (R generate: [:x1 :y1| {(x1 raisedTo: 2) - (y1 raisedTo: 2) + 2. (y1 raisedTo: 3) - 5}]).
 	x := A x. y := A y.
-	'self assert: x^2 = (y^2 - 2)'.
+	self assert: (x raisedTo: 2) = ((y raisedTo: 2) - 2).
 	"self assert: x reciprocal = ..."
 ]
 
@@ -43,13 +43,26 @@ CommutativeAlgebraTest >> testAffineRingIdealMembershipRandom [
 { #category : #'affine ring' }
 CommutativeAlgebraTest >> testAffineRingIdealOperations [
 	"Magma handbook, example H105E2."
+
 	| R A I J |
-	R := QQ polynomialsIn: #(x y z) "ordering: #lex".
-	'A := R / (R generate: [:x :y :z| {x^2 - y + 1. y^3 + z - 1}]).
-		I := A * (A generate: [:x :y :z| x^3*y*(z^2)])'.
+	R := QQ polynomialsIn: #(x y z).	"ordering: #lex"
+	A := R
+		/
+			(R
+				generate: [ :x :y :z | 
+					{((x raisedTo: 2) - y + 1).
+					((y raisedTo: 3) + z - 1)} ]).
+	I := A
+		* (A generate: [ :x :y :z | (x raisedTo: 3) * y * (z raisedTo: 2) ]).
 	self deny: I isRadical.
-	'J := A * (A generate: [:x :y :z| {x*(y^2) + (x*y) - (x*z) + x. y*z. z^2 - z}])'.
-	self assert: I radical = J. "this fails probably because PolynomialIdeal>>radical is broken"
+	J := A
+		*
+			(A
+				generate: [ :x :y :z | 
+					{(x * (y raisedTo: 2) + (x * y) - (x * z) + x).
+					(y * z).
+					((z raisedTo: 2) - z)} ]).
+	self assert: I radical equals: J	"this fails probably because PolynomialIdeal>>radical is broken"
 	"... and then some tests of primary decomposition"
 ]
 
@@ -141,7 +154,7 @@ CommutativeAlgebraTest >> testGroebnerCyclic3Lexicographic [
 { #category : #groebner }
 CommutativeAlgebraTest >> testGroebnerCyclic3OverZ2 [
 	| I G |
-	I := (ZZ/2 polynomialsIn: 3) cyclicIdeal.
+	I := (ZZ / 2 polynomialsIn: 3) cyclicIdeal.
 	G := I groebnerBasis.
 	self testGroebnerBasis: G ideal: I
 ]
@@ -237,9 +250,19 @@ CommutativeAlgebraTest >> testGroebnerExample [
 	x := P x.
 	y := P y.
 	z := P z.
-	I := 'P * {x^2 - (y*z). y^2 - (z*x). z^2 - (x*y)}'.
+	I := P
+		*
+			{((x raisedTo: 2) - (y * z)).
+			((y raisedTo: 2) - (z * x)).
+			((z raisedTo: 2) - (x * y))}.
 	G := I basis minimal.
-	'self assert: G asSet = {x^2 - (y*z). x*z - (y^2). x*y - (z^2). y^3 - (z^3)} asSet'
+	self
+		assert: G asSet
+		equals:
+			{((x raisedTo: 2) - (y * z)).
+			(x * z - (y raisedTo: 2)).
+			(x * y - (z raisedTo: 2)).
+			((y raisedTo: 3) - (z raisedTo: 3))} asSet
 ]
 
 { #category : #groebner }
@@ -258,11 +281,18 @@ CommutativeAlgebraTest >> testGroebnerExample2 [
 { #category : #groebner }
 CommutativeAlgebraTest >> testGroebnerExample3 [
 	"From some question in math.stackexchange.com."
+
 	| R I G |
 	R := QQ polynomialsIn: #(x y) ordering: #glex.
-	I := 'R * (R ! [:x :y| {x^2*y + x + 1. x*(y^2) + y + 1. x - y}])'.
+	I := R
+		*
+			(R
+				! [ :x :y | 
+					{((x raisedTo: 2) * y + x + 1).
+					(x * (y raisedTo: 2) + y + 1).
+					(x - y)} ]).
 	G := I basis reduced.
-	self assert: G printString = '{y^3 + y + 1, x - y}' "this is as computed by Singular"
+	self assert: G printString equals: '{y^3 + y + 1, x - y}'	"this is as computed by Singular"
 ]
 
 { #category : #groebner }
