@@ -77,55 +77,55 @@ ModuleTest >> newVectorSpace [
 { #category : #other }
 ModuleTest >> testAdjointMap [
 	| V W f a |
-	V := 'QQ ^ (1 to: 3) atRandom'.
-	W := 'QQ ^ (1 to: 5) atRandom'.
+	V := QQ raisedTo: (1 to: 3) atRandom.
+	W := QQ raisedTo: (1 to: 5) atRandom.
 	f := (V hom: W) atRandomBits: 100.
 	a := f adjoint.
-	self assert: a kernel = f image annihilator.
-	self assert: a image = f kernel annihilator.
-	self assert: f isSurjective = a isInjective.
-	self assert: f isInjective = a isSurjective
+	self assert: a kernel equals: f image annihilator.
+	self assert: a image equals: f kernel annihilator.
+	self assert: f isSurjective equals: a isInjective.
+	self assert: f isInjective equals: a isSurjective
 ]
 
 { #category : #other }
 ModuleTest >> testAdjointProperties [
 	| V W U f g a |
-	V := 'QQ ^ (1 to: 4) atRandom'.
-	W := 'QQ ^ (1 to: 4) atRandom'.
+	V := QQ raisedTo: (1 to: 4) atRandom.
+	W := QQ raisedTo: (1 to: 4) atRandom.
 	f := (V hom: W) atRandomBits: 100.
 	g := (V hom: W) atRandomBits: 100.
 	a := QQ atRandomBits: 10.
-	self assert: (f + g) adjoint = (f adjoint + g adjoint).
-	self assert: (f * a) adjoint = (f adjoint * a).
-	U := 'QQ ^ (1 to: 4) atRandom'.
+	self assert: (f + g) adjoint equals: f adjoint + g adjoint.
+	self assert: (f * a) adjoint equals: f adjoint * a.
+	U := QQ raisedTo: (1 to: 4) atRandom.
 	f := (U hom: V) atRandomBits: 100.
-	self assert: (g î f) adjoint = (f adjoint î g adjoint)
+	self assert: g î f adjoint equals: f adjoint î g adjoint
 ]
 
 { #category : #other }
 ModuleTest >> testAnnihilator [
 	| V v S S0 |
-	V := 'QQ ^ 3'.
-	v := (1,-2,1).
+	V := QQ raisedTo: 3.
+	v := 1 , -2 , 1.
 	S := V span: {v}.
 	S0 := S annihilator.
-	self assert: S0 dimension = S codimension.
-	S0 basis do: [:f| self assert: (f value: v) isZero]
+	self assert: S0 dimension equals: S codimension.
+	S0 basis do: [ :f | self assert: (f value: v) isZero ]
 ]
 
 { #category : #other }
 ModuleTest >> testAnnihilatorProperties [
 	| V S T |
-	V := 'QQ ^ 5'.
+	V := QQ raisedTo: 5.
 	S := (V grassmannian: 4) atRandomBits: 100.
 	T := (S grassmannian: 2) atRandomBits: 100.
-	T := V span: T basis. "hack, otherwise T ambient = S"
+	T := V span: T basis.	"hack, otherwise T ambient = S"
 	self assert: T <= S.
-	self assert: T annihilator >= S annihilator. "reverses inclusions"
-	self assert: (S + T) annihilator = (S annihilator ï T annihilator).
+	self assert: T annihilator >= S annihilator.	"reverses inclusions"
+	self assert: (S + T) annihilator = S annihilator ï T annihilator.
 	self assert: S dimension + S annihilator dimension = V dimension.
-	self assert: V annihilator isTrivial.
-"	self assert: S annihilator annihilator = S dual dual"
+	self assert: V annihilator isTrivial
+	"	self assert: S annihilator annihilator = S dual dual"
 ]
 
 { #category : #other }
