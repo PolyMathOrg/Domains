@@ -39,8 +39,11 @@ ModularMatrixBenchmark >> field: aField [
 ModularMatrixBenchmark >> setUp [
 	| random |
 	random := Random seed: 1234.
-	field isNil ifTrue: [field := 	ZZ/32003].
-	matrix := field matrix: 300@300 evaluating: [:i :j| field atRandom: random]
+	field isNil
+		ifTrue: [ field := ZZ / 32003 ].
+	matrix := field
+		matrix: 300 @ 300
+		evaluating: [ :i :j | field atRandom: random ]
 ]
 
 { #category : #'as yet unclassified' }

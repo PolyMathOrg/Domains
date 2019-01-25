@@ -534,7 +534,9 @@ FreeModule >> rotations [
 { #category : #accessing }
 FreeModule >> size [
 	| n |
-	^ (n := self rank) = 0 ifTrue: [^ 1] ifFalse: ['self scalars size ^ n']
+	^ (n := self rank) = 0
+		ifTrue: [ ^ 1 ]
+		ifFalse: [ (self scalars size)  raisedTo: n ]
 ]
 
 { #category : #operations }

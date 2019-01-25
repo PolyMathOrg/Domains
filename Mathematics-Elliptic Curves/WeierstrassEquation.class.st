@@ -86,7 +86,7 @@ WeierstrassEquation >> curve [
 
 { #category : #invariants }
 WeierstrassEquation >> discriminant [
-	^ '(self b2 squared * self b8) negated - (self b4 ^ 3 * 8) - (self b6 squared * 27) + (self b2 * self b4 * self b6 * 9)'
+	^ (self b2 squared * self b8) negated - (((self b4) raisedTo: 3) * 8) - (self b6 squared * 27) + (self b2 * self b4 * self b6 * 9)
 ]
 
 { #category : #accessing }

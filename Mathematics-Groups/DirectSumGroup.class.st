@@ -67,7 +67,7 @@ DirectSumGroup >> contains: anElement [
 
 { #category : #morphisms }
 DirectSumGroup >> embedding: i [
-	^ ((self at: i) to: self evaluating: [:x| components withIndexCollect: [:each :k| k = i ifTrue: [x] ifFalse: [each identity]]]) name: 'i', i printText sub
+	^ ((self at: i) to: self evaluating: [:x| components withIndexCollect: [:each :k| k = i ifTrue: [x] ifFalse: [each identity]]]) name: 'i', i asString
 ]
 
 { #category : #accessing }
@@ -100,7 +100,7 @@ DirectSumGroup >> printOn: aStream [
 
 { #category : #morphisms }
 DirectSumGroup >> projection: i [
-	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: Character pi asText, i printText sub
+	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: 'Pi', i asString
 ]
 
 { #category : #accessing }

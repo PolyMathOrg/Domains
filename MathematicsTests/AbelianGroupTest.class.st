@@ -11,10 +11,10 @@ AbelianGroupTest >> testAbelianGroup: G [
 	a := G atRandomBits: 100.
 	b := G atRandomBits: 100.
 	c := G atRandomBits: 100.
-	self assert: zero + a = a.
-	self assert: a + zero = a.
-	self assert: a + b = (b + a). "commutativity"
-	self assert: (a + b + c) = (a + (b + c)). "associativity"
+	self assert: zero + a equals: a.
+	self assert: a + zero equals: a.
+	self assert: a + b equals: b + a.
+	self assert: a + b + c equals: a + (b + c)
 ]
 
 { #category : #tests }
@@ -24,14 +24,17 @@ AbelianGroupTest >> testAbelianGroupHomomorphism: phi [
 	H := phi codomain.
 	a := G atRandomBits: 100.
 	b := G atRandomBits: 100.
-	self assert: (phi value: G identity) = H identity.
-	self assert: (phi value: a + b) = ((phi value: a) + (phi value: b))
+	self assert: (phi value: G identity) equals: H identity.
+	self
+		assert: (phi value: a + b)
+		equals: (phi value: a) + (phi value: b)
 ]
 
 { #category : #tests }
 AbelianGroupTest >> testDirectSum [
 	| G |
-	G := ZZ asAbelianGroup "Í" directSum: (ZZ / (2 to: 10) atRandom) asAbelianGroup.
+	G := ZZ asAbelianGroup
+		directSum: (ZZ / (2 to: 10) atRandom) asAbelianGroup.	"Í"
 	self testAbelianGroup: G.
 	self testAbelianGroupHomomorphism: (G projection: 2 atRandom).
 	self testAbelianGroupHomomorphism: (G embedding: 2 atRandom)

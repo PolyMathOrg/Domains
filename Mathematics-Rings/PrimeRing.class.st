@@ -139,8 +139,13 @@ PrimeRing >> p [
 
 { #category : #'accessing-private' }
 PrimeRing >> p: aPrime to: anInteger [
-	self modulus: 'aPrime^anInteger'.
-	self propertyAt: #modulusFactors put: (Bag new add: aPrime withOccurrences: anInteger; yourself)
+	self modulus: (aPrime raisedTo: anInteger).
+	self
+		propertyAt: #modulusFactors
+		put:
+			(Bag new
+				add: aPrime withOccurrences: anInteger;
+				yourself)
 ]
 
 { #category : #accessing }

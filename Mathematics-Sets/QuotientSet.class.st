@@ -21,10 +21,11 @@ QuotientSet >> base [
 QuotientSet >> do: aBlock [
 	| visited |
 	visited := Set new.
-	self base do: [:each|
-		| x |
-		x := self project: each.
-		visited add: x ifAbsent: [aBlock value: x]]
+	self base
+		do: [ :each | 
+			| x |
+			x := self project: each.
+			visited add: x ifAbsent: [ aBlock value: x ] ]
 ]
 
 { #category : #testing }
