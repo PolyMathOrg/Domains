@@ -41,7 +41,8 @@ CartesianProduct >> , aDomain [
 
 { #category : #comparing }
 CartesianProduct >> = anObject [
-	^ (anObject isKindOf: CartesianProduct) and: [components = anObject components]
+	^ (anObject isKindOf: CartesianProduct)
+		and: [ components = anObject components ]
 ]
 
 { #category : #accessing }
@@ -63,7 +64,7 @@ CartesianProduct >> atRandom: aRandom [
 CartesianProduct >> atRandom: aRandom bits: bitSize [
 	| n |
 	n := bitSize / components size.
-	^ components collect: [:each| each atRandom: aRandom bits: n]
+	^ components collect: [ :each | each atRandom: aRandom bits: n ]
 ]
 
 { #category : #'accessing-private' }
@@ -90,11 +91,13 @@ CartesianProduct >> hash [
 
 { #category : #testing }
 CartesianProduct >> includes: anObject [
-	anObject isSequenceable ifFalse: [^ false].
-	components size = anObject size ifFalse: [^ false].
-	1 to: components size do: [:i|
+	anObject isSequenceable
+		ifFalse: [ ^ false ].
+	components size = anObject size
+		ifFalse: [ ^ false ].
+	1 to: components size do: [ :i | 
 		((components at: i) includes: (anObject at: i))
-			ifFalse: [^ false]].
+			ifFalse: [ ^ false ] ].
 	^ true
 ]
 

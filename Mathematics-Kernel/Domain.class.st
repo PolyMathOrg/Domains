@@ -158,7 +158,11 @@ Domain >> + aDomain [
 { #category : #operations }
 Domain >> , aDomain [
 	"Answer the cartesian set product of the receiver with the argument."
-	^ CartesianProduct components: {self. aDomain}
+
+	^ CartesianProduct
+		components:
+			{self.
+			aDomain}
 ]
 
 { #category : #operations }

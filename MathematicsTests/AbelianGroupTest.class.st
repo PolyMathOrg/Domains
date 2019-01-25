@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testAbelianGroup: G [
 	| zero a b c |
 	zero := G identity.
@@ -17,7 +17,7 @@ AbelianGroupTest >> testAbelianGroup: G [
 	self assert: (a + b + c) = (a + (b + c)). "associativity"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testAbelianGroupHomomorphism: phi [
 	| G H a b |
 	G := phi domain.
@@ -28,7 +28,7 @@ AbelianGroupTest >> testAbelianGroupHomomorphism: phi [
 	self assert: (phi value: a + b) = ((phi value: a) + (phi value: b))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testDirectSum [
 	| G |
 	G := ZZ asAbelianGroup "Í" directSum: (ZZ / (2 to: 10) atRandom) asAbelianGroup.
@@ -37,23 +37,25 @@ AbelianGroupTest >> testDirectSum [
 	self testAbelianGroupHomomorphism: (G embedding: 2 atRandom)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testIntegerTuples [
 	| M |
-	M := 'ZZ ^ (1 to: 10) atRandom'.
+	M := ZZ raisedTo: ((1 to: 10) atRandom).
 	self testAbelianGroup: M asAbelianGroup.
-	self testAbelianGroupHomomorphism: (M projection: (1 to: M rank) atRandom) asAbelianGroupHomomorphism
+	self
+		testAbelianGroupHomomorphism: (M projection: (1 to: M rank) atRandom) asAbelianGroupHomomorphism
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testIntegers [
 	self testAbelianGroup: ZZ asAbelianGroup
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 AbelianGroupTest >> testModularIntegers [
 	| R |
 	R := ZZ / (2 to: 10) atRandom.
 	self testAbelianGroup: R asAbelianGroup.
-	self testAbelianGroupHomomorphism: R projection asAbelianGroupHomomorphism
+	self
+		testAbelianGroupHomomorphism: R projection asAbelianGroupHomomorphism
 ]
