@@ -78,10 +78,11 @@ Function class >> example3Frobenius1 [
 { #category : #examples }
 Function class >> example3Frobenius2 [
 	"The Frobenius ring homomorphism defined by a polynomial."
+
 	| R x |
 	R := ZZ / 6.
 	x := R polynomials x.
-	^ R endomorphisms evaluating: x raiseTo: 6
+	^ R endomorphisms evaluating: (x raisedTo: 6)
 ]
 
 { #category : #'instance creation' }

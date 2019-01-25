@@ -254,7 +254,9 @@ QuotientRing >> projection [
 
 { #category : #accessing }
 QuotientRing >> relation [
-	^ EquivalenceRelation on: self base evaluating: [:a :b| self relations includes: a - b]
+	^ EquivalenceRelation
+		on: self base
+		evaluating: [ :a :b | self relations includes: a - b ]
 ]
 
 { #category : #accessing }

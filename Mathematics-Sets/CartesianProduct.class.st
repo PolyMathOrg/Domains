@@ -57,7 +57,7 @@ CartesianProduct >> at: anInteger [
 
 { #category : #random }
 CartesianProduct >> atRandom: aRandom [
-	^ components collect: [:each| each atRandom: aRandom]
+	^ components collect: [ :each | each atRandom: aRandom ]
 ]
 
 { #category : #random }
@@ -120,7 +120,8 @@ CartesianProduct >> projection: i [
 
 { #category : #accessing }
 CartesianProduct >> size [
-	^ components product: [:each| each size]
+	^ (components collect: [:each | each size])
+		fold: [ :a :b | a * b ]
 ]
 
 { #category : #enumerating }

@@ -34,8 +34,11 @@ QuotientSet >> isQuotient [
 
 { #category : #printing }
 QuotientSet >> printOn: aStream [
-	aStream print: self relation domain; nextPut: $/; print: self relation
-"	| domain |
+	aStream
+		print: self relation domain;
+		nextPut: $/;
+		print: self relation
+	"	| domain |
 	domain := self relation domain.
 	(domain printString allSatisfy: [:each|each isAlphaNumeric])
 		ifTrue: [aStream print: domain]

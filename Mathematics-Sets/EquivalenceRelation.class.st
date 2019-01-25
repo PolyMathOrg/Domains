@@ -17,7 +17,9 @@ Class {
 
 { #category : #'instance creation' }
 EquivalenceRelation class >> on: aDomain evaluating: aBlock [
-	^ self new domain: aDomain; block: aBlock
+	^ self new
+		domain: aDomain;
+		block: aBlock
 ]
 
 { #category : #'accessing-private' }

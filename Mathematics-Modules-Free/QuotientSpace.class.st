@@ -94,7 +94,9 @@ QuotientSpace >> rank [
 
 { #category : #accessing }
 QuotientSpace >> relation [
-	^ EquivalenceRelation on: self base evaluating: [:x :y| self relations includes: x - y]
+	^ EquivalenceRelation
+		on: self base
+		evaluating: [ :x :y | self relations includes: x - y ]
 ]
 
 { #category : #accessing }

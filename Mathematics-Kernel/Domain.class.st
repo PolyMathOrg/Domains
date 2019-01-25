@@ -168,8 +168,11 @@ Domain >> , aDomain [
 { #category : #operations }
 Domain >> / anEquivalenceRelation [
 	"Answer the categorical quotient of the receiver by an equivalence relation."
+	
 	| relation |
-	relation := anEquivalenceRelation isBlock ifTrue: [EquivalenceRelation on: self evaluating: anEquivalenceRelation] ifFalse: [anEquivalenceRelation].
+	relation := anEquivalenceRelation isBlock
+		ifTrue: [ EquivalenceRelation on: self evaluating: anEquivalenceRelation ]
+		ifFalse: [ anEquivalenceRelation ].
 	^ QuotientSet mod: relation
 ]
 
@@ -723,7 +726,7 @@ Domain >> product: aBlock [
 
 { #category : #properties }
 Domain >> properties [
-	^ properties ifNil: [properties := IdentityDictionary new]
+	^ properties ifNil: [ properties := IdentityDictionary new ]
 ]
 
 { #category : #properties }
@@ -763,7 +766,10 @@ Domain >> raisedTo: anInteger [
 Domain >> select: aBlock [
 	| elements |
 	elements := Set new.
-	self do: [:each| (aBlock value: each) ifTrue: [elements add: each]].
+	self
+		do: [ :each | 
+			(aBlock value: each)
+				ifTrue: [ elements add: each ] ].
 	^ elements as: Domain
 ]
 

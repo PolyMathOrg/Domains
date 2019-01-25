@@ -105,7 +105,15 @@ QuotientGroup >> relation [
 	| inv op |
 	op := self base operation.
 	inv := self base inverseMap.
-	^ EquivalenceRelation on: self base evaluating: [:x :y| self relations includes: (op value: {x. inv value: y})]
+	^ EquivalenceRelation
+		on: self base
+		evaluating: [ :x :y | 
+			self relations
+				includes:
+					(op
+						value:
+							{x.
+							(inv value: y)}) ]
 ]
 
 { #category : #accessing }
