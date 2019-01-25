@@ -45,15 +45,18 @@ MonomialTest >> testHash [
 	self assert: m1 hash = m2 hash
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MonomialTest >> testLocalMonomialOrderings [
 	"Examples from Magma handbook."
 
 	| f |
-	"f := ZZ polynomialsIn: #(x y z) ordering: #llex :: generate: [:x :y :z| 1 + x + y + z + (x^7) + (x^8*(y^7)) + (y^5) + (z^10)].
-		self assert: f printString = '1 + x + x^7 + y + y^5 + x^8y^7 + z + z^{10}'.
-		self assert: (f orderedBy: #lgrevlex) printString = '1 + z + y + x + y^5 + x^7 + z^{10} + x^8y^7'"
-	
+	"f := ZZ polynomialsIn: #(x y z) ordering: #llex :: generate: [:x :y :z| 1 + x + y + z + (x^7) + (x^8*(y^7)) + (y^5) + (z^10)]."
+	self
+		assert: f printString
+		equals: '1 + x + x^7 + y + y^5 + x^8y^7 + z + z^{10}'.
+	self
+		assert: (f orderedBy: #lgrevlex) printString
+		equals: '1 + z + y + x + y^5 + x^7 + z^{10} + x^8y^7'
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,20 +93,20 @@ MonomialTest >> testMonomialLCM [
 	self assert: (a lcm: b) = (x*x*y*y)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MonomialTest >> testMonomialOrderings [
 	| P x y z f lex glex grevlex |
 	P := ZZ polynomialsIn: 3.
 	x := P x.
 	y := P y.
 	z := P z.
-	f := 10*x - (7*(y raiseTo: 4)) + (11*(y raiseTo: 3)*z).
+	f := 10 * x - (7 * (y raisedTo: 4)) + (11 * (y raisedTo: 3) * z).
 	lex := MonomialOrdering lex: 3.
 	glex := MonomialOrdering glex: 3.
 	grevlex := MonomialOrdering grevlex: 3.
-	self assert: (f orderedBy: lex) leadingCoefficient = 10.
-	self assert: (f orderedBy: glex) leadingCoefficient = -7.
-	self assert: (f orderedBy: grevlex) leadingCoefficient = -7	"this matches the definition in Singular"
+	self assert: (f orderedBy: lex) leadingCoefficient equals: 10.
+	self assert: (f orderedBy: glex) leadingCoefficient equals: -7.
+	self assert: (f orderedBy: grevlex) leadingCoefficient equals: -7	"this matches the definition in Singular"
 ]
 
 { #category : #'as yet unclassified' }
@@ -132,10 +135,10 @@ MonomialTest >> testMonomialOrderings3 [
 	x2 := P x: 2.
 	x3 := P x: 3.
 	x4 := P x: 4.
-	f := x1 + (x2*x4) + (x3 raiseTo: 2).
+	f := x1 + (x2*x4) + (x3 raisedTo: 2).
 	self assert: (f orderedBy: #lex) leadingTerm = x1.
 	self assert: (f orderedBy: #glex) leadingTerm = (x2*x4).
-	self assert: (f orderedBy: #grevlex) leadingTerm = (x3 raiseTo: 2)
+	self assert: (f orderedBy: #grevlex) leadingTerm = (x3 raisedTo: 2)
 ]
 
 { #category : #'as yet unclassified' }

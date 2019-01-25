@@ -68,6 +68,6 @@ QuadraticField >> sqrt: anInteger [
 	| P d |
 	d := anInteger squareFree.
 	(d == 0 or: [d == 1]) ifTrue: [DomainError signal: 'not a quadratic field'].
-	P := QQ polynomialsIn: {d == -1 ifTrue: ['i' italic] ifFalse: [Character sqrt asString, d printString]}.
+	P := QQ polynomialsIn: {d == -1 ifTrue: ['i' italic] ifFalse: ['sqrt ', d asString]}.
 	self polynomial: P x squared - d
 ]

@@ -4,13 +4,13 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testCyclotomicFieldDiscriminant [
 	self assert: (CyclotomicField new: 20) discriminant = 4000000.
 	self assert: (CyclotomicField new: 18) discriminant = -19683
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testMinimalPolynomial [
 	"Example from 'Algebraic Number Theory: A Computational Approach' by William Stein (28 pp)."
 	| x K a |
@@ -21,19 +21,20 @@ NumberFieldTest >> testMinimalPolynomial [
 		self assert: (a/2 + 3) minimalPolynomial = (x^2 - (x*6) + (17/2))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testMinimalPolynomial2 [
 	"Example from 'Algebraic Number Theory: A Computational Approach' by William Stein (29 pp)."
+
 	| x K a alpha |
 	x := QQ polynomials x.
 	K := QuadraticField sqrt: 5.
 	a := K x.
-	self assert: a squared = 5.
+	self assert: a squared equals: 5.
 	alpha := (1 + a) / 2.
-	'self assert: alpha minimalPolynomial = (x^2 - x - 1)'
+	self assert: alpha minimalPolynomial equals: (x raisedTo: 2) - x - 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testMinimalPolynomial3 [
 	"Example from 'Algebraic Number Theory: A Computational Approach' by William Stein (29 pp)."
 	| x alpha |
@@ -42,28 +43,31 @@ NumberFieldTest >> testMinimalPolynomial3 [
 	'self assert: alpha minimalPolynomial = (x^2 - x - 1)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testNormTraceAndMinimalPolynomial [
 	"Example H38E17 from Magma documentation."
+
 	| x F a |
 	x := QQ polynomials x.
-	'F := QQ extension: x^4 - (x^2*420) + 40000.
-		a := F x / 2.
-		self assert: a trace = 0.
-		self assert: a norm = 2500.
-		self assert: a minimalPolynomial = (x^4 - (x^2*105) + 2500)'
+	F := QQ extension: (x raisedTo: 4) - ((x raisedTo: 2) * 420) + 40000.
+	a := F x / 2.
+	self assert: a trace equals: 0.
+	self assert: a norm equals: 2500.
+	self
+		assert: a minimalPolynomial
+		equals: (x raisedTo: 4) - ((x raisedTo: 2) * 105) + 2500
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testQSqrt2 [
 	| E x |
 	x := QQ polynomials x.
 	E := QQ adjoin: RealAlgebraicNumber sqrt2.
-	self assert: E x minimalPolynomial = E polynomial.
-	self assert: E x squared minimalPolynomial = (x - 2)
+	self assert: E x minimalPolynomial equals: E polynomial.
+	self assert: E x squared minimalPolynomial equals: x - 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testQSqrt2RealEmbeddings [
 	| E embeddings roots |
 	E := QQ adjoin: RealAlgebraicNumber sqrt2.
@@ -72,24 +76,24 @@ NumberFieldTest >> testQSqrt2RealEmbeddings [
 	self assert: (embeddings collect: [:f| f value: E x]) asSet = roots
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testQuadraticFieldFundamentalDiscriminant [
 	self assert: (QuadraticField sqrt: 102) discriminant = 408.
 	self assert: (QuadraticField sqrt: 720) discriminant = 5.
 	self assert: (QuadraticField sqrt: 2) discriminant = 8
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testQuadraticFieldSqrt2 [
 	| E x |
 	E := QuadraticField sqrt: 2.
 	x := QQ polynomials x.
-	self assert: E x minimalPolynomial = E polynomial.
-	self assert: E x squared minimalPolynomial = (x - 2).
-	self assert: E discriminant = 8
+	self assert: E x minimalPolynomial equals: E polynomial.
+	self assert: E x squared minimalPolynomial equals: x - 2.
+	self assert: E discriminant equals: 8
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testQuadraticFieldSqrtMinusFive [
 	| E |
 	E := QuadraticField sqrt: -5.
@@ -99,7 +103,7 @@ NumberFieldTest >> testQuadraticFieldSqrtMinusFive [
 	self assert: E discriminant = -20
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testSignature [
 	| x F |
 '	x := QQ polynomials x.
@@ -115,7 +119,7 @@ NumberFieldTest >> testSignature [
 	self assert: F signature = #(3 0)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testTotallyImaginary [
 	| x E |
 '	x := QQ polynomials x.
@@ -127,7 +131,7 @@ NumberFieldTest >> testTotallyImaginary [
 	self assert: E isImaginary not'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 NumberFieldTest >> testTotallyReal [
 	| x E |
 '	x := QQ polynomials x.
