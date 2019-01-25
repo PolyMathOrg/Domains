@@ -180,18 +180,25 @@ SimplicialComplex >> coskeleton: n [
 { #category : #invariants }
 SimplicialComplex >> dimension [
 	self isVoid ifTrue: [^ Infinity negative].
-	^ self facets max: [:each| each dimension]
+	^ (self facets collect: [:each| each dimension]) max
 ]
 
 { #category : #operations }
-SimplicialComplex >> dirProd: aSimplicialComplex [ "◊"
+SimplicialComplex >> dirProd: aSimplicialComplex [
+	"◊"
+	
 	"Answer the direct product of the receiver and the argument."
+
 	| product |
 	product := Set new.
-	self facets do: [:each|
-		aSimplicialComplex facets do: [:other|
-			self pathsFrom: each vertices to: other vertices do: [:path|
-				product add: (Simplex vertices: path)]]].
+	self facets
+		do: [ :each | 
+			aSimplicialComplex facets
+				do: [ :other | 
+					self
+						pathsFrom: each vertices
+						to: other vertices
+						do: [ :path | product add: (Simplex vertices: path) ] ] ].
 	^ self species faces: product
 ]
 

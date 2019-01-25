@@ -49,7 +49,7 @@ CellComplex >> dimension [
 { #category : #invariants }
 CellComplex >> euler [
 	"Answer the Euler characteristic of the receiver."
-	^ '(0 to: self dimension) sum: [:p| -1^p * (self cells: p) size]'
+	^ (0 to: self dimension) sum: [:p| (-1 raisedTo: p) * (self cells: p) size]
 ]
 
 { #category : #invariants }

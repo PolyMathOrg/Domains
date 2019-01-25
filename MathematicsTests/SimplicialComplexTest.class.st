@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> test2Sphere [
 	| X |
 	X := SimplicialComplex sphere: 2.
@@ -12,7 +12,7 @@ SimplicialComplexTest >> test2Sphere [
 	self assert: X fVector = (1,4,6,4)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> test5Sphere [
 	| X |
 	X := SimplicialComplex sphere: 5.
@@ -20,42 +20,44 @@ SimplicialComplexTest >> test5Sphere [
 	self assert: X fVector = (1,7,21,35,35,21,7)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testAlexanderDual [
 	| X Y |
-	X := SimplicialComplex faces: #((0 1) (1 2) (2 3) (3 0)).
-	self assert: X dual dual = X.
-	Y := SimplicialComplex faces: #((1 3) (0 2)).
-	self assert: X dual = Y.
-	self assert: X dual nonfaces = X complement facets
+	X := SimplicialComplex faces: #(#(0 1) #(1 2) #(2 3) #(3 0)).
+	self assert: X dual dual equals: X.
+	Y := SimplicialComplex faces: #(#(1 3) #(0 2)).
+	self assert: X dual equals: Y.
+	self assert: X dual nonfaces equals: X complement facets
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testChainComplex [
 	"Jeff Erickson, 'Computational Topology', Example 17.7."
+
 	| S2 C |
-	S2 := SimplicialComplex facets: ((Simplex vertices: #(w x y z)) faces: 2).
+	S2 := SimplicialComplex
+		facets: ((Simplex vertices: #(w x y z)) faces: 2).
 	C := S2 chainComplexOver: ZZ.
-	self assert: (C cycles: 1) rank = 3.
-	self assert: (C boundaries: 0) rank = 3.
-	self assert: (C boundaries: 1) = (C cycles: 0).
-	self assert: C betti = #(1 0 1)
+	self assert: (C cycles: 1) rank equals: 3.
+	self assert: (C boundaries: 0) rank equals: 3.
+	self assert: (C boundaries: 1) equals: (C cycles: 0).
+	self assert: C betti equals: #(1 0 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testEulerCharacteristic [
 	| X |
 	X := SimplicialComplex torus.
-	self assert: X euler = 0.
+	self assert: X euler equals: 0.
 	X := SimplicialComplex sphere: 2.
-	self assert: X euler = 2.
+	self assert: X euler equals: 2.
 	X := SimplicialComplex kleinBottle.
-	self assert: X euler = 0.
+	self assert: X euler equals: 0.
 	X := SimplicialComplex realProjectivePlane.
-	self assert: X euler = 1
+	self assert: X euler equals: 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testJoin [
 	| S X |
 	S := SimplicialComplex faces: #((0) (1)).
@@ -65,7 +67,7 @@ SimplicialComplexTest >> testJoin [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testMinimalNonFaces [
 	| X |
 	X := SimplicialComplex faces: #((1 3) (1 2)).
@@ -75,7 +77,7 @@ SimplicialComplexTest >> testMinimalNonFaces [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testMinimalNonFaces2 [
 	| X MNF |
 	X := SimplicialComplex faces: #((0 1 2) (0 2 3) (2 3 4) (1 2 4) (1 4 5) (0 3 6) (3 6 7) (4 5 7)).
@@ -83,28 +85,33 @@ SimplicialComplexTest >> testMinimalNonFaces2 [
 	self assert: X nonfaces = MNF
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testProduct [
 	| C T |
 	"Circle:"
-	C := SimplicialComplex faces: #((0 1) (1 2) (0 2)).
+	C := SimplicialComplex faces: #(#(0 1) #(1 2) #(0 2)).
 	"Torus:"
-	T := 'C ◊ C'.
-	self assert: T euler = 0.
-	self assert: T vertices size = 9.
-	self assert: T facets size = 18
+	T := 'C × C'. T := C dirProd: C.
+	self assert: T euler equals: 0.
+	self assert: T vertices size equals: 9.
+	self assert: T facets size equals: 18
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplecialComplex [
 	| S |
-	S := SimplicialComplex facets: {{1. 2. 3}. {2. 4}. {3. 4}. {5}}.
-	self assert: (S faces: 2) asSet size = 1.
-	self assert: (S faces: 1) asSet size = 5.
-	self assert: (S faces: 0) asSet size = 5
+	S := SimplicialComplex
+		facets:
+			{{1 . 2 . 3}.
+			{2 . 4}.
+			{3 . 4}.
+			{5}}.
+	self assert: (S faces: 2) asSet size equals: 1.
+	self assert: (S faces: 1) asSet size equals: 5.
+	self assert: (S faces: 0) asSet size equals: 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplex [
 	| tetrahedron |
 	tetrahedron := Simplex vertices: #(a b c d).
@@ -114,7 +121,7 @@ SimplicialComplexTest >> testSimplex [
 	self assert: (tetrahedron faces: 3) size = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplexComplement [
 	| V |
 	V := (0 to: 5).
@@ -123,7 +130,7 @@ SimplicialComplexTest >> testSimplexComplement [
 	self assert: ((Simplex vertices: #(0 4 1 3 )) complementIn: V) = (Simplex vertices: #(2 5))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplexInclusion [
 	| S S2 |
 	S := Simplex new: (2 to: 10) atRandom.
@@ -131,7 +138,7 @@ SimplicialComplexTest >> testSimplexInclusion [
 	self assert: S2 <= S
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplexJoin [
 	| A B |
 	A := Simplex new: 2.
@@ -140,7 +147,7 @@ SimplicialComplexTest >> testSimplexJoin [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplicalChainsBoundaryMap [
 	| X d1 d2 |
 	X := SimplicialComplex sphere: 2.
@@ -151,7 +158,7 @@ SimplicialComplexTest >> testSimplicalChainsBoundaryMap [
 	self assert: (d1 î d2) isZero
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplicialComplexExample [
 	"Example from Herzog, 'Monomial Ideals', pag. 16."
 	| X |
@@ -162,7 +169,7 @@ SimplicialComplexTest >> testSimplicialComplexExample [
 	self assert: X hVector = (1,2,0,-1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testSimplicialMap [
 	| S T f |
 	S := SimplicialComplex faces: #((0 2) (1 5) (3 4)).
@@ -174,28 +181,28 @@ SimplicialComplexTest >> testSimplicialMap [
 	self assert: f isIdentity not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerIdealAndBack [
 	| X |
 	X := SimplicialComplex on: (1 to: 5) faces: #((1 2 4) (1 2 5) (2 3) (3 4)).
 	self assert: X stanleyReisnerIdeal asSimplicialComplex = X
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerIdealAndBack2 [
 	| X |
 	X := SimplicialComplex on: (1 to: 5) faces: #((1 3 2) (3 4) (2 4) (5)).
 	self assert: X stanleyReisnerIdeal asSimplicialComplex = X
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerIdealAndFacetIdealDuality [
 	| X |
 	X := SimplicialComplex on: (1 to: 5) faces: #((1 2 4) (1 2 5) (2 3) (3 4)).
 	self assert: X dual stanleyReisnerIdeal = X complement facetIdeal
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerRing [
 	| X R |
 	X := SimplicialComplex faces: #((0 1) (1 2) (2 3) (3 0)).
@@ -203,10 +210,10 @@ SimplicialComplexTest >> testStanleyReisnerRing [
 	self assert: X stanleyReisnerRing relations generators asSet = (R generate: [:x :y :z :w| {y*w. x*z}]) asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SimplicialComplexTest >> testTorus [
 	| X |
 	X := SimplicialComplex torus.
-	self assert: X dimension = 2.
-	self assert: X fVector = (1,7,21,14)
+	self assert: X dimension equals: 2.
+	self assert: X fVector equals: 1 , 7 , 21 , 14
 ]

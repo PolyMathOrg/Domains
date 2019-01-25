@@ -19,7 +19,9 @@ Class {
 
 { #category : #'instance creation' }
 EquivalenceClass class >> representative: anElement relation: anEquivalenceRelation [
-	^ self new representative: anElement; relation: anEquivalenceRelation
+	^ self new
+		representative: anElement;
+		relation: anEquivalenceRelation
 ]
 
 { #category : #comparing }
