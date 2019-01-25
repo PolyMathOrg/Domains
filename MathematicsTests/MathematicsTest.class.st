@@ -39,9 +39,15 @@ MathematicsTest >> testCRT [
 { #category : #tests }
 MathematicsTest >> testCartesianProduct [
 	| P x |
-	P := CartesianProduct components: {PrimeField new: 3. GaloisField new: 4. SymmetricGroup new: 5}.
-	self assert: P elements size = (3*4*5 factorial).
-	x := {(P at: 1) atRandom. (P at: 2) atRandom. (P at: 3) atRandom}.
+	P := CartesianProduct
+		components:
+			{(PrimeField new: 3).
+			(GaloisField new: 4).
+			(SymmetricGroup new: 5)}.
+	self assert: P elements size equals: 3 * 4 * 5 factorial.
+	x := {(P at: 1) atRandom.
+	(P at: 2) atRandom.
+	(P at: 3) atRandom}.
 	self assert: (P elements includes: x)
 ]
 
@@ -101,7 +107,7 @@ MathematicsTest >> testContinuedFractionsReciprocal [
 MathematicsTest >> testCyclotomicPolynomials [
 	| P |
 	P := QQ polynomials.
-	1 to: 20 do: [:n| self assert: (P cyclotomic: n) degree = n phi]
+	1 to: 20 do: [ :n | self assert: (P cyclotomic: n) degree equals: n phi ]
 ]
 
 { #category : #tests }
@@ -110,7 +116,9 @@ MathematicsTest >> testCyclotomicPolynomials2 [
 	P := QQ polynomials.
 	x := P x.
 	n := 100 atRandom.
-	'self assert: (n divisors product: [:d| P cyclotomic: d]) = (x^n - 1)'
+	self
+		assert: (n divisors product: [ :d | P cyclotomic: d ])
+		equals: (x raisedTo: n) - 1
 ]
 
 { #category : #tests }
@@ -118,11 +126,20 @@ MathematicsTest >> testExtendedEuclid [
 	| a b euclid |
 	a := '-1000 to: 1000 :: atRandom'.
 	b := '-1000 to: 1000 :: atRandom'.
-	euclid := ExtendedEuclid on: {a. b}.
+	euclid := ExtendedEuclid
+		on:
+			{a.
+			b}.
 	self assert: euclid gcd | a.
 	self assert: euclid gcd | b.
-	self assert: (euclid bezout * {a. b}) sum = euclid gcd.
-	self assert: euclid gcd = (a gcd: b).
+	self
+		assert:
+			(euclid bezout
+				*
+					{a.
+					b}) sum
+		equals: euclid gcd.
+	self assert: euclid gcd equals: (a gcd: b).
 	self assert: euclid verify
 ]
 

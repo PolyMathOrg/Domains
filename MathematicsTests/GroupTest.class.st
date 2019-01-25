@@ -26,13 +26,26 @@ GroupTest >> testActionOrbitOf [
 GroupTest >> testActionStabilizerOf [
 	| G g1 g2 g3 id H |
 	G := SymmetricGroup new: 8.
-	g1 := G ! #((1 3 2) (4 6 5)).
-	g2 := G ! #((1 2 3) (4 5 6)).
-	g3 := G ! #((7 8)).
+	g1 := G ! #(#(1 3 2) #(4 6 5)).
+	g2 := G ! #(#(1 2 3) #(4 5 6)).
+	g3 := G ! #(#(7 8)).
 	id := G identity.
-	H := G span: {g1. g2. g3}.
-	self assert: (H action stabilizerOf: 1) asSet = {id. g3} asSet.
-	self assert: (H action stabilizerOf: 7) asSet = {id. g1. g2} asSet
+	H := G
+		span:
+			{g1.
+			g2.
+			g3}.
+	self
+		assert: (H action stabilizerOf: 1) asSet
+		equals:
+			{id.
+			g3} asSet.
+	self
+		assert: (H action stabilizerOf: 7) asSet
+		equals:
+			{id.
+			g1.
+			g2} asSet
 ]
 
 { #category : #tests }

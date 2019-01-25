@@ -18,10 +18,10 @@ Conic class >> coefficients: aTuple [
 	x := R x.
 	y := R y.
 	z := R z.
-	'aTuple size = 3
-			ifTrue: [^ self polynomial: x^2 * (aTuple at: 1) + (y^2 * (aTuple at: 2)) + (z^2 * (aTuple at: 3))]'.
-	'aTuple size = 6
-			ifTrue: [^ self polynomial: x^2*(aTuple at: 1) + (x*y*(aTuple at: 2)) + (x*z*(aTuple at: 3)) + (y^2*(aTuple at: 4)) + (y*z*(aTuple at: 5)) + (z^2*(aTuple at: 6))]'.
+	aTuple size = 3
+			ifTrue: [^ self polynomial: (x raisedTo: 2) * (aTuple at: 1) + ((y raisedTo: 2) * (aTuple at: 2)) + ((z raisedTo: 2) * (aTuple at: 3))].
+	aTuple size = 6
+			ifTrue: [^ self polynomial: (x raisedTo: 2)*(aTuple at: 1) + (x*y*(aTuple at: 2)) + (x*z*(aTuple at: 3)) + ((y raisedTo: 2)*(aTuple at: 4)) + (y*z*(aTuple at: 5)) + ((z raisedTo: 2)*(aTuple at: 6))].
 	^ self error: '3 or 6 coefficients expected'
 ]
 

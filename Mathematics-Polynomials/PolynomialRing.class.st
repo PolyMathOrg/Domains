@@ -349,13 +349,17 @@ PolynomialRing >> cyclicIdeal [
 { #category : #examples }
 PolynomialRing >> cyclotomic: n [
 	"Answer the n-th cyclotomic polynomial."
-	| one x answer "numerator denominator" product |
+
+	| one x answer	"numerator denominator" product |
 	one := self one.
 	x := self x.
-	n = 1 ifTrue: [^ x - one].
+	n = 1
+		ifTrue: [ ^ x - one ].
 	n isPrime
-		ifTrue: [answer := one. n-1 timesRepeat: [answer := answer * x + one]. ^ answer].
-"	numerator := one.
+		ifTrue: [ answer := one.
+			n - 1 timesRepeat: [ answer := answer * x + one ].
+			^ answer ].
+	"	numerator := one.
 	denominator := one.
 	n divisorsDo: [:d| | mu |
 		mu := (n/d) moebius.
@@ -363,8 +367,11 @@ PolynomialRing >> cyclotomic: n [
 		mu = -1 ifTrue: [denominator := denominator * (x^d - one)]].
 	^ numerator // denominator"
 	product := self one.
-	n divisors do: [:each| each = n ifFalse: [product := product * (self cyclotomic: each)]].
-	^ 'x^n - one // product'
+	n divisors
+		do: [ :each | 
+			each = n
+				ifFalse: [ product := product * (self cyclotomic: each) ] ].
+	^ ((x raisedTo: n) - one) // product
 ]
 
 { #category : #examples }

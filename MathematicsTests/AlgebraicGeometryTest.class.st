@@ -55,19 +55,32 @@ AlgebraicGeometryTest >> testAffineSpace [
 
 { #category : #conics }
 AlgebraicGeometryTest >> testConicCoefficients [
-	self assert: (Conic coefficients: (1,2,3,4,5,6)) coefficients = (1,2,3,4,5,6).
-	self assert: '(Conic polynomial: (QQ polynomialsIn: 3) ! [:x :y :z| x^2 + (x*y*5) + (y^2) + (z^2)]) coefficients = (1,5,0,1,0,1)'
+	self
+		assert: (Conic coefficients: 1 , 2 , 3 , 4 , 5 , 6) coefficients
+		equals: 1 , 2 , 3 , 4 , 5 , 6.
+	self
+		assert:
+			(Conic
+				polynomial:
+					(QQ polynomialsIn: 3)
+						!
+							[ :x :y :z | (x raisedTo: 2) + (x * y * 5) + (y raisedTo: 2) + (z raisedTo: 2) ])
+				coefficients
+		equals: 1 , 5 , 0 , 1 , 0 , 1
 ]
 
 { #category : #conics }
 AlgebraicGeometryTest >> testConicDeterminant [
-	self assert: (Conic coefficients: (1,2,3,4,5,6)) determinant = (41/4)
+	self
+		assert: (Conic coefficients: 1 , 2 , 3 , 4 , 5 , 6) determinant
+		equals: 41 / 4
 ]
 
 { #category : #conics }
 AlgebraicGeometryTest >> testConicIsSmooth [
-	self assert: (Conic coefficients: (1,-1,0)) isSmooth not.
-	self assert: (Conic coefficients: (1,1,1,1,1,0) % 2) isSmooth
+	self assert: (Conic coefficients: 1 , -1 , 0) isSmooth not.
+	self
+		assert: (Conic coefficients: (1 , 1 , 1 , 1 , 1 , 0) % 2) isSmooth
 ]
 
 { #category : #general }
@@ -76,14 +89,17 @@ AlgebraicGeometryTest >> testDifference [
 	A := AffineSpace new: 2 over: QQ.
 	x := A coordinateRing x.
 	y := A coordinateRing y.
-	C := A subscheme: x * y. "union of x-axis and y-axis"
-	X2 := A subscheme: x raiseTo: 2. "y-axis with double multiplicity"
-	D := X2 - C. "y-axis with multiplicity 1"
+	C := A subscheme: x * y.	"union of x-axis and y-axis"
+	X2 := A subscheme: (x raisedTo: 2).	"y-axis with double multiplicity"
+	D := X2 - C.	"y-axis with multiplicity 1"
 	self assert: D ideal = (A coordinateRing * x).
-	O := A subscheme: {x. y}.
+	O := A
+		subscheme:
+			{x.
+			y}.
 	D := C - O.
 	self assert: D = C.
-	self assert: (C - A) isEmpty "removing the ambient space removes all"
+	self assert: (C - A) isEmpty	"removing the ambient space removes all"
 ]
 
 { #category : #general }
@@ -114,10 +130,10 @@ AlgebraicGeometryTest >> testEqualVarietiesDifferentIdeals [
 	A := QQ polynomials.
 	x := A x.
 	I := A * {x}.
-	I2 := A * {x raiseTo:2}.
+	I2 := A * {(x raisedTo: 2)}.
 	V := I variety.
 	V2 := I2 variety.
-	self assert: V = V2.
+	self assert: V equals: V2.
 	self assert: I ~= I2
 ]
 
