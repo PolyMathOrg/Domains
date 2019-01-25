@@ -78,8 +78,8 @@ CartesianProduct >> components: anArray [
 
 { #category : #enumerating }
 CartesianProduct >> do: aBlock [
-	(self components allSatisfy: [:each| each isFinite])
-		ifFalse: [^ self upTo: self size rank: self arity do: aBlock].
+	(self components allSatisfy: [ :each | each isFinite ])
+		ifFalse: [ ^ self upTo: self size rank: self arity do: aBlock ].
 	self upToComponent: self arity do: aBlock
 ]
 
@@ -105,8 +105,9 @@ CartesianProduct >> isProduct [
 
 { #category : #printing }
 CartesianProduct >> printOn: aStream [
-
-	components do: [:each| aStream print: each] separatedBy: [aStream nextPut: $X]
+	components
+		do: [ :each | aStream print: each ]
+		separatedBy: [ aStream nextPut: $× ]
 ]
 
 { #category : #morphisms }
@@ -123,17 +124,30 @@ CartesianProduct >> size [
 CartesianProduct >> upTo: max rank: n do: aBlock [
 	| k |
 	self notYetImplemented.
-	n = 0 ifTrue: [^ aBlock value: #()].
+	n = 0
+		ifTrue: [ ^ aBlock value: #() ].
 	k := 1.
-	(self at: n) upTo: max do: [:s|
-		self upTo: k rank: n-1 do: [:p|
-			aBlock value: {p. s}.
-			"(self at: n) upTo: k-1 do: [:t| (p includes: s) ifTrue: [aBlock value: (p,t)]]"].
-		k := k + 1]
+	(self at: n)
+		upTo: max
+		do: [ :s | 
+			self
+				upTo: k
+				rank: n - 1
+				do: [ :p | 
+					aBlock
+						value:
+							{p.
+							s}
+					"(self at: n) upTo: k-1 do: [:t| (p includes: s) ifTrue: [aBlock value: (p,t)]]" ].
+			k := k + 1 ]
 ]
 
 { #category : #enumerating }
 CartesianProduct >> upToComponent: k do: aBlock [
-	k = 0 ifTrue: [aBlock value: Array new. ^ self].
-	self upToComponent: k-1 do: [:each| (self at: k) do: [:last| aBlock value: (each copyWith: last)]]
+	k = 0
+		ifTrue: [ aBlock value: Array new.
+			^ self ].
+	self
+		upToComponent: k - 1
+		do: [ :each | (self at: k) do: [ :last | aBlock value: (each copyWith: last) ] ]
 ]
