@@ -207,16 +207,16 @@ MathematicsTest >> testFundamentalDiscriminant [
 { #category : #tests }
 MathematicsTest >> testGaloisFields [
 	| GF pi x one a |
-	GF := GaloisField new: (3 raiseTo: 3).
+	GF := GaloisField new: (3 raisedTo: 3).
 	self assert: GF isField.
-	self assert: GF characteristic = 3.
+	self assert: GF characteristic equals: 3.
 	pi := GF projection.
 	x := pi domain x.
 	one := pi domain one.
-	a := 'pi value: x^2 + one'.
-	self assert: a * a reciprocal = GF one.
-	[(a := GF atRandom) isZero] whileTrue.
-	self assert: a * a reciprocal = GF one
+	a := pi value: (x raisedTo: 2) + one.
+	self assert: a * a reciprocal equals: GF one.
+	[ (a := GF atRandom) isZero ] whileTrue.
+	self assert: a * a reciprocal equals: GF one
 ]
 
 { #category : #tests }
@@ -274,8 +274,12 @@ MathematicsTest >> testIteratorCovering2 [
 MathematicsTest >> testIteratorCovering3 [
 	| F |
 	F := GaloisField new: 3.
-	'self assert: ((F^4) upTo: 3^4) asSet size = (3^4).
-		self assert: ((F^4) upTo: 3^4+100) asSet size = (3^4)'
+	self
+		assert: ((F raisedTo: 4) upTo: (3 raisedTo: 4)) asSet size
+		equals: (3 raisedTo: 4).
+	self
+		assert: ((F raisedTo: 4) upTo: (3 raisedTo: 4) + 100) asSet size
+		equals: (3 raisedTo: 4)
 ]
 
 { #category : #tests }
