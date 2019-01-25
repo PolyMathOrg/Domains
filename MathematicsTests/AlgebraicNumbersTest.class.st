@@ -65,7 +65,7 @@ AlgebraicNumbersTest >> testRealDivision [
 	| sqrt3 sqrt5 |
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
 	sqrt5 := RealAlgebraicNumber sqrt: 5.
-	self assert: (sqrt3 / sqrt5 / sqrt3 / sqrt5) asRational = (1/5)
+	self assert: (sqrt3 / sqrt5 / sqrt3 / sqrt5) asRational equals: 1 / 5
 ]
 
 { #category : #tests }

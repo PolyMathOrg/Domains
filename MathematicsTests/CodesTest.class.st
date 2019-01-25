@@ -40,9 +40,11 @@ CodesTest >> testHamming743 [
 	| H7 |
 	H7 := LinearCode H7.
 	self assert: H7 isCyclic.
-	self assert: H7 minimumDistance = 3.
-	self assert: H7 weightDistribution = #(0 3 3 3 3 3 3 3 4 4 4 4 4 4 4 7) asBag.
-	self assert: H7 dual minimumDistance = 4
+	self assert: H7 minimumDistance equals: 3.
+	self
+		assert: H7 weightDistribution
+		equals: #(0 3 3 3 3 3 3 3 4 4 4 4 4 4 4 7) asBag.
+	self assert: H7 dual minimumDistance equals: 4
 ]
 
 { #category : #tests }
@@ -82,27 +84,29 @@ CodesTest >> testParityCheckMatrix [
 { #category : #tests }
 CodesTest >> testSelfDual [
 	| F C |
-	F := ZZ/2.
+	F := ZZ / 2.
 	"{00,11} is the smallest self-dual code"
-	C := 'LinearCode subspace: (F^2 span: {(0,0) % 2. (1,1) % 2})'.
+	C := LinearCode subspace: ((F raisedTo: 2) span: {(0,0) % 2. (1,1) % 2}).
 	self assert: C isSelfDual.
-	self assert: C isSelfOrthogonal.
+	self assert: C isSelfOrthogonal
 	"TODO: test other examples of self-dual codes: H8, G24"
 ]
 
 { #category : #tests }
 CodesTest >> testSingletonBound: C [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
+
 	| n k d |
 	n := C length.
 	k := C rank.
 	d := C minimumDistance.
-	self assert: k + d <= (n + 1).
+	self assert: k + d <= (n + 1)
 ]
 
 { #category : #tests }
 CodesTest >> testSingletonBoundH7 [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
+
 	self testSingletonBound: LinearCode H7
 ]
 
@@ -122,11 +126,13 @@ CodesTest >> testTetracode [
 					{((1 , 1 , 1 , 0) % 3).
 					((0 , 1 , 2 , 1) % 3)}).
 	self assert: C isSelfDual.
-	self assert: C minimumDistance = 3.
+	self assert: C minimumDistance equals: 3.
 	P := ZZ polynomialsIn: #(x y).
 	x := P x.
 	y := P y.
-	self assert: C weightEnumerator = ((x raisedTo: 4) + (x*(y raisedTo: 3)*8))
+	self
+		assert: C weightEnumerator
+		equals: (x raisedTo: 4) + (x * (y raisedTo: 3) * 8)
 ]
 
 { #category : #tests }

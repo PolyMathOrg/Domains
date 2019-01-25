@@ -79,6 +79,7 @@ FormalFraction >> hash [
 { #category : #testing }
 FormalFraction >> isFractional [
 	"Answer true if this is an element of a localization, i.e. if it is some kind of fraction and understands #numerator and #denominator."
+
 	^ true
 ]
 
@@ -106,7 +107,7 @@ FormalFraction >> numerator [
 
 { #category : #constants }
 FormalFraction >> one [
-	^ self class numerator: numerator one denominator: denominator one
+	^ self class numerator: numerator one denominator: denominator one 
 ]
 
 { #category : #printing }
@@ -121,12 +122,16 @@ FormalFraction >> printOn: aStream [
 ]
 
 { #category : #arithmetic }
-FormalFraction >> raiseTo: anInteger [ "^ "
-	anInteger = 1 ifTrue: [^ self].
-	'anInteger < 0 ifTrue: [^ self reciprocal ^ anInteger negated]'.
-	^ 'self class
-			numerator: numerator ^ anInteger
-			denominator: denominator ^ anInteger'
+FormalFraction >> raisedTo: anInteger [
+	"^ "
+	
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	anInteger < 0
+		ifTrue: [ ^ self reciprocal raisedTo: anInteger negated ].
+	^ self class
+		numerator: (numerator raisedTo: anInteger)
+		denominator: (denominator raisedTo: anInteger)
 ]
 
 { #category : #arithmetic }
