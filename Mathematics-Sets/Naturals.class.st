@@ -7,9 +7,8 @@ Class {
 	#category : #'Mathematics-Sets'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 Naturals class >> initialize [
-	super initialize.
 	Smalltalk at: #NN put: self new
 ]
 
@@ -57,7 +56,7 @@ Naturals >> isReal [
 
 { #category : #printing }
 Naturals >> printOn: aStream [
-	aStream nextPut: Character NN
+	aStream nextPutAll: 'NN'
 ]
 
 { #category : #accessing }
@@ -68,5 +67,6 @@ Naturals >> size [
 { #category : #morphisms }
 Naturals >> to: aDomain evaluating: aBlock [
 	"Answer a sequence with values in aDomain."
+
 	^ Sequence to: aDomain evaluating: aBlock
 ]
