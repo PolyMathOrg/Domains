@@ -192,24 +192,30 @@ FreeModule >> contains: anElement [
 { #category : #basis }
 FreeModule >> coordinateMap [
 	"Answer the isomorphism between the receiver and its coordinates."
+	
 	^ self to: self coordinates matrix: self matrix
 ]
 
 { #category : #accessing }
 FreeModule >> coordinateNames [
-	^ self propertyAt: #coordinateNames ifAbsent: []
+	^ self propertyAt: #coordinateNames ifAbsent: [  ]
 ]
 
 { #category : #basis }
 FreeModule >> coordinateRing [
 	"The coordinate ring of a R-module of rank n (or K-vector space of dimension n) is the polynomial ring R[x1..xn] (or K[x1..xn])."
-	^ self propertyAt: #coordinateRing ifAbsentPut: [self scalars polynomialsIn: (self coordinateNames ifNil: [self rank])]
+
+	^ self
+		propertyAt: #coordinateRing
+		ifAbsentPut: [ self scalars
+				polynomialsIn: (self coordinateNames ifNil: [ self rank ]) ]
 ]
 
 { #category : #basis }
 FreeModule >> coordinates [
 	"Answer the coordinate space (or module) of the receiver."
-	^ 'self scalars ^ self rank'
+
+	^ (self scalars) raisedTo: (self rank)
 ]
 
 { #category : #basis }
@@ -236,7 +242,8 @@ alternative 1:
 
 { #category : #basis }
 FreeModule >> corank [
-	self isVectorSpace ifTrue: [^ self ambient rank - self rank].
+	self isVectorSpace
+		ifTrue: [ ^ self ambient rank - self rank ].
 	^ (self ambient / self) rank
 ]
 
