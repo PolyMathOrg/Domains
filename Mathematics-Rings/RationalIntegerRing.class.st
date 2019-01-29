@@ -7,9 +7,8 @@ Class {
 	#category : #'Mathematics-Rings'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RationalIntegerRing class >> initialize [
-	super initialize.
 	Smalltalk at: #ZZ put: self new
 ]
 
@@ -174,7 +173,7 @@ RationalIntegerRing >> primeIdealsDo: aBlock [
 
 { #category : #printing }
 RationalIntegerRing >> printOn: aStream [
-	aStream nextPutAll: 'ZZ'
+	aStream nextPutAll: 'ℤ'
 ]
 
 { #category : #operations }

@@ -17,15 +17,17 @@ Class {
 { #category : #examples }
 PolynomialCode class >> G23 [
 	"Answer the perfect binary Golay code [23,12,7]."
+
 	| g |
-	'g := (ZZ/2) polynomials ! [:x| x^11 + (x^10) + (x^6) + (x^5) + (x^4) + (x^2) + 1]'.
+	g := (ZZ/2) polynomials ! [:x| (x raisedTo: 11) + (x raisedTo: 10) + (x raisedTo: 6) + (x raisedTo: 5) + (x raisedTo: 4) + (x raisedTo: 2) + 1].
 	^ self new: 23 generator: g
 ]
 
 { #category : #examples }
 PolynomialCode class >> H7 [
 	"Answer the Hamming code [7,4,3]."
-	^ 'self new: 7 generator: (ZZ/2) polynomials ! [:x| x^3 + x + 1]'
+
+	^ self new: 7 generator: (ZZ/2) polynomials ! [:x| (x raisedTo: 3) + x + 1]
 ]
 
 { #category : #'instance creation' }
