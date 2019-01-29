@@ -53,24 +53,35 @@ CodesTest >> testHamming844 [
 	C := LinearCode H8.
 	self assert: C isSelfDual.
 	self assert: C isSelfOrthogonal.
-	self assert: C minimumDistance = 4.
-	self assert: C dual minimumDistance = 4.
+	self assert: C minimumDistance equals: 4.
+	self assert: C dual minimumDistance equals: 4.
 	P := ZZ polynomialsIn: 2.
-	x := P x. y := P y.
-	'self assert: C weightEnumerator = (x^8 + (x*y^4*14) + (y^8))'
+	x := P x.
+	y := P y.
+	self
+		assert: C weightEnumerator
+		equals: (x raisedTo: 8) + ((x * y raisedTo: 4) * 14) + (y raisedTo: 8)
 ]
 
 { #category : #tests }
 CodesTest >> testMacWilliamsTheorem [
 	"(MacWilliams, 1962) the theorem relates the weight enumerator of a linear code to the weight enumerator of its dual."
+
 	"From youtube, Neil Sloane 'Error Correcting Codes, Group Theory and Invariant Theory, Part 1' 20:30."
+
 	| C W Wperp x y |
 	C := LinearCode H7.
 	W := C weightEnumerator.
 	Wperp := C dual weightEnumerator.
 	x := Wperp parent x.
 	y := Wperp parent y.
-	self assert: Wperp = ((W value: {x+y. x-y}) / C size)
+	self
+		assert: Wperp
+		equals:
+			(W
+				value:
+					{(x + y).
+					(x - y)}) / C size
 ]
 
 { #category : #tests }
@@ -106,13 +117,14 @@ CodesTest >> testSingletonBound: C [
 { #category : #tests }
 CodesTest >> testSingletonBoundH7 [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
-
+	
 	self testSingletonBound: LinearCode H7
 ]
 
 { #category : #tests }
 CodesTest >> testSingletonBoundTetracode [
 	"Any linear [n,k,d] code satisfies k + d <= n + 1."
+	
 	self testSingletonBound: LinearCode tetracode
 ]
 

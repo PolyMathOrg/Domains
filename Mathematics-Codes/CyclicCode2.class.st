@@ -10,14 +10,16 @@ Class {
 { #category : #'examples-todo' }
 CyclicCode2 class >> H7 [
 	"Answer the Hamming code of length 7."
-	^ 'self new: 7 generator: (ZZ/2) polynomials ! [:x| x^3 + x + 1]'
+
+	^ self new: 7 generator: (ZZ/2) polynomials ! [:x| (x raisedTo: 3)+ x + 1]
 ]
 
 { #category : #'instance creation' }
 CyclicCode2 class >> new: n generator: aPolynomial [
 	| F |
 	F := aPolynomial scalars.
-	^ (self new subspace: (F extension: aPolynomial) asVectorSpace) generator: aPolynomial
+	^ (self new subspace: (F extension: aPolynomial) asVectorSpace)
+		generator: aPolynomial
 ]
 
 { #category : #converting }

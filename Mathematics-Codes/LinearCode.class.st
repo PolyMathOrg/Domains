@@ -17,84 +17,111 @@ Class {
 { #category : #examples }
 LinearCode class >> G11 [
 	"Answer the perfect ternary Golary code [11,6,5]."
-	^ self matrix:
-		(Matrix rows: {
-			(1,0,0,0,0,0, 1,1,1,1,1) % 3.
-			(0,1,0,0,0,0, 0,1,2,2,1) % 3.
-			(0,0,1,0,0,0, 1,0,1,2,2) % 3.
-			(0,0,0,1,0,0, 2,1,0,1,2) % 3.
-			(0,0,0,0,1,0, 2,2,1,0,1) % 3.
-			(0,0,0,0,0,1, 1,2,2,1,0) % 3})
+	
+	^ self
+		matrix:
+			(Matrix
+				rows:
+					{((1 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 1) % 3).
+					((0 , 1 , 0 , 0 , 0 , 0 , 0 , 1 , 2 , 2 , 1) % 3).
+					((0 , 0 , 1 , 0 , 0 , 0 , 1 , 0 , 1 , 2 , 2) % 3).
+					((0 , 0 , 0 , 1 , 0 , 0 , 2 , 1 , 0 , 1 , 2) % 3).
+					((0 , 0 , 0 , 0 , 1 , 0 , 2 , 2 , 1 , 0 , 1) % 3).
+					((0 , 0 , 0 , 0 , 0 , 1 , 1 , 2 , 2 , 1 , 0) % 3)})
 ]
 
 { #category : #examples }
 LinearCode class >> G12 [
 	"Answer the extended ternary Golary code [12,6,6]."
-	^ self matrix:
-		(Matrix rows: {
-			(1,0,0,0,0,0, 0,1,1,1,1,1) % 3.
-			(0,1,0,0,0,0, 1,0,1,2,2,1) % 3.
-			(0,0,1,0,0,0, 1,1,0,1,2,2) % 3.
-			(0,0,0,1,0,0, 1,2,1,0,1,2) % 3.
-			(0,0,0,0,1,0, 1,2,2,1,0,1) % 3.
-			(0,0,0,0,0,1, 1,1,2,2,1,0) % 3})
+	
+	^ self
+		matrix:
+			(Matrix
+				rows:
+					{((1 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 1 , 1) % 3).
+					((0 , 1 , 0 , 0 , 0 , 0 , 1 , 0 , 1 , 2 , 2 , 1) % 3).
+					((0 , 0 , 1 , 0 , 0 , 0 , 1 , 1 , 0 , 1 , 2 , 2) % 3).
+					((0 , 0 , 0 , 1 , 0 , 0 , 1 , 2 , 1 , 0 , 1 , 2) % 3).
+					((0 , 0 , 0 , 0 , 1 , 0 , 1 , 2 , 2 , 1 , 0 , 1) % 3).
+					((0 , 0 , 0 , 0 , 0 , 1 , 1 , 1 , 2 , 2 , 1 , 0) % 3)})
 ]
 
 { #category : #examples }
 LinearCode class >> G24 [
-	"Answer the extended binary Golary code [24,12,8].
+"Answer the extended binary Golary code [24,12,8].
 	Its generator matrix is I|A, where I is the 12x12 identity matrix and A is the complement of the adjacency matrix of the icosahedron."
+
 	| F A |
-	F := ZZ/2.
+	F := ZZ / 2.
 	A := Graph icosahedron adjacencyMatrix: (1 to: 12).
-	A := A apply: (Function from: A scalars to: F evaluating: [:x| x = 0 ifTrue: [F one] ifFalse: [F zero]]).
+	A := A
+		apply:
+			(Function
+				from: A scalars
+				to: F
+				evaluating: [ :x | 
+					x = 0
+						ifTrue: [ F one ]
+						ifFalse: [ F zero ] ]).
 	^ self matrix: A identity | A
 ]
 
 { #category : #examples }
 LinearCode class >> H7 [
 	"Answer the [7,4,3] Hamming code, which is the binary cyclic code of length 7 with generator polynomial 1 + x + x^3."
+	
 	| generators c |
-	generators := OrderedCollection with: (c := (1,1,0,1,0,0,0) % 2).
-	3 timesRepeat: [generators add: (c := c >> 1)].
+	generators := OrderedCollection
+		with: (c := (1 , 1 , 0 , 1 , 0 , 0 , 0) % 2).
+	3 timesRepeat: [ generators add: (c := c >> 1) ].
 	^ self matrix: (Matrix rows: generators)
 ]
 
 { #category : #examples }
 LinearCode class >> H8 [
 	"Answer the extended Hamming code [8,4,4]."
-	^ self matrix:
-		(Matrix rows: {
-			(1,0,0,0, 0,1,1,1) % 2.
-			(0,1,0,0, 1,0,1,1) % 2.
-			(0,0,1,0, 1,1,0,1) % 2.
-			(0,0,0,1, 1,1,1,0) % 2})
+	
+	^ self
+		matrix:
+			(Matrix
+				rows:
+					{((1 , 0 , 0 , 0 , 0 , 1 , 1 , 1) % 2).
+					((0 , 1 , 0 , 0 , 1 , 0 , 1 , 1) % 2).
+					((0 , 0 , 1 , 0 , 1 , 1 , 0 , 1) % 2).
+					((0 , 0 , 0 , 1 , 1 , 1 , 1 , 0) % 2)})
 ]
 
 { #category : #examples }
 LinearCode class >> hadamard8 [
 	"Answer the [8,3,4] Hadamard code."
-	^ self matrix:
-		(Matrix rows: {
-			(0,0,0,0,1,1,1,1) % 2.
-			(0,0,1,1,0,0,1,1) % 2.
-			(0,1,0,1,0,1,0,1) % 2})
+	
+	^ self
+		matrix:
+			(Matrix
+				rows:
+					{((0 , 0 , 0 , 0 , 1 , 1 , 1 , 1) % 2).
+					((0 , 0 , 1 , 1 , 0 , 0 , 1 , 1) % 2).
+					((0 , 1 , 0 , 1 , 0 , 1 , 0 , 1) % 2)})
 ]
 
 { #category : #'instance creation' }
 LinearCode class >> matrix: aMatrix [
 	"Answer a linear code with generator matrix aMatrix."
+	
 	^ self subspace: aMatrix rowSpace
 ]
 
 { #category : #examples }
 LinearCode class >> simplex [
 	"Answer the [7,3,4] simplex code, which is the dual code of the Hamming code."
-	^ self matrix:
-		(Matrix rows: {
-			(0,0,0,1,1,1,1) % 2.
-			(0,1,1,0,0,1,1) % 2.
-			(1,0,1,0,1,0,1) % 2})
+	
+	^ self
+		matrix:
+			(Matrix
+				rows:
+					{((0 , 0 , 0 , 1 , 1 , 1 , 1) % 2).
+					((0 , 1 , 1 , 0 , 0 , 1 , 1) % 2).
+					((1 , 0 , 1 , 0 , 1 , 0 , 1) % 2)})
 ]
 
 { #category : #'instance creation' }
@@ -105,8 +132,13 @@ LinearCode class >> subspace: aLinearSubspace [
 { #category : #examples }
 LinearCode class >> tetracode [
 	"Answer the tetracode, a self dual code of minimum distance 3."
-
-	^ self subspace: (((ZZ/3) raisedTo: 4) span: {(1,1,1,0) % 3. (0,1,2,1) % 3})
+	
+	^ self
+		subspace:
+			((ZZ / 3 raisedTo: 4)
+				span:
+					{((1 , 1 , 1 , 0) % 3).
+					((0 , 1 , 2 , 1) % 3)})
 ]
 
 { #category : #comparing }

@@ -37,10 +37,10 @@ PolynomialCode class >> generator: aPolynomial [
 
 { #category : #'instance creation' }
 PolynomialCode class >> new: n generator: aPolynomial [
-	| V W subspace |
+	| V W subspace | 
 	V := aPolynomial parent filtrationAt: n - 1.
 	W := aPolynomial parent filtrationAt: n - aPolynomial degree - 1.
-	subspace := V span: (W asArray collect: [:f| aPolynomial * f]).
+	subspace := V span: (W asArray collect: [ :f | aPolynomial * f ]).
 	^ (self subspace: subspace) generator: aPolynomial
 ]
 
