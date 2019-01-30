@@ -112,8 +112,10 @@ CommutativeAlgebraTest >> testExtendedBuchberger [
 	self assert: algorithm verify.
 	self assert: G verify.
 	G2 := (Buchberger on: I) basis.
-	self assert: G reduced = G2 reduced.
-	self assert: algorithm matrix * (I scalars tuple: I generators) = (I scalars tuple: G)
+	self assert: G reduced equals: G2 reduced.
+	self
+		assert: algorithm matrix * (I scalars tuple: I generators)
+		equals: (I scalars tuple: G)
 ]
 
 { #category : #groebner }

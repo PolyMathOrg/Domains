@@ -338,11 +338,14 @@ PolynomialRing >> cyclicIdeal [
 	"Answer the ideal of cyclic n-roots, used for benchmarks."
 	| generators |
 	generators := OrderedCollection new.
-	0 to: self rank - 2 do: [:j|
+	0 to: self rank - 2 do: [ :j | 
 		| g |
-		g := (1 to: self rank) sum: [:i| (i to: i+j) product: [:k| self x: k-1 \\ self rank + 1]].
-		generators add: g].
-	generators add: self generators product - 1.
+		g := (1 to: self rank)
+			sum: [ :i | 
+				((i to: i + j) collect: [ :k | self x: (k - 1) \\ self rank + 1 ])
+					fold: [ :a :b | a * b ] ].
+		generators add: g ].
+	generators add: (self generators fold: [ :a :b| a*b]) - 1.
 	^ self * generators
 ]
 

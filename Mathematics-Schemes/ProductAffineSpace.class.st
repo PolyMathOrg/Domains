@@ -55,7 +55,10 @@ ProductAffineSpace >> components: anArray [
 
 { #category : #accessing }
 ProductAffineSpace >> coordinateRing [
-	^ self propertyAt: #coordinateRing ifAbsentPut: [self components fold: [:A :B| A coordinateRing í B coordinateRing]]
+	^ self
+		propertyAt: #coordinateRing
+		ifAbsentPut: [ self components
+				fold: [ :A :B | A coordinateRing í B coordinateRing ] ]
 ]
 
 { #category : #testing }
