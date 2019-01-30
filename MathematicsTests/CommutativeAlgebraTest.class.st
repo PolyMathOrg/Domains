@@ -167,8 +167,9 @@ CommutativeAlgebraTest >> testGroebnerCyclic3Reduced [
 	I := (QQ polynomialsIn: #(x y z)) cyclicIdeal.
 	I := I orderedBy: #lex.
 	G := I basis reduced.
-	self assert: G printString = '{x + y + z, y^2 + yz + z^2, z^3 - 1}' 
-
+	self
+		assert: G printString
+		equals: '{x + y + z, y^2 + yz + z^2, z^3 - 1}'
 ]
 
 { #category : #groebner }
@@ -300,12 +301,17 @@ CommutativeAlgebraTest >> testGroebnerExample3 [
 { #category : #groebner }
 CommutativeAlgebraTest >> testGroebnerExample4Minimal [
 	"Example from Cox, Little, O'Shea, 'Ideals, Varieties and Algorithms', p. 90, continued in p. 93."
+
 	| R I G |
 	R := QQ polynomialsIn: #(x y) ordering: #grevlex.
-	I := 'R * (R ! [:x :y| {x^3 - (x*y*2). x^2*y - (y^2*2) + x}])'.
+	I := R
+		*
+			(R
+				! [ :x :y | 
+					{((x raisedTo: 3) - (x * y * 2)).
+					((x raisedTo: 2) * y - ((y raisedTo: 2) * 2) + x)} ]).
 	G := I basis minimal.
-	self assert: G printString = '{x^2, xy, y^2 - (1/2)x}' 
-
+	self assert: G printString equals: '{x^2, xy, y^2 - (1/2)x}'
 ]
 
 { #category : #groebner }

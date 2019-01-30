@@ -191,12 +191,17 @@ PolynomialRing >> atRandom: aRandom bits: bitSize [
 PolynomialRing >> atRandom: aRandom bits: bitSize maxDegree: d [
 	| answer term n |
 	self isUnivariate
-		ifTrue: [^ self coefficients: ('self scalars ^ (d+1) atRandom: aRandom bits: bitSize')].
+		ifTrue: [ ^ self
+				coefficients: 'self scalars ^ (d+1) atRandom: aRandom bits: bitSize' ].
 	answer := self zero.
 	n := 2 raisedTo: self rank.
-	n timesRepeat:
-		[term := ((1 to: d) product: [:i| self x: (self rank atRandom: aRandom) to: (2 atRandom: aRandom) - 1]) * (self scalars atRandom: aRandom bits: bitSize/(self rank*d)).
-		answer := answer + term].
+	n
+		timesRepeat: [ term := (((1 to: d)
+				collect:
+					[ :i | self x: (self rank atRandom: aRandom) to: (2 atRandom: aRandom) - 1 ])
+				fold: [ :a :b | a * b ])
+				* (self scalars atRandom: aRandom bits: bitSize / (self rank * d)).
+			answer := answer + term ].
 	^ answer
 ]
 
