@@ -64,7 +64,7 @@ RationalField >> do: aBlock [
 
 { #category : #morphisms }
 RationalField >> embed: anInteger [
-	^ anInteger "because in Smalltalk Fractions of denominator 1 are always reduced to their Integer numerator"
+	^ anInteger	"because in Smalltalk Fractions of denominator 1 are always reduced to their Integer numerator" 
 ]
 
 { #category : #morphisms }

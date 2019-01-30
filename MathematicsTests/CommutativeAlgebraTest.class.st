@@ -199,7 +199,7 @@ CommutativeAlgebraTest >> testGroebnerCyclic4 [
 { #category : #groebner }
 CommutativeAlgebraTest >> testGroebnerCyclic4OverZ127 [
 	| I G |
-	I := (ZZ/127 polynomialsIn: 4) cyclicIdeal.
+	I := (ZZ / 127 polynomialsIn: 4) cyclicIdeal.
 	G := I groebnerBasis.
 	self testGroebnerBasis: G ideal: I
 ]
@@ -274,11 +274,17 @@ CommutativeAlgebraTest >> testGroebnerExample2 [
 	R := QQ polynomialsIn: #(x y) ordering: #lex.
 	x := R x.
 	y := R y.
-	'f1 := (x-1)^2 + (y-2^2) - (3^2).
-		f2 := (x+1)^2 + (y-1^2) - (2^2)'.
-	I := R * {f1. f2}.
+	f1 := (x - 1 raisedTo: 2) + (y - 2 raisedTo: 2) - (3 raisedTo: 2).
+	f2 := (x + 1 raisedTo: 2) + (y - 1 raisedTo: 2) - (2 raisedTo: 2).
+	I := R
+		*
+			{f1.
+			f2}.
 	G := I basis reduced.
-	self assert: G printString = '{x + (1/2)y + (1/2), y^2 - 2y - (11/5)}' 
+	self
+		assert: G printString
+		equals:
+			' End of statement list encountered ->{x + (1/2)y + (1/2), y^2 - 2y - (11/5)}'
 ]
 
 { #category : #groebner }
@@ -333,11 +339,12 @@ CommutativeAlgebraTest >> testGroebnerKatsura3 [
 { #category : #groebner }
 CommutativeAlgebraTest >> testGroebnerTrivial [
 	"The 3 polynomials have no common zeroes, the Groebner basis should be {1}."
+
 	| Qx x y I |
 	Qx := QQ polynomialsIn: #(x y) ordering: #lex.
 	x := Qx x.
 	y := Qx y.
-	I := 'Qx * {x + y. x^2 - 1. y^2 - (x*2)}'.
+	I := Qx * {x + y. (x raisedTo: 2) - 1. (y raisedTo: 2) - (x*2)}.
 	self assert: I groebnerBasis minimal isTrivial
 ]
 
