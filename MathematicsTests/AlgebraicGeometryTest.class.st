@@ -261,40 +261,51 @@ AlgebraicGeometryTest >> testMultiplicity [
 { #category : #general }
 AlgebraicGeometryTest >> testMultiplicity2 [
 	"Example from Sage documentation."
+
 	| P X q1 q2 q3 |
 	P := ProjectiveSpace new: 4 over: QQ.
-	'X := P subscheme: (P coordinateRing ! [:x :y :z :w :t| {y^2 - (x*t). w^7 - (t*w*(x^5)) - (z^7)}])'.
-	q1 := X ! (0,0,1,1,1).
-	self assert: q1 multiplicity = 1.
-	q2 := X ! (1,0,0,0,0).
-	self assert: q2 multiplicity = 3.
-	q3 := X ! (0,0,0,0,1).
-	self assert: q3 multiplicity = 7
+	X := P
+		subscheme:
+			P coordinateRing
+				! [ :x :y :z :w :t | 
+					{((y raisedTo: 2) - (x * t)).
+					((w raisedTo: 7) - (t * w * (x raisedTo: 5)) - (z raisedTo: 7))} ].
+	q1 := X ! (0 , 0 , 1 , 1 , 1).
+	self assert: q1 multiplicity equals: 1.
+	q2 := X ! (1 , 0 , 0 , 0 , 0).
+	self assert: q2 multiplicity equals: 3.
+	q3 := X ! (0 , 0 , 0 , 0 , 1).
+	self assert: q3 multiplicity equals: 7
 ]
 
 { #category : #general }
 AlgebraicGeometryTest >> testMultiplicity3 [
 	"Example from Sage documentation."
+
 	| P X q |
 	P := ProjectiveSpace new: 3 over: CC.
-	'X := P subscheme: (P coordinateRing ! [:x :y :z :w| z^5*(x^2)*w - (y^8)])'.
-	q := X ! (2,0,0,1).
-	self assert: q multiplicity = 5
+	X := P
+		subscheme:
+			P coordinateRing
+				! [ :x :y :z :w | (z raisedTo: 5) * (x raisedTo: 2) * w - (y raisedTo: 8) ].
+	q := X ! (2 , 0 , 0 , 1).
+	self assert: q multiplicity equals: 5
 ]
 
 { #category : #general }
 AlgebraicGeometryTest >> testMultiplicityAndTangentCone [
 	"'A Singular Introduction to Commutative Algebra', Example A.8.5."
+
 	| R C T p |
 	R := QQ polynomialsIn: #(x y).
-	'C := (R / (R ! [:x :y| x^3 - y squared])) spec'.
-	p := C ! (0,0).
-	self assert: p multiplicity = 2.
-	T := (R / (R ! [:x :y| y raiseTo: 2])) spec.
-	self assert: p tangentCone = T.
-"	L := (R / (R ! [:x :y| 100 atRandom * x + (100 atRandom * y)])) spec
-	...
-"
+	C := (R / (R ! [ :x :y | (x raisedTo: 3) - y squared ])) spec.
+	p := C ! (0 , 0).
+	self assert: p multiplicity equals: 2.
+	T := (R / (R ! [ :x :y | y raisedTo: 2 ])) spec.
+	self assert: p tangentCone equals: T
+	"	L := (R / (R ! [:x :y| 100 atRandom * x + (100 atRandom * y)])) spec
+		...
+		"
 ]
 
 { #category : #general }
