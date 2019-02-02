@@ -743,7 +743,7 @@ PolynomialRing >> printOn: aStream [
 	aStream print: self scalars; nextPut: $[.
 	self printIndeterminatesOn: aStream.
 	aStream nextPut: $].
-	self ordering isLocal ifTrue: [aStream nextPutAll: self maximalIdeal printText sub]
+	self ordering isLocal ifTrue: [aStream nextPutAll: self maximalIdeal asString]
 ]
 
 { #category : #operations }

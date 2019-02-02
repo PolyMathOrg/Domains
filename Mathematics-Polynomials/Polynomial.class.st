@@ -639,7 +639,7 @@ Polynomial >> one [
 Polynomial >> order [
 	"Answer the minimum degree of the monomials present in the receiver."
 
-	^ self isZero ifTrue: [Infinity negative] ifFalse: [self monomials min: [:each| each degree]]
+	^ self isZero ifTrue: [Infinity negative] ifFalse: [(self monomials collect: [:each| each degree]) min]
 ]
 
 { #category : #converting }

@@ -64,13 +64,13 @@ AffineGeometryTest >> testAffineMapCollinearity [
 AffineGeometryTest >> testAffineMapComposition [
 	| X Y Z f g x |
 	X := QQ raisedTo: 3.
-		Y := QQ raisedTo: 5.
-		Z := QQ raisedTo: 4.
+	Y := QQ raisedTo: 5.
+	Z := QQ raisedTo: 4.
 	f := ((X hom: Y) atRandomBits: 1000) + (Y atRandomBits: 100).
 	g := ((Y hom: Z) atRandomBits: 1000) + (Z atRandomBits: 100).
 	x := X atRandomBits: 1000.
 	"	self assert: ((X hom: Z) includes: g î f)."
-	self assert: (g î f value: x) = (g value: (f value: x)).
+	self assert: (g î f value: x) equals: (g value: (f value: x)).
 	self should: [ f î g ] raise: DomainError
 ]
 

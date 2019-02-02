@@ -187,48 +187,75 @@ AlgebraicGeometryTest >> testLinearSubspaceAsAlgebraicVariety [
 { #category : #general }
 AlgebraicGeometryTest >> testLocalAndGlobalDimension [
 	"'A Singluar Introduction to Commutative Algebra', Example A.8.4 (local and global dimension)."
+
 	| R I X |
 	R := QQ polynomialsIn: #(x y z).
-	I := R * (R generate: [:x :y :z| {x*z. y*z}]).
+	I := R
+		*
+			(R
+				generate: [ :x :y :z | 
+					{(x * z).
+					(y * z)} ]).
 	X := (R / I) spec.
-	self assert: X dimension = 2. "global dimension of X"
-	self assert: (X ! (0,0,0)) localRing dimension = 2. "dimension of X at (0,0,0)"
-	self assert: (X ! (1,0,0)) localRing dimension = 2. "dimension of X at (1,0,0)"
-	self assert: (X ! (0,0,1)) localRing dimension = 1. "dimension of X at (0,0,1)"
+	self assert: X dimension equals: 2.
+	self assert: (X ! (0 , 0 , 0)) localRing dimension equals: 2.
+	self assert: (X ! (1 , 0 , 0)) localRing dimension equals: 2.
+	self assert: (X ! (0 , 0 , 1)) localRing dimension equals: 1
 ]
 
 { #category : #general }
 AlgebraicGeometryTest >> testMorphismsOfProjectiveVarieties [
 	"'A Singular Introduction To Commutative Algebra', Example A.6.8 (morphisms of projective varieties)."
+
 	| P A x y z X f1 f2 f3 I J Y phi Z |
-	P := ProjectiveSpace new: #(x y z) over: CC. "å^2à"
-	A := P coordinateRing. "à[x,y,z]"
-	x := A x. y := A y. z := A z.
-	'X := P subscheme: {z^3 - (x*(y^2)) + (y^3)}.
-		f1 := x*z. f2 := x*y. f3 := x^2 + (y*z)'.
+	P := ProjectiveSpace new: #(x y z) over: CC.	"å^2à"
+	A := P coordinateRing.	"à[x,y,z]"
+	x := A x.
+	y := A y.
+	z := A z.
+	X := P
+		subscheme: {((z raisedTo: 3) - (x * (y raisedTo: 2)) + (y raisedTo: 3))}.
+	f1 := x * z.
+	f2 := x * y.
+	f3 := (x raisedTo: 2) + (y * z).
 	"In order for (f1,f2,f3) to define a projective morphism (not just a rational map) it must never be zero at any point of X, this means the intersection of X with V(J) must be empty:"
 	I := X ideal.
-	J := A * {f1. f2. f3}.
-	self assert: (I + J) dimension = 0.
+	J := A
+		*
+			{f1.
+			f2.
+			f3}.
+	self assert: (I + J) dimension equals: 0.
 	Y := P subscheme: J.
 	self assert: '(X ï Y) isEmpty'.
-	phi := X to: P representatives: {f1. f2. f3}.
+	phi := X
+		to: P
+		representatives:
+			{f1.
+			f2.
+			f3}.
 	"The image is a curve of degree 6:"
 	Z := phi image.
 	self assert: Z isCurve.
-	self assert: Z degree = 6
+	self assert: Z degree equals: 6
 ]
 
 { #category : #general }
 AlgebraicGeometryTest >> testMultiplicity [
 	"Example from Sage documentation."
+
 	| A X q1 q2 |
 	A := AffineSpace new: 4 over: QQ.
-	X := A subscheme: (A coordinateRing ! [:x :y :z :w| {z*y - (x raiseTo: 7). w - (2*z)}]).
-	q1 := X ! (1,(1/3),3,6).
-	q2 := X ! (0,0,0,0).
-	self assert: q1 multiplicity = 1.
-	self assert: q2 multiplicity = 2
+	X := A
+		subscheme:
+			A coordinateRing
+				! [ :x :y :z :w | 
+					{(z * y - (x raisedTo: 7)).
+					(w - (2 * z))} ].
+	q1 := X ! (1 , (1 / 3) , 3 , 6).
+	q2 := X ! (0 , 0 , 0 , 0).
+	self assert: q1 multiplicity equals: 1.
+	self assert: q2 multiplicity equals: 2
 ]
 
 { #category : #general }
