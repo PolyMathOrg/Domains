@@ -331,13 +331,15 @@ PolynomialTest >> testFiniteFieldFactorization [
 	Fx := F polynomials.
 	x := Fx x.
 	one := Fx one.
-	'f := x^11 + (x^9 * 2) + (x^8 * 2) + (x^6) + (x^5) + (x^3 * 2) + (x^2 * 2) + one'.
+	f := (x raisedTo: 11) + ((x raisedTo: 9) * 2) + ((x raisedTo: 8) * 2) + (x raisedTo: 6) + (x raisedTo: 5) + ((x raisedTo: 3) * 2) + ((x raisedTo: 2) * 2) + one.
 	factors := f factors.
-	self assert: factors size = 8.
-	self assert: (factors occurrencesOf: x + (one*2)) = 4.
-	self assert: '(factors occurrencesOf: x^2 + one) = 3'.
-	self assert: (factors occurrencesOf: x + one) = 1.
-	self assert: (factors inject: Fx one into: [:a :b| a*b]) = f
+	self assert: factors size equals: 8.
+	self assert: (factors occurrencesOf: x + (one * 2)) equals: 4.
+	self assert: (factors occurrencesOf: (x raisedTo: 2) + one) equals: 3.
+	self assert: (factors occurrencesOf: x + one) equals: 1.
+	self
+		assert: (factors inject: Fx one into: [ :a :b | a * b ])
+		equals: f
 ]
 
 { #category : #tests }
@@ -345,23 +347,23 @@ PolynomialTest >> testFiniteFieldFactorization2 [
 	| Z3 x f factors |
 	Z3 := ZZ / 3.
 	x := Z3 polynomials x.
-	'f := (x-1)^2*(x-2)'.
+	f := (x - 1 raisedTo: 2) * (x - 2).
 	factors := f factors.
-	self assert: factors size = 3.
-	self assert: (factors occurrencesOf: x-1) = 2.
-	self assert: (factors occurrencesOf: x-2) = 1
+	self assert: factors size equals: 3.
+	self assert: (factors occurrencesOf: x - 1) equals: 2.
+	self assert: (factors occurrencesOf: x - 2) equals: 1
 ]
 
 { #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization3 [
 	| F9 x f factors |
-	F9 := GaloisField new: (3 raiseTo: 2).
+	F9 := GaloisField new: (3 raisedTo: 2).
 	x := F9 polynomials x.
-	f := '(x-1)^2*(x-2)'.
+	f := (x - 1 raisedTo: 2) * (x - 2).
 	factors := f factors.
-	self assert: factors size = 3.
-	self assert: (factors occurrencesOf: x-1) = 2.
-	self assert: (factors occurrencesOf: x-2) = 1
+	self assert: factors size equals: 3.
+	self assert: (factors occurrencesOf: x - 1) equals: 2.
+	self assert: (factors occurrencesOf: x - 2) equals: 1
 ]
 
 { #category : #tests }
@@ -369,11 +371,13 @@ PolynomialTest >> testFiniteFieldFactorization4 [
 	| R x f factors |
 	R := ZZ / 2.
 	x := R polynomials x.
-	f := 'x^24 - 1'.
+	f := (x raisedTo: 24) - 1.
 	factors := f factors.
-	self assert: factors size = 16.
-	'self assert: (factors occurrencesOf: x+1) = 8.
-		self assert: (factors occurrencesOf: x^2+x+1) = 8'
+	self assert: factors size equals: 16.
+	self assert: (factors occurrencesOf: x + 1) equals: 8.
+	self
+		assert: (factors occurrencesOf: (x raisedTo: 2) + x + 1)
+		equals: 8
 ]
 
 { #category : #tests }
@@ -381,7 +385,14 @@ PolynomialTest >> testFiniteFieldFactorization5 [
 	| R x |
 	R := ZZ / 2.
 	x := R polynomials x.
-'	self assert: (x^15 - 1) factors = {x + 1. x^2 + x + 1. x^4 + (x^3) + (x^2) + x + 1. x^4 + x + 1. x^4 + (x^3) + 1} asBag'
+	self
+		assert: ((x raisedTo: 15) - 1) factors
+		equals:
+			{(x + 1).
+			((x raisedTo: 2) + x + 1).
+			((x raisedTo: 4) + (x raisedTo: 3) + (x raisedTo: 2) + x + 1).
+			((x raisedTo: 4) + x + 1).
+			((x raisedTo: 4) + (x raisedTo: 3) + 1)} asBag
 ]
 
 { #category : #tests }
