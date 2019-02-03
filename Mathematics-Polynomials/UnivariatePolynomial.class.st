@@ -92,36 +92,59 @@ UnivariatePolynomial >> \\ anObject [
 UnivariatePolynomial >> allComplexRoots [
 	| answer |
 	answer := Bag new.
-	self integerPrimitive factors withOccurrencesDo: [:f :e|
-		f degree = 1
-			ifTrue:
-				[answer add: (f independentCoefficient negated / f leadingCoefficient) withOccurrences: e]
-			ifFalse:
-				[(ComplexRootIsolator on: f) roots do: [:each|
-	 				answer add: (ComplexAlgebraicNumber minimalPolynomial: f approximation: each center radius: each radius) withOccurrences: e]]].
+	self integerPrimitive factors
+		withOccurrencesDo: [ :f :e | 
+			f degree = 1
+				ifTrue: [ answer
+						add: f independentCoefficient negated / f leadingCoefficient
+						withOccurrences: e ]
+				ifFalse: [ (ComplexRootIsolator on: f) roots
+						do: [ :each | 
+							answer
+								add:
+									(ComplexAlgebraicNumber
+										minimalPolynomial: f
+										approximation: each center
+										radius: each radius)
+								withOccurrences: e ] ] ].
 	^ answer
 ]
 
 { #category : #'roots-private' }
 UnivariatePolynomial >> allRationalRoots [
 	"Answer the (real) rational roots of the polynomial."
+
 	| roots f n k tau visited fourier |
 	roots := Bag new.
 	f := self integerPrimitive.
 	n := f degree.
-	(k := f order) > 0 ifTrue: [roots add: 0 withOccurrences: k. f := f shift: k negated].
-	f isConstant ifTrue: [^ roots].
+	(k := f order) > 0
+		ifTrue: [ roots add: 0 withOccurrences: k.
+			f := f shift: k negated ].
+	f isConstant
+		ifTrue: [ ^ roots ].
 	visited := Set new.
 	fourier := OrderedCollection with: f.
-	f independentCoefficient divisorsDo: [:each|
-		f leadingCoefficient divisorsDo: [:one|
-			tau := each / one.
-			visited add: tau ifAbsent:
-					[(f value: tau) isZero
-						ifTrue: [roots add: tau withOccurrences: (self multiplicityAt: tau fourier: fourier). roots size = n ifTrue: [^ roots]].
-					tau := tau negated.
-					(f value: tau) isZero
-						ifTrue: [roots add: tau withOccurrences: (self multiplicityAt: tau fourier: fourier). roots size = n ifTrue: [^ roots]]]]].
+	f independentCoefficient
+		divisorsDo: [ :each | 
+			f leadingCoefficient
+				divisorsDo: [ :one | 
+					tau := each / one.
+					visited
+						add: tau
+						ifAbsent: [ (f value: tau) isZero
+								ifTrue: [ roots
+										add: tau
+										withOccurrences: (self multiplicityAt: tau fourier: fourier).
+									roots size = n
+										ifTrue: [ ^ roots ] ].
+							tau := tau negated.
+							(f value: tau) isZero
+								ifTrue: [ roots
+										add: tau
+										withOccurrences: (self multiplicityAt: tau fourier: fourier).
+									roots size = n
+										ifTrue: [ ^ roots ] ] ] ] ].
 	^ roots
 ]
 
@@ -142,6 +165,7 @@ UnivariatePolynomial >> allRealRoots [
 { #category : #roots }
 UnivariatePolynomial >> allRoots [
 	"Answer the roots (counted with multiplicity) in the coefficients ring or field."
+
 	^ self allRootsIn: self scalars
 ]
 
@@ -186,7 +210,7 @@ UnivariatePolynomial >> at: aMonomial [
 
 { #category : #'accessing coefficients' }
 UnivariatePolynomial >> atDegree: i [
-	^ coefficients at: i+1 ifAbsent: [self scalars zero]
+	^ coefficients at: i + 1 ifAbsent: [ self scalars zero ]
 ]
 
 { #category : #accessing }
@@ -279,17 +303,19 @@ UnivariatePolynomial >> derivativeIn: anIndeterminate [
 { #category : #operations }
 UnivariatePolynomial >> discriminant [
 	"Answer the (standard) discriminant of the receiver."
+
 	| n |
 	n := self degree.
-	^ '(-1) ^ (n*(n-1)/2) / self leadingCoefficient * (self resultant: self derivative)'
+	^( (-1)  raisedTo:  (n*(n-1)/2)) / self leadingCoefficient * (self resultant: self derivative)
 ]
 
 { #category : #operations }
 UnivariatePolynomial >> discriminant0 [
 	"Answer the (normalized) discriminant of the receiver."
+
 	| n |
 	n := self degree.
-	^ '(-1) ^ (n*(n-1)/2) / (self leadingCoefficient ^ (2*n-1)) * (self resultant: self derivative)'
+	^ ((-1)  raisedTo: (n*(n-1)/2)) / ((self leadingCoefficient)  raisedTo: (2*n-1)) * (self resultant: self derivative)
 ]
 
 { #category : #factorization }
@@ -1019,32 +1045,41 @@ UnivariatePolynomial >> shift: anInteger [
 UnivariatePolynomial >> signature [
 	"Answer the signature (r1,r2) of the receiver, where r1 is the number of real roots and 2*r2 is the number of non-real roots. Assume the receiver's coefficients are integers. Throw an error if the receiver is not square-free.
 	Ref: COHEN Algorithm 4.1.11 (Sturm)."
+
 	| A B g h s n t r1 d R |
-	self isZero ifTrue: [^ #(0 0)].
+	self isZero
+		ifTrue: [ ^ #(0 0) ].
 	A := self primitive.
 	B := self derivative primitive.
 	g := 1.
 	h := 1.
 	s := A sign.
 	n := A degree.
-	t := n even ifTrue: [s negated] ifFalse: [s].
+	t := n even
+		ifTrue: [ s negated ]
+		ifFalse: [ s ].
 	r1 := 1.
-	[d := A degree - B degree.
+	[ d := A degree - B degree.
 	R := A pseudoRem: B.
-	R isZero ifTrue: [^ self error: 'polynomial is not square-free'].
-	(d odd or: [B leadingCoefficient > 0])
-		ifTrue: [R := R negated].
+	R isZero
+		ifTrue: [ ^ self error: 'polynomial is not square-free' ].
+	(d odd or: [ B leadingCoefficient > 0 ])
+		ifTrue: [ R := R negated ].
 	"Use Sturm:"
-	R sign ~= s ifTrue: [s := s negated. r1 := r1 - 1].
-	'R sign ~= ((-1) ^ R degree * t) ifTrue: [t := t negated. r1 := r1 + 1]'.
+	R sign ~= s
+		ifTrue: [ s := s negated.
+			r1 := r1 - 1 ].
+	R sign ~= ((-1 raisedTo: R) degree * t)
+		ifTrue: [ t := t negated.
+			r1 := r1 + 1 ].
 	"Finished?"
-	R isConstant]
-		whileFalse:
-			['A := B.
-						B := R / (h ^ d * g).
-						g := A leadingCoefficient abs.
-						h := h ^ (1 - d) * (g ^ d)'].
-	^ {r1. n - r1 / 2}
+	R isConstant ]
+		whileFalse: [ A := B.
+			B := R / ((h raisedTo: d) * g).
+			g := A leadingCoefficient abs.
+			h := (h raisedTo: 1 - d) * (g raisedTo: d) ].
+	^ {r1.
+	((n - r1) / 2)}
 ]
 
 { #category : #factorization }

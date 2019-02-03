@@ -84,9 +84,9 @@ NumberFieldTest >> testQSqrt2RealEmbeddings [
 
 { #category : #tests }
 NumberFieldTest >> testQuadraticFieldFundamentalDiscriminant [
-	self assert: (QuadraticField sqrt: 102) discriminant = 408.
-	self assert: (QuadraticField sqrt: 720) discriminant = 5.
-	self assert: (QuadraticField sqrt: 2) discriminant = 8
+	self assert: (QuadraticField sqrt: 102) discriminant equals: 408.
+	self assert: (QuadraticField sqrt: 720) discriminant equals: 5.
+	self assert: (QuadraticField sqrt: 2) discriminant equals: 8
 ]
 
 { #category : #tests }
@@ -101,50 +101,51 @@ NumberFieldTest >> testQuadraticFieldSqrt2 [
 
 { #category : #tests }
 NumberFieldTest >> testQuadraticFieldSqrtMinusFive [
-	| E |
-	E := QuadraticField sqrt: -5.
-	self assert: E x minimalPolynomial = E polynomial.
-	self assert: E x squared = (E embed: -5).
-'	self assert: E x ^ 4 = (E embed: 25)'.
-	self assert: E discriminant = -20
+	| e |
+	e := QuadraticField sqrt: -5.
+	self assert: e x minimalPolynomial equals: e polynomial.
+	self assert: e x squared equals: (e embed: -5).
+	self assert: (e x raisedTo: 4) equals: (e embed: 25).
+	self assert: e discriminant equals: -20
 ]
 
 { #category : #tests }
 NumberFieldTest >> testSignature [
 	| x F |
-'	x := QQ polynomials x.
-	F := NumberField polynomial: x^2 + 1.
-	self assert: F signature = #(0 1).
-	F := NumberField polynomial: x^3 - 2.
-	self assert: F signature = #(1 1).
+	x := QQ polynomials x.
+	F := NumberField polynomial: (x raisedTo: 2) + 1.
+	self assert: F signature equals: #(0 1).
+	F := NumberField polynomial: (x raisedTo: 3) - 2.
+	self assert: F signature equals: #(1 1).
 	F := CyclotomicField new: 5.
-	self assert: F signature = #(0 2).
-	F := NumberField polynomial: x^6 + x + 1.
-	self assert: F signature = #(0 3).
-	F := NumberField polynomial: x^3 + (x^2) - (x*5) - 1.
-	self assert: F signature = #(3 0)'
+	self assert: F signature equals: #(0 2).
+	F := NumberField polynomial: (x raisedTo: 6) + x + 1.
+	self assert: F signature equals: #(0 3).
+	F := NumberField
+		polynomial: (x raisedTo: 3) + (x raisedTo: 2) - (x * 5) - 1.
+	self assert: F signature equals: #(3 0)
 ]
 
 { #category : #tests }
 NumberFieldTest >> testTotallyImaginary [
 	| x E |
-'	x := QQ polynomials x.
-	E := NumberField polynomial: x^2 + 2.
+	x := QQ polynomials x.
+	E := NumberField polynomial: (x raisedTo: 2) + 2.
 	self assert: E isImaginary.
-	E := NumberField polynomial: x^2 - 2.
+	E := NumberField polynomial: (x raisedTo: 2) - 2.
 	self assert: E isImaginary not.
-	E := NumberField polynomial: x^4 - 2.
-	self assert: E isImaginary not'
+	E := NumberField polynomial: (x raisedTo: 4) - 2.
+	self assert: E isImaginary not
 ]
 
 { #category : #tests }
 NumberFieldTest >> testTotallyReal [
 	| x E |
-'	x := QQ polynomials x.
-	E := NumberField polynomial: x^2 + 2.
+	x := QQ polynomials x.
+	E := NumberField polynomial: (x raisedTo: 2) + 2.
 	self assert: E isReal not.
-	E := NumberField polynomial: x^2 - 2.
+	E := NumberField polynomial: (x raisedTo: 2) - 2.
 	self assert: E isReal.
-	E := NumberField polynomial: x^4 - 2.
-	self assert: E isReal not'
+	E := NumberField polynomial: (x raisedTo: 4) - 2.
+	self assert: E isReal not
 ]
