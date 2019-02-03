@@ -344,65 +344,68 @@ AlgebraicGeometryTest >> testProductRingHomogeneousTuplesBug [
 { #category : #affine }
 AlgebraicGeometryTest >> testProjectiveClosure [
 	"From Magma Handbook example Scheme_projective-closure (H118E23)."
+
 	| A1 u v X PX X2 |
-	A1 := AffineSpace new: #(u v) over: ZZ/5.
+	A1 := AffineSpace new: #(u v) over: ZZ / 5.
 	u := A1 coordinateRing x: #u.
 	v := A1 coordinateRing x: #v.
-	X := 'A1 subscheme: u^2 - (v^5)'.
+	X := A1 subscheme: (u raisedTo: 2) - (v raisedTo: 5).
 	PX := X projectiveClosure.
-	self assert: (PX patch: 3) = X.
+	self assert: (PX patch: 3) equals: X.
 	X2 := PX patch: 2.
-	self assert: X2 projectiveClosure = X projectiveClosure
+	self assert: X2 projectiveClosure equals: X projectiveClosure
 ]
 
 { #category : #affine }
 AlgebraicGeometryTest >> testProjectiveEmbedding [
 	| A1 u v X PX affinePointsEmbedded projectivePoints |
-	A1 := AffineSpace new: #(u v) over: ZZ/5.
+	A1 := AffineSpace new: #(u v) over: ZZ / 5.
 	u := A1 coordinateRing x: #u.
 	v := A1 coordinateRing x: #v.
-	X := 'A1 subscheme: u^2 - (v^5)'.
+	X := A1 subscheme: (u raisedTo: 2) - (v raisedTo: 5).
 	PX := X projectiveClosure.
 	affinePointsEmbedded := X points asSet apply: X projectiveEmbedding.
 	projectivePoints := PX points asSet.
 	self assert: projectivePoints >= affinePointsEmbedded.
 	"the projective scheme has one more point at infinity:"
-	self assert: affinePointsEmbedded size + 1 = projectivePoints size
+	self
+		assert: affinePointsEmbedded size + 1
+		equals: projectivePoints size
 ]
 
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing [
 	| P |
-	P := ProjectiveLine over: ZZ/6.
+	P := ProjectiveLine over: ZZ / 6.
 	"P(Z/6Z) has 12 points: [0:1], [1:1], [2:1], [3:1], [4:1], [5:1], [1:2], [3:2], [5:2], [1:3], [2:3] and [1:0] (Henri Cohen, 'A Course in Computational Algebraic Number Theory', 478p)"
-	self assert: P points size = 12.
-	self assert: (Iterator on: P points performing: #do:) size = 12
+	self assert: P points size equals: 12.
+	self assert: (Iterator on: P points performing: #do:) size equals: 12
 ]
 
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing2AsDirectProduct [
 	| P |
-	P := 'ProjectiveLine over: ZZ/2 ◊ (ZZ/2)'. "isomorphic to ZZ/2[x]/<x(x+1)>"
-	self assert: P points size = 9.
-	self assert: (Iterator on: P points performing: #do:) size = 9
+	P := 'ProjectiveLine over: ZZ/2 ◊ (ZZ/2)'.	"isomorphic to ZZ/2[x]/<x(x+1)>"
+	self assert: P points size equals: 9.
+	self assert: (Iterator on: P points performing: #do:) size equals: 9
 ]
 
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing2AsQuotient [
 	| R P |
-	R := (ZZ/2) polynomials.
-	'R := R / (R x * (R x + 1))'. "isomorphic to ZZ/2 ◊ (ZZ/2)"
+	R := (ZZ / 2) polynomials.
+	R := R / (R x * (R x + 1)).	"isomorphic to ZZ/2 ◊ (ZZ/2)"
 	P := ProjectiveLine over: R.
-	self assert: P points size = 9.
-	self assert: (Iterator on: P points performing: #do:) size = 9
+	self assert: P points size equals: 9.
+	self assert: (Iterator on: P points performing: #do:) size equals: 9
 ]
 
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing4 [
 	| P |
 	'P := ProjectiveLine over: ZZ/4 ◊ (ZZ/4)'.
-	self assert: P points size = 36.
-	self assert: (Iterator on: P points performing: #do:) size = 36
+	self assert: P points size equals: 36.
+	self assert: (Iterator on: P points performing: #do:) size equals: 36
 ]
 
 { #category : #'finite rings' }
@@ -416,36 +419,39 @@ AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing5 [
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing6 [
 	| R P |
-	R := '(ZZ/2) polynomials'.
-	R := 'R / (R x^3 - R x)'.
+	R := (ZZ / 2) polynomials.
+	R := R / ((R x raisedTo: 3) - R x).
 	P := ProjectiveLine over: R.
-	self assert: P points size = 18.
-	self assert: (Iterator on: P points performing: #do:) size = 18
+	self assert: P points size equals: 18.
+	self assert: (Iterator on: P points performing: #do:) size equals: 18
 ]
 
 { #category : #projective }
 AlgebraicGeometryTest >> testProjectivePlaneCurveArithmeticGenus [
 	| R f C |
-	R :=  (ZZ/5) polynomialsIn: 3.
-	f := 'R ! [:x :y :z| y^2*(z^7) - (x^9) - (x*(z^8))]'.
+	R := ZZ / 5 polynomialsIn: 3.
+	f := R
+		! [ :x :y :z | 
+			(y raisedTo: 2) * (z raisedTo: 7) - (x raisedTo: 9)
+				- (x * (z raisedTo: 8)) ].
 	C := ProjectivePlaneCurve polynomial: f.
-	self assert: C arithmeticGenus = 28.
+	self assert: C arithmeticGenus equals: 28
 	"self assert: C genus = 4"
 ]
 
 { #category : #projective }
 AlgebraicGeometryTest >> testProjectivePlaneOverFiniteField [
 	| P |
-	P := ProjectiveSpace new: 2 over: ZZ/5.
-	self assert: P points size = 31.
-	self assert: (Iterator on: P points performing: #do:) size = 31
+	P := ProjectiveSpace new: 2 over: ZZ / 5.
+	self assert: P points size equals: 31.
+	self assert: (Iterator on: P points performing: #do:) size equals: 31
 ]
 
 { #category : #projective }
 AlgebraicGeometryTest >> testProjectivePlaneOverFiniteRing [
 	| P |
-	P := ProjectiveSpace new: 2 over: ZZ/4.
-	self assert: P points size = 28
+	P := ProjectiveSpace new: 2 over: ZZ / 4.
+	self assert: P points size equals: 28
 	"this plane has 28 points and 28 lines (falling into 7 neighbour classes of size 4), each line has 6 points and each point is on 6 lines"
 ]
 
@@ -722,27 +728,42 @@ AlgebraicGeometryTest >> testSpecZSubschemes [
 { #category : #'rational points' }
 AlgebraicGeometryTest >> testSturmfelsExample1 [
 	"Bernd Sturmfels, 'Ideals, Varieties and Macaulay 2', 1. A Curve in Affine 3-Space."
+
 	| R x y I C C1 C2 |
-	R := QQ polynomialsIn: #(x y z). "default ordering is trevlex"
+	R := QQ polynomialsIn: #(x y z).	"default ordering is trevlex"
 	x := R x.
 	y := R y.
-"	z := R z."
-	I := 'R * {x^4 - (y^5). x^3 - (y^7)}'.
-	self assert: I groebnerBasis reduced printString = '{x^8 - x^3y^3, x^4y^2 - x^3, y^5 - x^4}'.
+	"	z := R z."
+	I := R
+		*
+			{((x raisedTo: 4) - (y raisedTo: 5)).
+			((x raisedTo: 3) - (y raisedTo: 7))}.
+	self
+		assert: I groebnerBasis reduced printString
+		equals: '{x^8 - x^3y^3, x^4y^2 - x^3, y^5 - x^4}'.
 	C := I variety.
-	self assert: C dimension = 1.
-	self assert: C codimension = 2.
-	"The degree of a curve in complex affine 3-space is the number of intersection points with a general plane. It coincides with the degree of the projective closure of our curve:"
-	self assert: C projectiveClosure degree = 28.
-	"We first extract the components which are transverse to the plane x = 0:"
+	self assert: C dimension equals: 1.
+	self assert: C codimension equals: 2.
+	self assert: C projectiveClosure degree equals: 28.
 	C1 := C \ (R / R x) spec.
-	'self assert: C1 = (R / {x*(y^2) - 1. y^5 - (x^4). x^5 - (y^3)}) spec'.
-	"And next we extract the component which lies in the clane x = 0:"
-	C2 := C - C1. "NOTE: the article uses ideal saturation, and this is colon"
-	'self assert: C2 = (R / {x^3. y^5}) spec'.
-	"self deny: C isReduced." "this fails!!!"
-	self assert: C1 projectiveClosure degree = 13.
-	self assert: C1 isReduced "equivalent to C1 ideal = C1 ideal radical"
+	self
+		assert: C1
+		equals:
+			(R
+				/
+					{(x * (y raisedTo: 2) - 1).
+					((y raisedTo: 5) - (x raisedTo: 4)).
+					((x raisedTo: 5) - (y raisedTo: 3))}) spec.
+	C2 := C - C1.	"NOTE: the article uses ideal saturation, and this is colon"
+	self
+		assert: C2
+		equals:
+			(R
+				/
+					{(x raisedTo: 3).
+					(y raisedTo: 5)}) spec.
+	self assert: C1 projectiveClosure degree equals: 13.
+	self assert: C1 isReduced	"equivalent to C1 ideal = C1 ideal radical"
 ]
 
 { #category : #'rational points' }
@@ -772,12 +793,24 @@ AlgebraicGeometryTest >> testSturmfelsExample2 [
 { #category : #'tangent cone' }
 AlgebraicGeometryTest >> testTangentCone [
 	"'A Singular Introduction to Commutative Algebra', Example 5.5.13."
+
 	| R I J X |
 	R := QQ polynomialsIn: #(x y z).
-'	I := R * (R ! [:x :y :z| {y*z + (z^2) + (x^3). y^2 + (x*z) + (y^4)}]).
-	X := (R/I) spec.
-	J := R * (R ! [:x :y :z| {y^2 + (x*z). y*z + (z^2). x*(z^2) - (y*(z^2))}])'.
-	self assert: (X ! (0,0,0)) tangentCone ideal = J
+	I := R
+		*
+			(R
+				! [ :x :y :z | 
+					{(y * z + (z raisedTo: 2) + (x raisedTo: 3)).
+					((y raisedTo: 2) + (x * z) + (y raisedTo: 4))} ]).
+	X := (R / I) spec.
+	J := R
+		*
+			(R
+				! [ :x :y :z | 
+					{((y raisedTo: 2) + (x * z)).
+					(y * z + (z raisedTo: 2)).
+					(x * (z raisedTo: 2) - (y * (z raisedTo: 2)))} ]).
+	self assert: (X ! (0 , 0 , 0)) tangentCone ideal equals: J
 ]
 
 { #category : #'tangent cone' }

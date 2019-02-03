@@ -97,9 +97,9 @@ ProjectiveSpace >> newPatch: i [
 ProjectiveSpace >> pointsCountOver: aRing [
 	aRing isField ifTrue: [^ aRing isFinite ifTrue: [^ self rank choose: 1 q: aRing size] ifFalse: [aRing size]].
 	aRing isFinite ifFalse: [^ aRing size].
-	'(aRing isKindOf: ModularIntegerRing)
+	(aRing isKindOf: ModularIntegerRing)
 			ifTrue:
-				[^ aRing modulus ^ (self rank - 1) * (aRing modulus factors asSet product: [:p| (0 to: self rank - 1) sum: [:i| 1 / (p^i)]])]'.
+				[^ ((aRing modulus) raisedTo: (self rank - 1) )* ((aRing modulus factors asSet collect: [:p| (0 to: self rank - 1) sum: [:i| 1 / (p raisedTo: i)]]) fold: [:a :b| a*b])].
 	^ super pointsCountOver: aRing
 ]
 
@@ -130,7 +130,7 @@ ProjectiveSpace >> pointsOverField: aRing do: aBlock [
 
 { #category : #printing }
 ProjectiveSpace >> printOn: aStream [
-	aStream nextPut: Character PP; nextPutAll: (self rank - 1) printString super; print: self scalars
+	aStream nextPutAll: 'PP'; nextPutAll: (self rank - 1) printString; print: self scalars
 ]
 
 { #category : #morphisms }

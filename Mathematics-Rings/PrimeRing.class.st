@@ -155,7 +155,7 @@ PrimeRing >> primeSubfield [
 
 { #category : #printing }
 PrimeRing >> printOn: aStream [
-	aStream print: self base; nextPut: $/; print: self p; nextPutAll: self exponent printString super; print: self base
+	aStream print: self base; nextPut: $/; print: self p; nextPutAll: self exponent printString ; print: self base
 ]
 
 { #category : #morphisms }
