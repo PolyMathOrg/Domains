@@ -13,7 +13,8 @@ Class {
 { #category : #'instance creation' }
 QuadraticForm class >> coefficients: aTuple [
 	"Answer the quadratic form with the given coefficients (in lexicographical order)."
-	^ 'self from: aTuple scalars ^ (aTuple size * 2) sqrtFloor coefficients: aTuple'
+
+	^ self from: ((aTuple scalars)  raisedTo:  (aTuple size * 2)) sqrtFloor coefficients: aTuple
 ]
 
 { #category : #'instance creation' }

@@ -42,19 +42,33 @@ QuadraticFormTest >> testAsPolynomial [
 { #category : #tests }
 QuadraticFormTest >> testAssociatedBilinearForm [
 	"Example from Sage."
+
 	| Q B |
-	Q := QuadraticForm coefficients: ((1,4,0,1,4,1) over: ZZ).
+	Q := QuadraticForm coefficients: (1 , 4 , 0 , 1 , 4 , 1 over: ZZ).
 	B := Q associatedBilinearForm.
-	self assert: (B value: {(1,2,0) over: ZZ. (0,1,1) over: ZZ}) = 8
+	self
+		assert:
+			(B
+				value:
+					{(1 , 2 , 0 over: ZZ).
+					(0 , 1 , 1 over: ZZ)})
+		equals: 8
 ]
 
 { #category : #tests }
 QuadraticFormTest >> testAssociatedBilinearForm2 [
 	"Example from Sage."
+
 	| Q B |
-	Q := QuadraticForm coefficients: (1/2, 2, 1).
+	Q := QuadraticForm coefficients: 1 / 2 , 2 , 1.
 	B := Q associatedBilinearForm.
-	self assert: (B value: {(1,1). (1/2,2)}) = (19/4)
+	self
+		assert:
+			(B
+				value:
+					{(1 , 1).
+					(1 / 2 , 2)})
+		equals: 19 / 4
 ]
 
 { #category : #tests }

@@ -6,19 +6,22 @@ Class {
 
 { #category : #tests }
 NumberFieldTest >> testCyclotomicFieldDiscriminant [
-	self assert: (CyclotomicField new: 20) discriminant = 4000000.
-	self assert: (CyclotomicField new: 18) discriminant = -19683
+	self assert: (CyclotomicField new: 20) discriminant equals: 4000000.
+	self assert: (CyclotomicField new: 18) discriminant equals: -19683
 ]
 
 { #category : #tests }
 NumberFieldTest >> testMinimalPolynomial [
 	"Example from 'Algebraic Number Theory: A Computational Approach' by William Stein (28 pp)."
+
 	| x K a |
 	x := QQ polynomials x.
-	'K := QQ extension: x^2 - 2.
-		a := K x.
-		self assert: a minimalPolynomial = (x^2 - 2).
-		self assert: (a/2 + 3) minimalPolynomial = (x^2 - (x*6) + (17/2))'
+	K := QQ extension: (x raisedTo: 2) - 2.
+	a := K x.
+	self assert: a minimalPolynomial equals: (x raisedTo: 2) - 2.
+	self
+		assert: (a / 2 + 3) minimalPolynomial
+		equals: (x raisedTo: 2) - (x * 6) + (17 / 2)
 ]
 
 { #category : #tests }
@@ -37,10 +40,11 @@ NumberFieldTest >> testMinimalPolynomial2 [
 { #category : #tests }
 NumberFieldTest >> testMinimalPolynomial3 [
 	"Example from 'Algebraic Number Theory: A Computational Approach' by William Stein (29 pp)."
+
 	| x alpha |
 	x := QQ polynomials x.
-	alpha := 1 + 5 squareRoot / 2.
-	'self assert: alpha minimalPolynomial = (x^2 - x - 1)'
+	alpha := (1 + 5 squareRoot) / 2.
+	self assert: alpha minimalPolynomial equals: (x raisedTo: 2) - x - 1
 ]
 
 { #category : #tests }
@@ -73,7 +77,9 @@ NumberFieldTest >> testQSqrt2RealEmbeddings [
 	E := QQ adjoin: RealAlgebraicNumber sqrt2.
 	embeddings := E realEmbeddings.
 	roots := (E polynomial rootsIn: RR) asSet.
-	self assert: (embeddings collect: [:f| f value: E x]) asSet = roots
+	self
+		assert: (embeddings collect: [ :f | f value: E x ]) asSet
+		equals: roots
 ]
 
 { #category : #tests }

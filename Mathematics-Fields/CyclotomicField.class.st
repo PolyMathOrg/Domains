@@ -28,7 +28,7 @@ CyclotomicField >> discriminant [
 	| n phi |
 	n := self order.
 	phi := n phi.
-	^ '-1 ^ (phi / 2) * (n ^ phi) / (n factors asSet product: [:p| p ^ (phi / (p - 1))])'
+	^ (-1  raisedTo: (phi / 2)) * (n  raisedTo:  phi) / ((n factors asSet collect:  [:p| p  raisedTo: (phi / (p - 1))]) fold: [:a :b| a*b])
 ]
 
 { #category : #accessing }
@@ -67,7 +67,7 @@ CyclotomicField >> order [
 CyclotomicField >> order: anInteger [
 	anInteger > 2 ifFalse: [^ self error: 'the order of a cyclotomic field must be > 2'].
 	self propertyAt: #order put: anInteger.
-	self polynomial: ((QQ polynomialsIn: {Character zeta asString, anInteger printString sub}) cyclotomic: anInteger)
+	self polynomial: ((QQ polynomialsIn: {'Zeta' , anInteger printString}) cyclotomic: anInteger)
 ]
 
 { #category : #printing }
