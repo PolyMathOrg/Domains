@@ -224,7 +224,7 @@ PolynomialRing >> atRandomBits: bitSize maxDegree: d [
 PolynomialRing >> atRandomDegree: d [
 	"Answer a polynomial of degree d choosen at random with a uniform distribution."
 	self isUnivariate ifFalse: [^ self notYetImplemented].
-	^ self coefficients: ('self scalars ^ d') atRandom, self scalars one
+	^ self coefficients: (self scalars raisedTo: d) atRandom
 ]
 
 { #category : #random }

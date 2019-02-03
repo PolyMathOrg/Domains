@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testAllMonomialsOfDegree [
 	| d n |
 	n := 5 atRandom.
@@ -12,7 +12,7 @@ PolynomialTest >> testAllMonomialsOfDegree [
 	'self assert: (ZZ polynomialsIn: n :: allMonomialsOfDegree: d) size = (n+d-1 choose: d)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testArithmeticOver: R [
 	| x f g |
 '	x := R polynomials x.
@@ -27,91 +27,101 @@ PolynomialTest >> testArithmeticOver: R [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testArithmeticQQ [
 	self testArithmeticOver: QQ
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testArithmeticZ2 [
-	self testArithmeticOver: ZZ/2
+	self testArithmeticOver: ZZ / 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testArithmeticZ3 [
-	self testArithmeticOver: ZZ/3
+	self testArithmeticOver: ZZ / 3
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testArithmeticZm [
-	self testArithmeticOver: ZZ/(2 + 100 atRandom)
+	self testArithmeticOver: ZZ / (2 + 100 atRandom)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testCRT [
 	| x f1 f2 f3 crt r1 r2 r3 h |
-	'x := QQ polynomials x.
-		f1 := x^5 + 1.
-		f2 := x^2 + 1.
-		f3 := x - 1.
-		crt := CRT mod: {f1. f2. f3}.
-		r1 := x-1.
-		r2 := x+1.
-		r3 := x-x. "zero"
-		h := crt solve: {r1. r2. r3}'.
-	self assert: h \\ f1 = r1.
-	self assert: h \\ f2 = r2.
-	self assert: h \\ f3 = r3
+	x := QQ polynomials x.
+	f1 := (x raisedTo: 5) + 1.
+	f2 := (x raisedTo: 2) + 1.
+	f3 := x - 1.
+	crt := CRT
+		mod:
+			{f1.
+			f2.
+			f3}.
+	r1 := x - 1.
+	r2 := x + 1.
+	r3 := x - x.	"zero"
+	h := crt
+		solve:
+			{r1.
+			r2.
+			r3}.
+	self assert: h \\ f1 equals: r1.
+	self assert: h \\ f2 equals: r2.
+	self assert: h \\ f3 equals: r3
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testCompanionMatrix [
 	| x p |
 	x := QQ polynomials x.
-	p := 'x^2 + (x*2) - 1'.
-	self assert: p companion characteristicPolynomial = p.
-	self assert: p companion minimalPolynomial = p
+	p := (x raisedTo: 2) + (x * 2) - 1.
+	self assert: p companion characteristicPolynomial equals: p.
+	self assert: p companion minimalPolynomial equals: p
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testContentAndPrimitive [
 	| Zx Zxy x y f |
 	Zx := ZZ polynomialsIn: #(x).
 	Zxy := Zx polynomialsIn: #(y).
 	x := Zx x.
 	y := Zxy x.
-'	f := 2*x*y + (2*(x^2))'.
-	self assert: f primitive * f content = f
+	f := 2 * x * y + (2 * (x raisedTo: 2)).
+	self assert: f primitive * f content equals: f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testContentAndPrimitiveAtRandom [
 	| Zx f |
 	Zx := ZZ polynomials.
 	f := Zx atRandomBits: 100 maxDegree: (1 to: 10) atRandom.
-	self assert: f primitive * f content = f
+	self assert: f primitive * f content equals: f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDiscriminant [
 	| Zx x f g |
 	Zx := ZZ polynomials.
 	x := Zx x.
-'	f := x^2 + x + 1.
-	g := x^3 + 1'.
-	self assert: (f*g) discriminant = (f discriminant * g discriminant * (f resultant: g) squared)
+	f := (x raisedTo: 2) + x + 1.
+	g := (x raisedTo: 3) + 1.
+	self
+		assert: (f * g) discriminant
+		equals: f discriminant * g discriminant * (f resultant: g) squared
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDiscriminant2 [
 	| Zx x f |
 	Zx := ZZ polynomials.
 	x := Zx x.
-'	f := x^2 - x - 36042'.
-	self assert: f discriminant = 144169 "this is a prime, although looks like a square :)"
+	f := (x raisedTo: 2) - x - 36042.
+	self assert: f discriminant = 144169	"this is a prime, although looks like a square :)"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDivision: F [
 	| Fx f g |
 	Fx := F polynomials.
@@ -120,22 +130,22 @@ PolynomialTest >> testDivision: F [
 	self assert: (f // g) * g + (f \\ g) = f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDivisionQ [
 	self testDivision: QQ
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDivisionZ2 [
 	self testDivision: (PrimeField new: 2)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDivisionZ65535 [
-	self testDivision: (PrimeField new: (2 raiseTo: 17) - 1)
+	self testDivision: (PrimeField new: (2 raisedTo: 17) - 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testDomainError [
 	| f g |
 	f := ZZ polynomials atRandomBits: 10.
@@ -145,7 +155,7 @@ PolynomialTest >> testDomainError [
 	self should: [f * g] raise: DomainError
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEPRS [
 	"Example from Zippel."
 	| a b eprs |
@@ -159,66 +169,74 @@ PolynomialTest >> testEPRS [
 		(1254542875143750 -1654608338437500) (12593338795500743100931141992187500))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphism [
 	| Zx f g a |
 	Zx := ZZ polynomials.
 	f := Zx atRandomBits: 1000 maxDegree: 10.
 	g := Zx atRandomBits: 1000 maxDegree: 10.
 	a := ZZ atRandomBits: 100.
-	self assert: (f+g value: a) = ((f value: a) + (g value: a)).
-	self assert: (f-g value: a) = ((f value: a) - (g value: a)).
-	self assert: (f*g value: a) = ((f value: a) * (g value: a)).
-	self assert: '(f^3 value: a) = ((f value: a)^3)'
+	self assert: (f + g value: a) equals: (f value: a) + (g value: a).
+	self assert: (f - g value: a) equals: (f value: a) - (g value: a).
+	self assert: (f * g value: a) equals: (f value: a) * (g value: a).
+	self
+		assert: ((f raisedTo: 3) value: a)
+		equals: ((f value: a) raisedTo: 3)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphism: F [
 	| Fx f g a |
 	Fx := F polynomials.
 	f := Fx atRandomDegree: 10 atRandom.
 	g := Fx atRandomDegree: 10 atRandom.
 	a := F atRandom.
-	self assert: (f+g value: a) = ((f value: a) + (g value: a)).
-	self assert: (f-g value: a) = ((f value: a) - (g value: a)).
-	self assert: (f*g value: a) = ((f value: a) * (g value: a)).
-	self assert: '(f^3 value: a) = ((f value: a)^3)'
+	self assert: (f + g value: a) equals: (f value: a) + (g value: a).
+	self assert: (f - g value: a) equals: (f value: a) - (g value: a).
+	self assert: (f * g value: a) equals: (f value: a) * (g value: a).
+	self
+		assert: ((f raisedTo: 3) value: a)
+		equals: ((f value: a) raisedTo: 3)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphismMultivariate [
 	| Zxyz f g a |
 	Zxyz := ZZ polynomialsIn: #(x y z).
 	f := Zxyz atRandomBits: 1000 maxDegree: 10.
 	g := Zxyz atRandomBits: 1000 maxDegree: 10.
-	a := 'ZZ ^ 3' atRandomBits: 100.
-	self assert: (f+g value: a) = ((f value: a) + (g value: a)).
-	self assert: (f-g value: a) = ((f value: a) - (g value: a)).
-	self assert: (f*g value: a) = ((f value: a) * (g value: a)).
-	self assert: '(f^3 value: a) = ((f value: a)^3)'
+	a := (ZZ raisedTo: 3) atRandomBits: 100.
+	self assert: (f + g value: a) equals: (f value: a) + (g value: a).
+	self assert: (f - g value: a) equals: (f value: a) - (g value: a).
+	self assert: (f * g value: a) equals: (f value: a) * (g value: a).
+	self
+		assert: ((f raisedTo: 3) value: a)
+		equals: ((f value: a) raisedTo: 3)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphismZ2 [
-	self testEvaluationHomomorphism: (PrimeField new: 2)
+	self testEvaluationHomomorphism: (PrimeField new: 2) 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphismZm [
-	'self testEvaluationHomomorphism: ZZ / (2 + 100 atRandom).
-		self testEvaluationHomomorphism: ZZ / (2^13 - 2).
-		self testEvaluationHomomorphism: ZZ / (2^31 - 2)'
+	self testEvaluationHomomorphism: ZZ / (2 + 100 atRandom).
+	self testEvaluationHomomorphism: ZZ / ((2 raisedTo: 13) - 2).
+	self testEvaluationHomomorphism: ZZ / ((2 raisedTo: 31) - 2) 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationHomomorphismZp [
 	self testEvaluationHomomorphism: (PrimeField new: 3).
 	self testEvaluationHomomorphism: (PrimeField new: 5).
-	'self testEvaluationHomomorphism: (PrimeField new: 2^13 - 1).
-		self testEvaluationHomomorphism: (PrimeField new: 2^31 - 1)'
+	self
+		testEvaluationHomomorphism: (PrimeField new: (2 raisedTo: 13) - 1).
+	self
+		testEvaluationHomomorphism: (PrimeField new: (2 raisedTo: 31) - 1) 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testEvaluationMultivariate [
 	| Zxyz f a x y z |
 	Zxyz := ZZ polynomialsIn: #(x y z).
@@ -228,7 +246,7 @@ PolynomialTest >> testEvaluationMultivariate [
 		self assert: (f value: a) = ((a at: 1)^2 * (a at: 2) - (a at: 3))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionBug [
 	| Zx x f |
 	Zx := ZZ polynomials.
@@ -237,7 +255,7 @@ PolynomialTest >> testExactDivisionBug [
 	self assert: f /// f = Zx one
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionMultivariate [
 	| Qxy x y f g |
 	Qxy := QQ polynomialsIn: #(x y).
@@ -249,7 +267,7 @@ PolynomialTest >> testExactDivisionMultivariate [
 	self assert: f * g /// f = g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionMultivariate2 [
 	| Qxy x y f g |
 	Qxy := QQ polynomialsIn: #(x y).
@@ -261,46 +279,52 @@ PolynomialTest >> testExactDivisionMultivariate2 [
 	self assert: (f * g divisionBy: f) quotient = g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionOverQ [
 	| x f g |
 	x := QQ polynomials x.
-	f := 'x^2 + x + 1'.
+	f := (x raisedTo: 2) + x + 1.
 	g := 1 - x.
-	self assert: f * g /// g = f.
-	self assert: f * g /// f = g
+	self assert: f * g /// g equals: f.
+	self assert: f * g /// f equals: g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionOverQRandom [
 	| Qx f g |
 	Qx := QQ polynomials.
 	f := Qx atRandomBits: 100 maxDegree: (1 to: 10) atRandom.
 	g := Qx atRandomBits: 100 maxDegree: (1 to: 10) atRandom.
-	self assert: f * g /// g = f.
-	self assert: f * g /// f = g
+	self assert: f * g /// g equals: f.
+	self assert: f * g /// f equals: g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExactDivisionOverZ [
 	| x f g |
 	x := ZZ polynomials x.
-	f := 'x^2 + x + 1'.
+	f := (x raisedTo: 2) + x + 1.
 	g := 1 - x.
-	self assert: f * g /// g = f.
-	self assert: f * g /// f = g
+	self assert: f * g /// g equals: f.
+	self assert: f * g /// f equals: g
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testExtendedEuclidBug [
 	| x f1 f2 |
 	x := QQ polynomials x.
-	f1 := 'x^2 + 1'.
+	f1 := (x raisedTo: 2) + 1.
 	f2 := x - 1.
-	self assert: (ExtendedEuclid on: {f1. f2}) gcd = (f1 gcd: f2)
+	self
+		assert:
+			(ExtendedEuclid
+				on:
+					{f1.
+					f2}) gcd
+		equals: (f1 gcd: f2)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization [
 	| F Fx x one f factors |
 	F := ZZ / 3.
@@ -316,7 +340,7 @@ PolynomialTest >> testFiniteFieldFactorization [
 	self assert: (factors inject: Fx one into: [:a :b| a*b]) = f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization2 [
 	| Z3 x f factors |
 	Z3 := ZZ / 3.
@@ -328,7 +352,7 @@ PolynomialTest >> testFiniteFieldFactorization2 [
 	self assert: (factors occurrencesOf: x-2) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization3 [
 	| F9 x f factors |
 	F9 := GaloisField new: (3 raiseTo: 2).
@@ -340,7 +364,7 @@ PolynomialTest >> testFiniteFieldFactorization3 [
 	self assert: (factors occurrencesOf: x-2) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization4 [
 	| R x f factors |
 	R := ZZ / 2.
@@ -352,7 +376,7 @@ PolynomialTest >> testFiniteFieldFactorization4 [
 		self assert: (factors occurrencesOf: x^2+x+1) = 8'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldFactorization5 [
 	| R x |
 	R := ZZ / 2.
@@ -360,7 +384,7 @@ PolynomialTest >> testFiniteFieldFactorization5 [
 '	self assert: (x^15 - 1) factors = {x + 1. x^2 + x + 1. x^4 + (x^3) + (x^2) + x + 1. x^4 + x + 1. x^4 + (x^3) + 1} asBag'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldIrreduciblePolynomials [
 	"Z/<3>[x] has 8 irreducible monic polynomials of degree 3, out of 27 monic polynomials of degree 3."
 	| F Fx f count |
@@ -378,7 +402,7 @@ PolynomialTest >> testFiniteFieldIrreduciblePolynomials [
 	self assert: count = 8
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldIsIrreducible [
 	| F Fx x f |
 	F := ZZ / 3.
@@ -389,7 +413,7 @@ PolynomialTest >> testFiniteFieldIsIrreducible [
 	self assert: f isIrreducible
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldRoots [
 	| Z3 x f roots |
 	Z3 := ZZ / 3.
@@ -401,7 +425,7 @@ PolynomialTest >> testFiniteFieldRoots [
 	self assert: (roots occurrencesOf: (Z3 project: 2)) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testFiniteFieldSFF [
 	| F Fx x one f factors |
 	F := ZZ / 3.
@@ -416,7 +440,7 @@ PolynomialTest >> testFiniteFieldSFF [
 	self assert: (factors occurrencesOf: x + one) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCD [
 	| P x f g |
 	P := QQ polynomials.
@@ -426,7 +450,7 @@ PolynomialTest >> testGCD [
 		self assert: (f gcd: g) = (x^2 - 1)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDMultivariate [
 	| Zxy x y f g |
 	Zxy := ZZ polynomialsIn: #(x y).
@@ -437,7 +461,7 @@ PolynomialTest >> testGCDMultivariate [
 	self assert: (f gcd: g) = (y-x)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDMultivariate2 [
 	"Example from Sage documentation."
 	| R x y f g |
@@ -448,7 +472,7 @@ PolynomialTest >> testGCDMultivariate2 [
 	self assert: '(f gcd: g) = (x^2 + (x*y))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDMultivariateOverQ [
 	| R x y f g |
 	R := QQ polynomialsIn: #(x y).
@@ -458,7 +482,7 @@ PolynomialTest >> testGCDMultivariateOverQ [
 	self assert: (f gcd: g) = (x*y)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDMultivariateOverZ [
 	| R x y f g |
 	R := ZZ polynomialsIn: #(x y).
@@ -468,7 +492,7 @@ PolynomialTest >> testGCDMultivariateOverZ [
 	self assert: (f gcd: g) = (x*y*3)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDOverRationalFunctions [
 	| R x y f g |
 	R := 'QQ polynomialsIn: #(y) :: fractions polynomials'.
@@ -478,7 +502,7 @@ PolynomialTest >> testGCDOverRationalFunctions [
 	self assert: (f gcd: g) = x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDOverZ [
 	| x f g |
 	x := ZZ polynomials x.
@@ -487,7 +511,7 @@ PolynomialTest >> testGCDOverZ [
 		self assert: (f gcd: g) = ((x^2 - 1)*3)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGCDOverZ2 [
 	| x f g h |
 	x := 'ZZ/2 :: polynomials x'.
@@ -497,7 +521,7 @@ PolynomialTest >> testGCDOverZ2 [
 	self assert: (f gcd: g) = (h * (x + 1))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testGaussLemma [
 	"Lemma (Gauss): The product of two primitive polynomials is primitive."
 	| Zx f g |
@@ -507,7 +531,7 @@ PolynomialTest >> testGaussLemma [
 	self assert: (f primitive * g primitive) isPrimitive
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testHeight [
 	| x |
 	x := QQ polynomials x.
@@ -515,7 +539,7 @@ PolynomialTest >> testHeight [
 	self assert: (x * 5 - 2) height =  5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testIntegerFactorization [
 	| x f factors |
 	x := ZZ polynomials x.
@@ -526,7 +550,7 @@ PolynomialTest >> testIntegerFactorization [
 	self assert: factors product = f
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testInterpolation [
 	| Qx f |
 	Qx := QQ polynomials.
@@ -536,7 +560,7 @@ PolynomialTest >> testInterpolation [
 	self assert: (f value: 4) = 5
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testInterpolation2 [
 	| Qx f |
 	Qx := QQ polynomials.
@@ -546,7 +570,7 @@ PolynomialTest >> testInterpolation2 [
 	self assert: (f value: 3) = 9
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testIsIrreducible [
 	"The polynomial x^4 + 1 is irreducible in Z[x] and Q[x], and it is reducible Z/p[x] for all prime numbers p."
 	| p |
@@ -556,7 +580,7 @@ PolynomialTest >> testIsIrreducible [
 	'self deny: (ZZ/p :: polynomials ! [:x| x^4 + 1] :: isIrreducible)'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testIsIrreducibleOverQ [
 	| x f |
 	x := QQ polynomials x.
@@ -567,7 +591,7 @@ PolynomialTest >> testIsIrreducibleOverQ [
 	self assert: (f*(x+1)) isIrreducible not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testIsIrreducibleOverZ [
 	| x f |
 	x := ZZ polynomials x.
@@ -579,7 +603,7 @@ PolynomialTest >> testIsIrreducibleOverZ [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testIsSeparableNot [
 	"A tipical example of a polynomial that is NOT separable."
 	| p F x Fy y f |
@@ -592,7 +616,7 @@ PolynomialTest >> testIsSeparableNot [
 	self assert: f isSeparable not
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testMultivariateDivision [
 	"Example from Cox IVA 62 p."
 	| Zxy x y f f1 f2 division |
@@ -608,7 +632,7 @@ PolynomialTest >> testMultivariateDivision [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testMultivariateDivision2 [
 	"Example from Cox IVA 63 p."
 	| Zxy x y f f1 f2 division |
@@ -624,7 +648,7 @@ PolynomialTest >> testMultivariateDivision2 [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testMultivariateDivision3 [
 	"Example from Cox IVA 67 p."
 	| Zxy x y f f1 f2 division |
@@ -640,14 +664,14 @@ PolynomialTest >> testMultivariateDivision3 [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testMultivariateGCDBug [
 	| x |
 	x := 'QQ polynomialsIn: 3 :: x'.
 	self assert: '(x^2 gcd: x)' = x
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPPRS [
 	"Example from Zippel."
 	| a b pprs |
@@ -662,7 +686,7 @@ PolynomialTest >> testPPRS [
 		(1))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivision1 [
 	| Zxy x y division |
 	Zxy := ZZ polynomialsIn: #(x y).
@@ -674,7 +698,7 @@ PolynomialTest >> testPseudoDivision1 [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivision2 [
 	| Zxy x y division |
 	Zxy := QQ polynomialsIn: #(x y).
@@ -686,7 +710,7 @@ PolynomialTest >> testPseudoDivision2 [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivision3 [
 	| Zxy x y division |
 	Zxy := ZZ polynomialsIn: #(x y).
@@ -703,7 +727,7 @@ PolynomialTest >> testPseudoDivision3 [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivision: R [
 	| Rx f g div |
 	Rx := R polynomials.
@@ -713,7 +737,7 @@ PolynomialTest >> testPseudoDivision: R [
 	self assert: div verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivisionUnivariate [
 	| Zx x division |
 	Zx := ZZ polynomials.
@@ -725,7 +749,7 @@ PolynomialTest >> testPseudoDivisionUnivariate [
 	self assert: division verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivisionUnivariate2 [
 	"Example from Zippel book"
 	| Zx a b |
@@ -735,17 +759,17 @@ PolynomialTest >> testPseudoDivisionUnivariate2 [
 	^ self assert: (a pseudoDivisionBy: b) verify
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivisionZ [
 	self testPseudoDivision: ZZ
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoDivisionZ6 [
 	self testPseudoDivision: ZZ / 6
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testPseudoRemainder [
 	| Zx x a b r |
 	Zx := ZZ polynomials.
@@ -757,7 +781,7 @@ PolynomialTest >> testPseudoRemainder [
 	self assert: (a pseudoDivisionBy: b) remainder = r
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testQuotientRingBug [
 	"This is fixed by making ideals of Z[x] have generators with positive leading coefficient. But it could be still a problem for polynomials over other rings."
 	| R f Q pi a b |
@@ -770,7 +794,7 @@ PolynomialTest >> testQuotientRingBug [
 	self assert: (pi value: a) + (pi value: b) = (pi value: a+b)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testRationalFactorization [
 	| x f factors |
 	x := QQ polynomials x.
@@ -781,7 +805,7 @@ PolynomialTest >> testRationalFactorization [
 	self assert: factors product monic = f monic "up to a unit"
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testRationalRoots [
 	| x f roots |
 	x := QQ polynomials x.
@@ -792,7 +816,7 @@ PolynomialTest >> testRationalRoots [
 	self assert: (roots occurrencesOf: 2) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testRationalRootsBug [
 	| x f roots |
 	x := QQ polynomials x.
@@ -803,7 +827,7 @@ PolynomialTest >> testRationalRootsBug [
 	self assert: (roots occurrencesOf: 2) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testRealRoots [
 	| x f roots |
 	x := QQ polynomials x.
@@ -815,7 +839,7 @@ PolynomialTest >> testRealRoots [
 	self assert: (roots occurrencesOf: 2) = 1
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testRemainderInconsistency [
 	"In Sage these two give the same result."
 	| X x |
@@ -824,7 +848,7 @@ PolynomialTest >> testRemainderInconsistency [
 	self assert: (x \\ (1 - x)) leadingCoefficient = (X \\ (1 - X)) leadingCoefficient
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testResultant [
 	| Zx x f g f2 g2 h |
 	Zx := ZZ polynomials.
@@ -840,7 +864,7 @@ PolynomialTest >> testResultant [
 	self assert: (f * g resultant: h) = ((f resultant: h) * (g resultant: h))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testResultant2 [
 	| Zx x f g |
 	Zx := ZZ polynomials.
@@ -850,7 +874,7 @@ PolynomialTest >> testResultant2 [
 	self assert: (f resultant: g) = '((2 ^ 1) * (3^2) * (5 - 7) * (11 - 7))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testSPRS [
 	"Example from Zippel."
 	| a b sprs |
@@ -866,7 +890,7 @@ PolynomialTest >> testSPRS [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testShift [
 	| Zx x f |
 	Zx := ZZ polynomials.
@@ -878,7 +902,7 @@ PolynomialTest >> testShift [
 		self assert: (f * (x^3) shift: -3) = f'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testSquareFree [
 	| P x f1 f2 f3 f |
 	P := QQ polynomials.
@@ -890,7 +914,7 @@ PolynomialTest >> testSquareFree [
 	self assert: f squareFree = (f1 * f2 * f3)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testSquareFreeMultivariate [
 	| P x y f1 f2 f |
 	P := QQ polynomialsIn: #(x y).
@@ -902,7 +926,7 @@ PolynomialTest >> testSquareFreeMultivariate [
 	self assert: f squareFree = (f1 * f2)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testSubresultant [
 	"deg(gcd(f,g)) = d iff subresultant(f,g,k) = 0 for all k < d and subresultant(f,g,d) ~= 0, and the d-th subresultant coefficient is in fact a gcd of f and g."
 	| x f g |
@@ -916,7 +940,7 @@ PolynomialTest >> testSubresultant [
 	self assert: (f subresultant: 2 with: g) primitive = ((x raiseTo: 2) - 1)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testSubresultant0 [
 	| Zx x f g |
 	Zx := ZZ polynomials.
@@ -926,7 +950,7 @@ PolynomialTest >> testSubresultant0 [
 	self assert: (f resultant: g) = (f subresultant: 0 with: g) asScalar
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testUnivariateMultivariateConversion [
 	| Qx x y f |
 	Qx := QQ polynomialsIn: #(x y).
@@ -938,7 +962,7 @@ PolynomialTest >> testUnivariateMultivariateConversion [
 	'self assert: (f asUnivariateIn: 2 :: asMultivariate) = f'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testUnivariateMultivariateConversion2 [
 	| Qx x y f f2 x0 y0 |
 	Qx := QQ polynomialsIn: #(x y).
@@ -953,7 +977,7 @@ PolynomialTest >> testUnivariateMultivariateConversion2 [
 	self assert: ((f2 value: y0) value: x0) = (f value: {x0. y0})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PolynomialTest >> testZeroCoefficientBug [
 	| Qx |
 	Qx := QQ polynomials.

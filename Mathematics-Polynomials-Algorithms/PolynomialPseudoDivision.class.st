@@ -27,7 +27,8 @@ PolynomialPseudoDivision class >> divide: aPolynomial by: anotherPolynomial [
 { #category : #accessing }
 PolynomialPseudoDivision >> delta [
 	"Answer an integer delta such that the dividend multiplied by the divisor's leading coeficient raised to the delta equals the product of the quotient by the divisor plus the remainder (the pseudo-division relation)."
-	^ self dividend degree - self divisor degree + 1 max: 0
+
+	^ self dividend degree - self divisor degree + 1 max: 0 
 ]
 
 { #category : #private }
@@ -55,7 +56,7 @@ PolynomialPseudoDivision >> divide [
 { #category : #initialization }
 PolynomialPseudoDivision >> divide: aPolynomial by: anotherPolynomial [
 	dividend := aPolynomial.
-	divisor := anotherPolynomial
+	divisor := anotherPolynomial 
 ]
 
 { #category : #accessing }
@@ -71,8 +72,10 @@ PolynomialPseudoDivision >> divisor [
 { #category : #accessing }
 PolynomialPseudoDivision >> exactQuotient [
 	"Answer the quotient of an exact division."
-	self remainder isZero ifFalse: [self error: 'not an exact division'].
-	^ 'self quotient / (divisor leadingCoefficient ^ self delta)'
+
+	self remainder isZero
+		ifFalse: [ self error: 'not an exact division' ].
+	^ self quotient / ((divisor leadingCoefficient)  raisedTo: (self delta))
 ]
 
 { #category : #printing }
@@ -99,14 +102,15 @@ PolynomialPseudoDivision >> quotient [
 
 { #category : #accessing }
 PolynomialPseudoDivision >> remainder [
-	remainder isNil ifTrue: [self divide].
+	remainder isNil
+		ifTrue: [ self divide ].
 	^ remainder
 ]
 
 { #category : #private }
 PolynomialPseudoDivision >> verify [
 	| a b |
-	a := 'dividend * (divisor leadingCoefficient ^ self delta)'.
+	a := dividend * (divisor leadingCoefficient raisedTo: self delta).
 	b := self quotient * divisor + self remainder.
 	^ a = b
 ]
