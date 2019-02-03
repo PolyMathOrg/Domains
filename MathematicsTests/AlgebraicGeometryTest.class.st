@@ -663,11 +663,11 @@ AlgebraicGeometryTest >> testSmoothness [
 	| R C |
 	R := QQ polynomialsIn: #(x y).
 	"cuspidal curve:"
-	'C := (R / (R ! [:x :y| y^2 - (x^3)])) spec'.
+	C := (R / (R ! [:x :y| (y raisedTo: 2) - (x raisedTo: 3)])) spec.
 	self assert: C isSmooth not.
 	self assert: C isSingular.
-	self assert: (C ! (1,1)) isSmooth.
-	self assert: (C ! (0,0)) isSmooth not
+	self assert: (C ! (1 , 1)) isSmooth.
+	self assert: (C ! (0 , 0)) isSmooth not
 ]
 
 { #category : #general }
@@ -675,11 +675,11 @@ AlgebraicGeometryTest >> testSmoothnessOverCC [
 	| P R C |
 	P := ProjectiveSpace new: 2 over: CC.
 	R := P coordinateRing.
-	C := P subscheme: R ! [:x :y :z| x].
+	C := P subscheme: R ! [ :x :y :z | x ].
 	self assert: C isSingular not.
-	C := 'P subscheme: R ! [:x :y :z| y^2*z - (x^3)]'.
+	C := P subscheme: R ! [:x :y :z| (y raisedTo: 2)*z - (x raisedTo: 3)].
 	self assert: C isSingular.
-	C := 'P subscheme: R ! [:x :y :z| y^2*z - (x^3) + (z^3)]'.
+	C := P subscheme: R ! [:x :y :z| (y raisedTo: 2)*z - (x raisedTo: 3) + (z raisedTo: 3)].
 	self assert: C isSingular not
 ]
 
@@ -816,28 +816,41 @@ AlgebraicGeometryTest >> testTangentCone [
 { #category : #'tangent cone' }
 AlgebraicGeometryTest >> testTangentCone2 [
 	"M. Kreuzer, 'Computational Commutative Algebra', Example 6.5.27."
+
 	| R J T I |
 	R := QQ polynomialsIn: 4.
-	'J := R * (R generate: [:x1 :x2 :x3 :x4| {x1*x2 - (x3^2). x2^2 - (x4^5)}]).
-		T := (R/J) spec tangentConeAt: (0,0,0,0).
-		I := R * (R generate: [:x1 :x2 :x3 :x4| {x1*x2 - (x3^2). x2^2. x2*(x3^2). x3^4}])'.
-	self assert: T ideal = I
+	J := R
+		*
+			(R
+				generate: [ :x1 :x2 :x3 :x4 | 
+					{(x1 * x2 - (x3 raisedTo: 2)).
+					((x2 raisedTo: 2) - (x4 raisedTo: 5))} ]).
+	T := (R / J) spec tangentConeAt: 0 , 0 , 0 , 0.
+	I := R
+		*
+			(R
+				generate: [ :x1 :x2 :x3 :x4 | 
+					{(x1 * x2 - (x3 raisedTo: 2)).
+					(x2 raisedTo: 2).
+					(x2 * (x3 raisedTo: 2)).
+					(x3 raisedTo: 4)} ]).
+	self assert: T ideal equals: I
 ]
 
 { #category : #'tangent cone' }
 AlgebraicGeometryTest >> testTangentConeAndTangentSpace [
 	"Example from https://en.wikipedia.org/wiki/Tangent_cone."
+
 	| A x y S o |
 	A := AffineSpace new: #(x y) over: QQ.
 	x := A coordinateRing x.
 	y := A coordinateRing y.
 	"this curve is singular at (0,0):"
-	'S := A subscheme: x^2 + (x^3) - (y^2)'.
-	o := S ! (0,0).
+	S := A subscheme: (x raisedTo: 2) + (x raisedTo: 3) - (y raisedTo: 2).
+	o := S ! (0 , 0).
 	"the tangent cone is the union of the two lines x = y and x = -y:"
-	self assert: o tangentCone = (A subscheme: (x + y) * (x - y)).
-	"the tangent space is the whole plane:"
-	self assert: o tangentSpace = A
+	self assert: o tangentCone equals: (A subscheme: (x + y) * (x - y)).
+	self assert: o tangentSpace equals: A
 ]
 
 { #category : #'rational points' }
@@ -846,9 +859,11 @@ AlgebraicGeometryTest >> testTwistedCubic [
 	P := ProjectiveSpace new: 3 over: QQ.
 	R := P coordinateRing.
 	"R indeterminateNames: #(u v w t)"
-	M := R matrix: (2@3) coefficients: ((1,2,3,2,3,4) collect: [:i| R x: i]).
+	M := R
+		matrix: 2 @ 3
+		coefficients: (1 , 2 , 3 , 2 , 3 , 4 collect: [ :i | R x: i ]).
 	C := P subscheme: (M minors: 2).
-	self assert: C dimension = 1.
+	self assert: C dimension equals: 1.
 	self assert: C isSmooth
 ]
 
