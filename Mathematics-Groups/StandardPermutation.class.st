@@ -130,28 +130,31 @@ StandardPermutation >> inverse [
 
 { #category : #'accessing-private' }
 StandardPermutation >> map [
-	^ map
+	^ map 
 ]
 
 { #category : #'accessing-private' }
 StandardPermutation >> map: aCollection [
-	map := aCollection
+	map := aCollection 
 ]
 
 { #category : #private }
 StandardPermutation >> species [
-	^ StandardPermutation
+	^ StandardPermutation 
 ]
 
 { #category : #accessing }
 StandardPermutation >> transpositions [
 	"Answer the decomposition of the receiver in product of transpositions."
+
 	| answer last value |
 	answer := OrderedCollection new.
-	self changesDo: [:each|	
-		last := each.
-		answer reverseDo: [:one| last := one at: last].
-		(value := self at: each) = last
-			ifFalse: [answer addFirst: (self species new: self degree transposing: last with: value)]].
+	self
+		changesDo: [ :each | 
+			last := each.
+			answer reverseDo: [ :one | last := one at: last ].
+			(value := self at: each) = last
+				ifFalse: [ answer
+						addFirst: (self species new: self degree transposing: last with: value) ] ].
 	^ answer
 ]

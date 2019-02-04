@@ -91,7 +91,9 @@ StandardSymmetricGroup >> mapping: anArray [
 
 { #category : #printing }
 StandardSymmetricGroup >> printOn: aStream [
-	aStream nextPutAll: 'S', degree printText sub
+	aStream
+		nextPutAll: 'S_';
+		print: degree
 ]
 
 { #category : #accessing }

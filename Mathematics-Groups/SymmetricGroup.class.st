@@ -75,9 +75,9 @@ SymmetricGroup >> computeGenerators [
 	| answer X |
 	answer := OrderedCollection new.
 	X := self space asArray.
-	2 to: X size do: [:i| answer add: (self transposing: (X at: 1) with: (X at: i))].
+	2 to: X size do: [ :i | answer add: (self transposing: (X at: 1) with: (X at: i)) ].
 	^ answer
-"alternatively: Coxeter generators, the set of (i,i+1) all the adjacent transpositions"
+	"alternatively: Coxeter generators, the set of (i,i+1) all the adjacent transpositions"
 ]
 
 { #category : #testing }
@@ -116,7 +116,7 @@ SymmetricGroup >> evaluating: aBlock [
 
 { #category : #elements }
 SymmetricGroup >> identity [
-	^ self propertyAt: #identity ifAbsentPut: [Permutation new]
+	^ self propertyAt: #identity ifAbsentPut: [ Permutation new ]
 ]
 
 { #category : #testing }
@@ -137,7 +137,10 @@ SymmetricGroup >> isStandard [
 
 { #category : #printing }
 SymmetricGroup >> printOn: aStream [
-	aStream nextPutAll: 'Sym('; print: self space; nextPut: $)
+	aStream
+		nextPutAll: 'Sym(';
+		print: self space;
+		nextPut: $)
 ]
 
 { #category : #accessing }
