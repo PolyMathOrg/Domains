@@ -68,11 +68,11 @@ ExplicitGraphNode >> addInNeighborNoCheck: aNode [
 ]
 
 { #category : #'changing edges' }
-ExplicitGraphNode >> addNeighbor: aNode [ 
+ExplicitGraphNode >> addNeighbor: aNode [
 	outNeighbors add: aNode.
 	aNode addInNeighborNoCheck: self.
 	^ aNode
-"	self flag: #fix.
+	"	self flag: #fix.
 	(outNeighbors includes: aNode)
 		ifFalse: 
 			[outNeighbors add: aNode.

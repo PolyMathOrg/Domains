@@ -103,6 +103,7 @@ Graph class >> cube: n [
 { #category : #'example graphs' }
 Graph class >> desargues [
 	"Answer the Desargues graph."
+
 	^ self petersen: 10 order: 3
 ]
 
@@ -114,6 +115,7 @@ Graph class >> dodecahedron [
 { #category : #'example graphs' }
 Graph class >> durer [
 	"Answer the Durer graph."
+
 	^ self petersen: 6 order: 2
 ]
 
@@ -148,12 +150,39 @@ Graph class >> exampleImplicitGraph3 [
 
 { #category : #'example graphs' }
 Graph class >> icosahedron [
-	^ self unordered addEdges:
-		{1->2. 2->3. 3->1.
-		4->5. 5->6. 6->7. 7->8. 8->9. 9->4.
-		1->9. 1->4. 1->5. 2->5. 2->6. 2->7. 3->7. 3->8. 3->9.
-		10->11. 11->12. 12->10.
-		10->4. 10->5. 10->6. 11->6. 11->7. 11->8. 12->8. 12->9. 12->4}; yourself
+	^ self unordered
+		addEdges:
+			{(1 -> 2).
+			(2 -> 3).
+			(3 -> 1).
+			(4 -> 5).
+			(5 -> 6).
+			(6 -> 7).
+			(7 -> 8).
+			(8 -> 9).
+			(9 -> 4).
+			(1 -> 9).
+			(1 -> 4).
+			(1 -> 5).
+			(2 -> 5).
+			(2 -> 6).
+			(2 -> 7).
+			(3 -> 7).
+			(3 -> 8).
+			(3 -> 9).
+			(10 -> 11).
+			(11 -> 12).
+			(12 -> 10).
+			(10 -> 4).
+			(10 -> 5).
+			(10 -> 6).
+			(11 -> 6).
+			(11 -> 7).
+			(11 -> 8).
+			(12 -> 8).
+			(12 -> 9).
+			(12 -> 4)};
+		yourself
 ]
 
 { #category : #'instance creation' }

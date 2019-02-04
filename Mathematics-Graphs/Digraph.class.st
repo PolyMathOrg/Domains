@@ -63,38 +63,38 @@ Digraph class >> implicitIteratorBlock: iteratorBlock [
 { #category : #initialization }
 Digraph class >> initialize [
 	"Digraph initialize"
-	InitializationBlocks	:=  Dictionary new.
+
+	InitializationBlocks := Dictionary new.
 	InitializationBlocks
-		at: #binary
-		put: [:value | ExplicitGraphNode binary: value];
+		at: #binary put: [ :value | ExplicitGraphNode binary: value ];
 		at: #arity
-		put: [:n | [:value | ExplicitGraphNode on: value arity: n]];
-		at: #ordered
-		put: [:value | ExplicitGraphNode ordered: value];
-		at: #unordered
-		put: [:value | ExplicitGraphNode newOn: value];
+			put: [ :n | [ :value | ExplicitGraphNode on: value arity: n ] ];
+		at: #ordered put: [ :value | ExplicitGraphNode ordered: value ];
+		at: #unordered put: [ :value | ExplicitGraphNode newOn: value ];
 		at: #arityLabeled
-		put: [:n | [:value | LabeledExplicitGraphNode on: value arity: n]];
+			put: [ :n | [ :value | LabeledExplicitGraphNode on: value arity: n ] ];
 		at: #binaryLabeled
-		put: [:value | LabeledExplicitGraphNode binary: value];
+			put: [ :value | LabeledExplicitGraphNode binary: value ];
 		at: #orderedLabeled
-		put: [:value | LabeledExplicitGraphNode ordered: value];
+			put: [ :value | LabeledExplicitGraphNode ordered: value ];
 		at: #unorderedLabeled
-		put: [:value | LabeledExplicitGraphNode newOn: value];
+			put: [ :value | LabeledExplicitGraphNode newOn: value ];
 		at: #implicitCollection
-		put: [:graph :collectionBlock | [:value | ImplicitGraphNode
+			put: [ :graph :collectionBlock | 
+			[ :value | 
+			ImplicitGraphNode
 				on: value
-				collectionBlock: [(collectionBlock value: value)
-						collect: [:node | graph add: node]]]];
+				collectionBlock:
+					[ (collectionBlock value: value) collect: [ :node | graph add: node ] ] ] ];
 		at: #implicitIteratorBlock
-		put: [:graph :iteratorBlock | [:value | 
-			| iterator | 
+			put: [ :graph :iteratorBlock | 
+			[ :value | 
+			| iterator |
 			iterator := iteratorBlock value: value.
 			ImplicitGraphNode
 				on: value
-				iteratorBlock: [:aBlock | iterator
-						value: [:node | aBlock
-								value: (graph nodes add: node)]]]]
+				iteratorBlock:
+					[ :aBlock | iterator value: [ :node | aBlock value: (graph nodes add: node) ] ] ] ]
 ]
 
 { #category : #'instance creation' }

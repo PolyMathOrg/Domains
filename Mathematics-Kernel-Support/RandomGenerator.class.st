@@ -24,16 +24,18 @@ RandomGenerator class >> on: aDomain random: aRandom [
 
 { #category : #accessing }
 RandomGenerator >> bits: anInteger [
-	anInteger >= 1 ifFalse: [^ self error: 'bitsize must be >= 1'].
+	anInteger >= 1
+		ifFalse: [ ^ self error: 'bitsize must be >= 1' ].
 	bits := anInteger
 ]
 
 { #category : #generating }
 RandomGenerator >> distinct: n [
 	"Answer n distinct elements choosen at random."
+
 	| answer |
 	answer := Set new: n.
-	[answer size < n] whileTrue: [answer add: self next].
+	[ answer size < n ] whileTrue: [ answer add: self next ].
 	^ answer
 ]
 

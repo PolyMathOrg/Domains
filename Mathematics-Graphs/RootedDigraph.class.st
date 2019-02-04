@@ -16,7 +16,8 @@ Class {
 
 { #category : #'example graphs' }
 RootedDigraph class >> exampleDAG [
-	"RootedGraph exampleDAG."
+	"RootedDigraph exampleDAG."
+
 	| d |
 	d := self unordered.
 	d addRoot: #r1.
@@ -26,7 +27,7 @@ RootedDigraph class >> exampleDAG [
 	d addEdge: #r2 -> #n2.
 	d addEdge: #n1 -> #n3.
 	d addEdge: #n2 -> #n3.
-	^d
+	^ d
 ]
 
 { #category : #'example graphs' }
