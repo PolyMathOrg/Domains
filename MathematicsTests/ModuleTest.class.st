@@ -1006,19 +1006,19 @@ ModuleTest >> testThirdIsomorphismTheoremOverQ [
 
 { #category : #isomorphisms }
 ModuleTest >> testThirdIsomorphismTheoremOverQuadraticField [
-	self testThirdIsomorphismTheorem: '(QuadraticField sqrt: -5) ^ 5'
+	self testThirdIsomorphismTheorem: ((QuadraticField sqrt: -5) raisedTo:5)
 ]
 
 { #category : #other }
 ModuleTest >> testTuplesQ [
-	self testFreeModule: '(QQ ^ 5 atRandom)'
+	self testFreeModule: ((QQ raisedTo: 5) atRandom)
 ]
 
 { #category : #other }
 ModuleTest >> testTuplesRationalFunctionsQ [
 	| F |
 	F := QQ polynomials fractions.
-	self testFreeModule: 'F ^ 3 atRandom'
+	self testFreeModule: (F raisedTo: 3) atRandom
 ]
 
 { #category : #other }
@@ -1028,10 +1028,10 @@ ModuleTest >> testTuplesZ [
 
 { #category : #other }
 ModuleTest >> testTuplesZ2 [
-	self testFreeModule: '((ZZ / 2) ^ 5 atRandom)'
+	self testFreeModule: (((ZZ / 2)  raisedTo: 5) atRandom)
 ]
 
 { #category : #other }
 ModuleTest >> testTuplesZ4 [
-	self testFreeModule: '((ZZ / 4) ^ 5 atRandom)'
+	self testFreeModule: (((ZZ / 4)  raisedTo: 5) atRandom)
 ]
