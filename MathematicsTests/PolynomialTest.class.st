@@ -398,19 +398,19 @@ PolynomialTest >> testFiniteFieldFactorization5 [
 { #category : #tests }
 PolynomialTest >> testFiniteFieldIrreduciblePolynomials [
 	"Z/<3>[x] has 8 irreducible monic polynomials of degree 3, out of 27 monic polynomials of degree 3."
+
 	| F Fx f count |
 	F := ZZ / 3.
 	Fx := F polynomials.
 	count := 0.
-	('F ^ 3') do: [:each|
-		f := (Fx coefficients: each, F one).
-		f isIrreducible
-			ifTrue:
-				[count := count + 1.
-				self assert: f factors size = 1]
-			ifFalse:
-				[self assert: f factors size > 1]].
-	self assert: count = 8
+	(F raisedTo: 3)
+		do: [ :each | 
+			f := Fx coefficients: each , F one.
+			f isIrreducible
+				ifTrue: [ count := count + 1.
+					self assert: f factors size equals: 1 ]
+				ifFalse: [ self assert: f factors size > 1 ] ].
+	self assert: count equals: 8
 ]
 
 { #category : #tests }
@@ -419,8 +419,8 @@ PolynomialTest >> testFiniteFieldIsIrreducible [
 	F := ZZ / 3.
 	Fx := F polynomials.
 	x := Fx x.
-'	f := x^3 + (x*2) + 1'.
-	self assert: f factors size = 1.
+	f := (x raisedTo: 3) + (x * 2) + 1.
+	self assert: f factors size equals: 1.
 	self assert: f isIrreducible
 ]
 
@@ -429,11 +429,11 @@ PolynomialTest >> testFiniteFieldRoots [
 	| Z3 x f roots |
 	Z3 := ZZ / 3.
 	x := Z3 polynomials x.
-	f := '(x-1)^2*(x-2)'.
+	f := (x - 1 raisedTo: 2) * (x - 2).
 	roots := f allRoots.
-	self assert: roots size = 3.
-	self assert: (roots occurrencesOf: (Z3 project: 1)) = 2.
-	self assert: (roots occurrencesOf: (Z3 project: 2)) = 1
+	self assert: roots size equals: 3.
+	self assert: (roots occurrencesOf: (Z3 project: 1)) equals: 2.
+	self assert: (roots occurrencesOf: (Z3 project: 2)) equals: 1
 ]
 
 { #category : #tests }
@@ -443,12 +443,14 @@ PolynomialTest >> testFiniteFieldSFF [
 	Fx := F polynomials.
 	x := Fx x.
 	one := Fx one.
-'	f := x^11 + (x^9 * 2) + (x^8 * 2) + (x^6) + (x^5) + (x^3 * 2) + (x^2 * 2) + one'.
+	f := (x raisedTo: 11) + ((x raisedTo: 9) * 2) + ((x raisedTo: 8) * 2)
+		+ (x raisedTo: 6) + (x raisedTo: 5) + ((x raisedTo: 3) * 2)
+		+ ((x raisedTo: 2) * 2) + one.
 	factors := f squareFreeFactorization.
-	self assert: factors size = 8.
-	self assert: (factors occurrencesOf: x + (one*2)) = 4.
-'	self assert: (factors occurrencesOf: x^2 + one) = 3'.
-	self assert: (factors occurrencesOf: x + one) = 1
+	self assert: factors size equals: 8.
+	self assert: (factors occurrencesOf: x + (one * 2)) equals: 4.
+	self assert: (factors occurrencesOf: (x raisedTo: 2) + one) equals: 3.
+	self assert: (factors occurrencesOf: x + one) equals: 1
 ]
 
 { #category : #tests }
@@ -456,9 +458,9 @@ PolynomialTest >> testGCD [
 	| P x f g |
 	P := QQ polynomials.
 	x := P x.
-	'f := x^4 - 1.
-		g := x^6 - 1.
-		self assert: (f gcd: g) = (x^2 - 1)'
+	f := (x raisedTo: 4) - 1.
+	g := (x raisedTo: 6) - 1.
+	self assert: (f gcd: g) equals: (x raisedTo: 2) - 1
 ]
 
 { #category : #tests }
@@ -467,9 +469,9 @@ PolynomialTest >> testGCDMultivariate [
 	Zxy := ZZ polynomialsIn: #(x y).
 	x := Zxy x.
 	y := Zxy y.
-	f := (x+y)*(y-x).
-	g := '(y-x)^2'.
-	self assert: (f gcd: g) = (y-x)
+	f := (x + y) * (y - x).
+	g := y - x raisedTo: 2.
+	self assert: (f gcd: g) equals: y - x
 ]
 
 { #category : #tests }
@@ -535,6 +537,7 @@ PolynomialTest >> testGCDOverZ2 [
 { #category : #tests }
 PolynomialTest >> testGaussLemma [
 	"Lemma (Gauss): The product of two primitive polynomials is primitive."
+
 	| Zx f g |
 	Zx := ZZ polynomials.
 	f := Zx atRandomBits: 100 maxDegree: (5 to: 10) atRandom.
@@ -546,19 +549,20 @@ PolynomialTest >> testGaussLemma [
 PolynomialTest >> testHeight [
 	| x |
 	x := QQ polynomials x.
-	self assert: (x * 2 - 5) height =  5.
-	self assert: (x * 5 - 2) height =  5
+	self assert: (x * 2 - 5) height equals: 5.
+	self assert: (x * 5 - 2) height equals: 5
 ]
 
 { #category : #tests }
 PolynomialTest >> testIntegerFactorization [
 	| x f factors |
 	x := ZZ polynomials x.
-	'f := (x*2-1)^2*(x-2)*(x^2 + 1)*(x^2-2)*18'.
+	f := (x * 2 - 1 raisedTo: 2) * (x - 2) * ((x raisedTo: 2) + 1)
+		* ((x raisedTo: 2) - 2) * 18.
 	factors := f factors.
-	self assert: factors size = 8.
-	self assert: factors asSet size = 6.
-	self assert: factors product = f
+	self assert: factors size equals: 8.
+	self assert: factors asSet size equals: 6.
+	self assert: factors product equals: f
 ]
 
 { #category : #tests }
@@ -595,23 +599,22 @@ PolynomialTest >> testIsIrreducible [
 PolynomialTest >> testIsIrreducibleOverQ [
 	| x f |
 	x := QQ polynomials x.
-	f := 'x^4 + 1'.
+	f := (x raisedTo: 4) + 1.
 	self assert: f isIrreducible.
 	self assert: f negated isIrreducible.
-	self assert: (f*2) isIrreducible.
-	self assert: (f*(x+1)) isIrreducible not
+	self assert: (f * 2) isIrreducible.
+	self assert: (f * (x + 1)) isIrreducible not
 ]
 
 { #category : #tests }
 PolynomialTest >> testIsIrreducibleOverZ [
 	| x f |
 	x := ZZ polynomials x.
-	f := 'x^4 + 1'.
+	f := (x raisedTo: 4) + 1.
 	self assert: f isIrreducible.
 	self assert: f negated isIrreducible.
-	self assert: (f*2) isIrreducible not.
-	self assert: (f*(x+1)) isIrreducible not.
-
+	self assert: (f * 2) isIrreducible not.
+	self assert: (f * (x + 1)) isIrreducible not
 ]
 
 { #category : #tests }
@@ -679,7 +682,7 @@ PolynomialTest >> testMultivariateDivision3 [
 PolynomialTest >> testMultivariateGCDBug [
 	| x |
 	x := 'QQ polynomialsIn: 3 :: x'.
-	self assert: '(x^2 gcd: x)' = x
+	self assert: ((x raisedTo: 2) gcd: x) equals: x
 ]
 
 { #category : #tests }
@@ -703,9 +706,13 @@ PolynomialTest >> testPseudoDivision1 [
 	Zxy := ZZ polynomialsIn: #(x y).
 	x := Zxy x.
 	y := Zxy y.
-	'division := x^2 + (y^2) pseudoDivisionBy: y - x in: 2.
-		self assert: division quotient asMultivariate = (x + y).
-		self assert: division remainder asMultivariate = (x^2 * 2)'.
+	division := (x raisedTo: 2) + (y raisedTo: 2)
+		pseudoDivisionBy: y - x
+		in: 2.
+	self assert: division quotient asMultivariate equals: x + y.
+	self
+		assert: division remainder asMultivariate
+		equals: (x raisedTo: 2) * 2.
 	self assert: division verify
 ]
 
@@ -715,9 +722,13 @@ PolynomialTest >> testPseudoDivision2 [
 	Zxy := QQ polynomialsIn: #(x y).
 	x := Zxy x.
 	y := Zxy y.
-	'division := x^2 + (y^2) pseudoDivisionBy: (y-x)*2 in: 2.
-		self assert: division quotient asMultivariate = ((x+y) * 2).
-		self assert: division remainder asMultivariate = (x^2 * 8)'.
+	division := (x raisedTo: 2) + (y raisedTo: 2)
+		pseudoDivisionBy: (y - x) * 2
+		in: 2.
+	self assert: division quotient asMultivariate equals: (x + y) * 2.
+	self
+		assert: division remainder asMultivariate
+		equals: (x raisedTo: 2) * 8.
 	self assert: division verify
 ]
 
@@ -727,14 +738,21 @@ PolynomialTest >> testPseudoDivision3 [
 	Zxy := ZZ polynomialsIn: #(x y).
 	x := Zxy x.
 	y := Zxy y.
-	'division := x^2 + (y^2) pseudoDivisionBy: y - x in: 2.
-		self assert: division quotient asMultivariate = (x + y).
-		self assert: division remainder asMultivariate = (x^2 * 2)'.
+	division := (x raisedTo: 2) + (y raisedTo: 2)
+		pseudoDivisionBy: y - x
+		in: 2.
+	self assert: division quotient asMultivariate equals: x + y.
+	self
+		assert: division remainder asMultivariate
+		equals: (x raisedTo: 2) * 2.
 	self assert: division verify.
-
-'	division := x^2 + (y^2) pseudoDivisionBy: x - y in: 2.
-	self assert: division quotient asMultivariate = (x + y) negated.
-	self assert: division remainder asMultivariate = (x^2 * 2)'.
+	division := (x raisedTo: 2) + (y raisedTo: 2)
+		pseudoDivisionBy: x - y
+		in: 2.
+	self assert: division quotient asMultivariate equals: (x + y) negated.
+	self
+		assert: division remainder asMultivariate
+		equals: (x raisedTo: 2) * 2.
 	self assert: division verify
 ]
 
@@ -743,26 +761,29 @@ PolynomialTest >> testPseudoDivision: R [
 	| Rx f g div |
 	Rx := R polynomials.
 	f := Rx atRandomBits: 100 maxDegree: 10 atRandom.
-	[g := Rx atRandomBits: 100 maxDegree: 10 atRandom. g isZero] whileTrue.
+	[ g := Rx atRandomBits: 100 maxDegree: 10 atRandom.
+	g isZero ] whileTrue.
 	div := f pseudoDivisionBy: g.
 	self assert: div verify
 ]
 
 { #category : #tests }
 PolynomialTest >> testPseudoDivisionUnivariate [
-	| Zx x division |
-	Zx := ZZ polynomials.
-	x := Zx x.
-'	division := x^3 + x + 1 pseudoDivisionBy: (x^2 * 3) + x + 1'.
-	self assert: division quotient = (x*3 - 1).
-	self assert: division remainder = (x*7 + 10).
-	self assert: division delta = 2.
+	| zx x division |
+	zx := ZZ polynomials.
+	x := zx x.
+	division := (x raisedTo: 3) + x + 1
+		pseudoDivisionBy: (x raisedTo: 2) * 3 + x + 1.
+	self assert: division quotient equals: x * 3 - 1.
+	self assert: division remainder equals: x * 7 + 10.
+	self assert: division delta equals: 2.
 	self assert: division verify
 ]
 
 { #category : #tests }
 PolynomialTest >> testPseudoDivisionUnivariate2 [
 	"Example from Zippel book"
+
 	| Zx a b |
 	Zx := ZZ polynomials.
 	a := Zx coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
@@ -785,78 +806,87 @@ PolynomialTest >> testPseudoRemainder [
 	| Zx x a b r |
 	Zx := ZZ polynomials.
 	x := Zx x.
-'	a := x^8 + (x^6) - (3*(x^4)) - (3*(x^3)) + (8*(x^2)) + (2*x) - 5.
-	b := 3*(x^6) + (5*(x^4)) - (4*(x^2)) - (9*x) + 21'.
+	a := (x raisedTo: 8) + (x raisedTo: 6) - (3 * (x raisedTo: 4))
+		- (3 * (x raisedTo: 3)) + (8 * (x raisedTo: 2)) + (2 * x) - 5.
+	b := 3 * (x raisedTo: 6) + (5 * (x raisedTo: 4))
+		- (4 * (x raisedTo: 2)) - (9 * x) + 21.
 	r := Zx coefficients: #(-9 0 3 0 -15).
-	self assert: (a pseudoRem: b) = r.
-	self assert: (a pseudoDivisionBy: b) remainder = r
+	self assert: (a pseudoRem: b) equals: r.
+	self assert: (a pseudoDivisionBy: b) remainder equals: r
 ]
 
 { #category : #tests }
 PolynomialTest >> testQuotientRingBug [
 	"This is fixed by making ideals of Z[x] have generators with positive leading coefficient. But it could be still a problem for polynomials over other rings."
+
 	| R f Q pi a b |
 	R := ZZ polynomials.
-	'f := R ! [:x| x^2*-1 - 1]'.
-	Q := R/f.
+	f := R ! [ :x | (x raisedTo: 2) *(-1) - 1 ].
+	Q := R / f.
 	pi := Q projection.
 	a := R x - 1.
-	b := 'R x^2 + 1'.
-	self assert: (pi value: a) + (pi value: b) = (pi value: a+b)
+	b := (R x raisedTo: 2) + 1.
+	self assert: (pi value: a) + (pi value: b) equals: (pi value: a + b)
 ]
 
 { #category : #tests }
 PolynomialTest >> testRationalFactorization [
 	| x f factors |
 	x := QQ polynomials x.
-	f := '(x-(1/2))^2*(x-2)*(x^2 + 1)*(x^2-2)'.
+	f := (x - (1 / 2) raisedTo: 2) * (x - 2) * ((x raisedTo: 2) + 1)
+		* ((x raisedTo: 2) - 2).
 	factors := f factors.
-	self assert: factors size = 5.
-	self assert: factors asSet size = 4.
-	self assert: factors product monic = f monic "up to a unit"
+	self assert: factors size equals: 5.
+	self assert: factors asSet size equals: 4.
+	self assert: factors product monic equals: f monic	"up to a unit"
 ]
 
 { #category : #tests }
 PolynomialTest >> testRationalRoots [
 	| x f roots |
 	x := QQ polynomials x.
-	f := '(x-(1/2))^2*(x-2)*(x^2 + 1)*(x^2-2)'.
+	f := (x - (1 / 2) raisedTo: 2) * (x - 2) * ((x raisedTo: 2) + 1)
+		* ((x raisedTo: 2) - 2).
 	roots := f allRoots.
-	self assert: roots size = 3.
-	self assert: (roots occurrencesOf: 1/2) = 2.
-	self assert: (roots occurrencesOf: 2) = 1
+	self assert: roots size equals: 3.
+	self assert: (roots occurrencesOf: 1 / 2) equals: 2.
+	self assert: (roots occurrencesOf: 2) equals: 1
 ]
 
 { #category : #tests }
 PolynomialTest >> testRationalRootsBug [
 	| x f roots |
 	x := QQ polynomials x.
-	f := 'x^3*-1 + (3*x) + 2'.
+	f := (x raisedTo: 3) * -1 + (3 * x) + 2.
 	roots := f allRoots.
-	self assert: roots size = 3.
-	self assert: (roots occurrencesOf: -1) = 2.
-	self assert: (roots occurrencesOf: 2) = 1
+	self assert: roots size equals: 3.
+	self assert: (roots occurrencesOf: -1) equals: 2.
+	self assert: (roots occurrencesOf: 2) equals: 1
 ]
 
 { #category : #tests }
 PolynomialTest >> testRealRoots [
 	| x f roots |
 	x := QQ polynomials x.
-	f := '(x-(1/2))^2*(x-2)*(x^2 + 1)*(x^2-2)'.
+	f := (x - (1 / 2) raisedTo: 2) * (x - 2) * ((x raisedTo: 2) + 1)
+		* ((x raisedTo: 2) - 2).
 	roots := f allRootsIn: RR.
-	self assert: roots size = 5.
-	self assert: roots asSet size = 4.
-	self assert: (roots occurrencesOf: 1/2) = 2.
-	self assert: (roots occurrencesOf: 2) = 1
+	self assert: roots size equals: 5.
+	self assert: roots asSet size equals: 4.
+	self assert: (roots occurrencesOf: 1 / 2) equals: 2.
+	self assert: (roots occurrencesOf: 2) equals: 1
 ]
 
 { #category : #tests }
 PolynomialTest >> testRemainderInconsistency [
 	"In Sage these two give the same result."
+
 	| X x |
 	X := ZZ polynomials x.
 	x := QQ polynomials x.
-	self assert: (x \\ (1 - x)) leadingCoefficient = (X \\ (1 - X)) leadingCoefficient
+	self
+		assert: (x \\ (1 - x)) leadingCoefficient
+		equals: (X \\ (1 - X)) leadingCoefficient
 ]
 
 { #category : #tests }
@@ -864,15 +894,19 @@ PolynomialTest >> testResultant [
 	| Zx x f g f2 g2 h |
 	Zx := ZZ polynomials.
 	x := Zx x.
-	'f := x^2 + x + 1.
-		f2 := f * (x + 2).
-		g := x^3 + 1.
-		g2 := g * (x + 2).
-		h := x^4 + 1'.
-	self assert: (f resultant: g) isZero not. "not 0 because f and g have no common roots"
-	self assert: (f2 resultant: g2) isZero. "res(f2,g2) = 0 because f2 and g2 have a common root -2."
-	self assert: '(-1)^(f degree * g degree) * (f resultant: g) = (g resultant: f)'.
-	self assert: (f * g resultant: h) = ((f resultant: h) * (g resultant: h))
+	f := (x raisedTo: 2) + x + 1.
+	f2 := f * (x + 2).
+	g := (x raisedTo: 3) + 1.
+	g2 := g * (x + 2).
+	h := (x raisedTo: 4) + 1.
+	self assert: (f resultant: g) isZero not.	"not 0 because f and g have no common roots"
+	self assert: (f2 resultant: g2) isZero.	"res(f2,g2) = 0 because f2 and g2 have a common root -2."
+	self
+		assert: (-1 raisedTo: f degree * g degree) * (f resultant: g)
+		equals: (g resultant: f).
+	self
+		assert: (f * g resultant: h)
+		equals: (f resultant: h) * (g resultant: h)
 ]
 
 { #category : #tests }
@@ -882,7 +916,9 @@ PolynomialTest >> testResultant2 [
 	x := Zx x.
 	f := 2 * (x - 5) * (x - 11).
 	g := 3 * (x - 7).
-	self assert: (f resultant: g) = '((2 ^ 1) * (3^2) * (5 - 7) * (11 - 7))'
+	self
+		assert: (f resultant: g)
+		equals: (2 raisedTo: 1) * (3 raisedTo: 2) * (5 - 7) * (11 - 7)
 ]
 
 { #category : #tests }
@@ -907,10 +943,10 @@ PolynomialTest >> testShift [
 	Zx := ZZ polynomials.
 	x := Zx x.
 	f := Zx atRandomBits: 10.
-	self assert: (f shift: 10) degree = (f degree + 10).
-	self assert: ((f shift: 10) shift: -10) = f.
-	'self assert: f * (x^3) = (f shift: 3).
-		self assert: (f * (x^3) shift: -3) = f'
+	self assert: (f shift: 10) degree equals: f degree + 10.
+	self assert: ((f shift: 10) shift: -10) equals: f.
+	self assert: f * (x raisedTo: 3) equals: (f shift: 3).
+	self assert: (f * (x raisedTo: 3) shift: -3) equals: f
 ]
 
 { #category : #tests }
@@ -918,11 +954,11 @@ PolynomialTest >> testSquareFree [
 	| P x f1 f2 f3 f |
 	P := QQ polynomials.
 	x := P x.
-'	f1 := x^2 + x + 1'.
+	f1 := (x raisedTo: 2) + x + 1.
 	f2 := 1 - x.
 	f3 := x - 2.
-	f := f1*f1*f2*f3*f3*f3.
-	self assert: f squareFree = (f1 * f2 * f3)
+	f := f1 * f1 * f2 * f3 * f3 * f3.
+	self assert: f squareFree equals: f1 * f2 * f3
 ]
 
 { #category : #tests }
@@ -933,22 +969,25 @@ PolynomialTest >> testSquareFreeMultivariate [
 	y := P y.
 	f1 := x + 1.
 	f2 := y + 1.
-	f := f1*f1*f2*f2.
-	self assert: f squareFree = (f1 * f2)
+	f := f1 * f1 * f2 * f2.
+	self assert: f squareFree equals: f1 * f2
 ]
 
 { #category : #tests }
 PolynomialTest >> testSubresultant [
 	"deg(gcd(f,g)) = d iff subresultant(f,g,k) = 0 for all k < d and subresultant(f,g,d) ~= 0, and the d-th subresultant coefficient is in fact a gcd of f and g."
+
 	| x f g |
 	x := ZZ polynomials x.
-	'f := (x^4 - 1)*6.
-		g := (x^6 - 1)*9'.
+	f := ((x raisedTo: 4) - 1) * 6.
+	g := ((x raisedTo: 6) - 1) * 9.
 	"self assert: (f gcd: g) = ((x^2 - 1)*3)"
 	self assert: (f subresultant: 0 with: g) isZero.
 	self assert: (f subresultant: 1 with: g) isZero.
 	self assert: (f subresultant: 2 with: g) isZero not.
-	self assert: (f subresultant: 2 with: g) primitive = ((x raiseTo: 2) - 1)
+	self
+		assert: (f subresultant: 2 with: g) primitive
+		equals: (x raisedTo: 2) - 1
 ]
 
 { #category : #tests }
@@ -958,7 +997,9 @@ PolynomialTest >> testSubresultant0 [
 	x := Zx x.
 	f := 2 * (x - 5) * (x - 11).
 	g := 3 * (x - 7).
-	self assert: (f resultant: g) = (f subresultant: 0 with: g) asScalar
+	self
+		assert: (f resultant: g)
+		equals: (f subresultant: 0 with: g) asScalar
 ]
 
 { #category : #tests }
@@ -967,9 +1008,8 @@ PolynomialTest >> testUnivariateMultivariateConversion [
 	Qx := QQ polynomialsIn: #(x y).
 	x := Qx x.
 	y := Qx y.
-	'f := x^2*y'.
-	self assert: f asUnivariate asMultivariate = f.
-"	self assert: (f asUnivariateIn: 1 :: asMultivariate) = f."
+	f := (x raisedTo: 2) * y.
+	self assert: f asUnivariate asMultivariate equals: f.
 	'self assert: (f asUnivariateIn: 2 :: asMultivariate) = f'
 ]
 
@@ -980,12 +1020,22 @@ PolynomialTest >> testUnivariateMultivariateConversion2 [
 	x := Qx x.
 	y := Qx y.
 	f := Qx zero.
-	'10 timesRepeat: [f := f + (10 atRandom - 5 * (x ^ (3 atRandom - 1) * (y ^ (3 atRandom - 1))))]'.
+	10
+		timesRepeat: [ f := f
+				+
+					((10 atRandom - 5)
+						* (x raisedTo: (3 atRandom - 1) * (y raisedTo: 3 atRandom - 1))) ].
 	f2 := f asUnivariate.
-	self assert: f2 asMultivariate = f.
+	self assert: f2 asMultivariate equals: f.
 	x0 := (-100 to: 100) atRandom.
 	y0 := (-100 to: 100) atRandom.
-	self assert: ((f2 value: y0) value: x0) = (f value: {x0. y0})
+	self
+		assert: ((f2 value: y0) value: x0)
+		equals:
+			(f
+				value:
+					{x0.
+					y0})
 ]
 
 { #category : #tests }
