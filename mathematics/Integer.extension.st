@@ -2,7 +2,7 @@ Extension { #name : #Integer }
 
 { #category : #'*mathematics' }
 Integer >> % anInteger [
-	^ ZZ % anInteger project: self
+	^ ZZ % anInteger project: self 
 ]
 
 { #category : #'*mathematics' }
@@ -15,12 +15,19 @@ Integer >> /// anInteger [
 Integer >> Stirling: anInteger [
 	"Answer the Stirling number of the second kind S(n,k).
 	Stirling numbers of the second kind count the ways to partition a set of n things into k nonempty subsets."
-	(anInteger > self or: [self < 0]) ifTrue: [^ DomainError signal].
-	self = anInteger ifTrue: [^ 1].
-	anInteger = 0 ifTrue: [^ 0].
-	self+1 = anInteger ifTrue: [^ self choose: 2].
-	anInteger = 2 ifTrue: [^ 2 raisedTo: (self-1) - 1].
-	^ anInteger*(self - 1 Stirling: anInteger) + (self - 1 Stirling: anInteger - 1)
+
+	(anInteger > self or: [ self < 0 ])
+		ifTrue: [ ^ DomainError signal ].
+	self = anInteger
+		ifTrue: [ ^ 1 ].
+	anInteger = 0
+		ifTrue: [ ^ 0 ].
+	self + 1 = anInteger
+		ifTrue: [ ^ self choose: 2 ].
+	anInteger = 2
+		ifTrue: [ ^ 2 raisedTo: self - 1 - 1 ].
+	^ anInteger * (self - 1 Stirling: anInteger)
+		+ (self - 1 Stirling: anInteger - 1)
 ]
 
 { #category : #'*mathematics' }
@@ -455,11 +462,17 @@ Integer >> squareRoot [
 Integer >> stirling: anInteger [
 	"Answer the Stirling number of the first kind s(n,k).
 	Stirling numbers of the first kind count the ways to arrange n objects into k cycles."
-	(anInteger > self or: [self < 0]) ifTrue: [^ DomainError signal].
-	anInteger = 1 ifTrue: [^ (self - 1) factorial].
-	self = anInteger ifTrue: [^ self Stirling: anInteger].
-	self+1 = anInteger ifTrue: [^ self choose: 2].
-	^ (self-1) * (self-1 stirling: anInteger) + (self-1 stirling: anInteger-1)
+
+	(anInteger > self or: [ self < 0 ])
+		ifTrue: [ ^ DomainError signal ].
+	anInteger = 1
+		ifTrue: [ ^ (self - 1) factorial ].
+	self = anInteger
+		ifTrue: [ ^ self Stirling: anInteger ].
+	self + 1 = anInteger
+		ifTrue: [ ^ self choose: 2 ].
+	^ (self - 1) * (self - 1 stirling: anInteger)
+		+ (self - 1 stirling: anInteger - 1)
 ]
 
 { #category : #'*mathematics' }
@@ -485,5 +498,6 @@ Integer >> xgcd: anInteger [
 { #category : #'*mathematics' }
 Integer >> | anInteger [
 	"Answer true if the receiver divides anInteger."
-	^ self ~= 0 and: [anInteger \\ self = 0]
+
+	^ self ~= 0 and: [ anInteger \\ self = 0 ]
 ]
