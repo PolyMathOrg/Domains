@@ -398,6 +398,26 @@ Integer >> primeSignature [
 ]
 
 { #category : #'*mathematics' }
+Integer >> productTo: anInteger [
+	"Answer self * (self + 1) * ... * anInteger"
+	
+	| integers answer |
+	integers := anInteger - self + 1.
+	integers < 1 ifTrue: [^1].
+	integers > 7 ifTrue:
+		[
+			| half |
+			half := integers bitShift: -1.
+			^(self productTo: self + half)
+				* (self + half + 1 productTo: anInteger)
+		].
+	answer := self.
+	self + 1 to: anInteger do:
+		[:each | answer := answer * each].
+	^answer
+]
+
+{ #category : #'*mathematics' }
 Integer >> radical [
 	"Answer the product of the prime divisors of the receiver."
 	| answer |

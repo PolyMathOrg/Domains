@@ -40,7 +40,8 @@ Class {
 { #category : #examples }
 CFiniteSequence class >> fibonacci [
 	"The Fibonacci sequence defined as a C-finite sequence."
-	^ CFiniteSequence initialValues: #(0 1) coefficients: #(1 1)
+
+	^ CFiniteSequence initialValues: #(0 1) coefficients: #(1 1) 
 ]
 
 { #category : #examples }

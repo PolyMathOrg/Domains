@@ -4,7 +4,7 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testBellNumbers [
 	self
 		assert: (Sequence bellNumbers beginsWith: #(1 2 5 15 52 203 877)).
@@ -15,7 +15,15 @@ SequenceTest >> testBellNumbers [
 				beginsWith: #(2 5 15 52 203 877))
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
+SequenceTest >> testBernoulliNumbers [
+	self
+		assert:
+			(Sequence bernoulli
+				beginsWith: {1. -1/2. 1/6. 0. -1/30. 0. 1/42.})
+]
+
+{ #category : #tests }
 SequenceTest >> testDirichletConvolution [
 	self
 		assert: ((Sequence phi dirichlet: Sequence one) beginsWith: #(1 2 3 4 5)).
@@ -23,14 +31,14 @@ SequenceTest >> testDirichletConvolution [
 		assert: ((Sequence moebius dirichlet: Sequence one) beginsWith: #(1 0 0 0 0))
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testLinearRecursiveSequenceBug [
 	| F |
 	F := CFiniteSequence fibonacci.
 	self assert: (F - F at: 1) equals: 0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testPowerSeries [
 	| cos sin |
 	sin := PowerSeries sin.
@@ -41,7 +49,7 @@ SequenceTest >> testPowerSeries [
 				beginsWith: #(1 0 0 0 0 0 0 0 0))
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testRecursive [
 	| f g |
 	f := Sequence fibonacci.
@@ -53,7 +61,7 @@ SequenceTest >> testRecursive [
 		equals: #(-1 -1 1)
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testRecursive2 [
 	| a b c |
 	a := CFiniteSequence fibonacci.
@@ -62,7 +70,7 @@ SequenceTest >> testRecursive2 [
 	self assert: a equals: c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testRecursiveConvolution [
 	| a b c a2 b2 c2 |
 	a := CFiniteSequence fibonacci.
@@ -74,7 +82,7 @@ SequenceTest >> testRecursiveConvolution [
 	self assert: (c equals: c2 upTo: 20)
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testRecursiveEquals [
 	| a b c |
 	a := CFiniteSequence fibonacci.
@@ -84,7 +92,7 @@ SequenceTest >> testRecursiveEquals [
 	self assert: a ~= c
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testRecursiveIndefiniteSumation [
 	| a c a2 c2 |
 	a := CFiniteSequence fibonacci.
@@ -95,7 +103,7 @@ SequenceTest >> testRecursiveIndefiniteSumation [
 	self assert: (c equals: c2 upTo: 20)
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testRecursiveMinimal [
 	| a f |
 	a := CFiniteSequence initialValues: #(0 1 1) coefficients: #(0 1 1).
@@ -106,7 +114,7 @@ SequenceTest >> testRecursiveMinimal [
 	self assert: a minimalPolynomial equals: f characteristicPolynomial
 ]
 
-{ #category : #accessing }
+{ #category : #tests }
 SequenceTest >> testRecursiveProduct [
 	| a b c c2 |
 	a := CFiniteSequence fibonacci.
@@ -118,7 +126,7 @@ SequenceTest >> testRecursiveProduct [
 	self assert: c order equals: 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testRecursiveScalarMultiplication [
 	| a c a2 c2 |
 	a := CFiniteSequence fibonacci.
@@ -129,7 +137,7 @@ SequenceTest >> testRecursiveScalarMultiplication [
 	self assert: (c equals: c2 upTo: 20)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testRecursiveShiftLeft [
 	| a c a2 c2 |
 	a := CFiniteSequence fibonacci.
@@ -140,7 +148,7 @@ SequenceTest >> testRecursiveShiftLeft [
 	self assert: (c equals: c2 upTo: 20)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 SequenceTest >> testRecursiveSum [
 	| a b c c2 |
 	a := CFiniteSequence fibonacci.
