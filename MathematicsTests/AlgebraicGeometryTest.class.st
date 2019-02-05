@@ -8,9 +8,10 @@ Class {
 AlgebraicGeometryTest >> testAffinePlaneCurveMultiplicity [
 	| A C |
 	A := AffineSpace new: #(x y) over: QQ.
-	C := A subscheme: A coordinateRing ! [:x :y| 'y^2 - (x^3)'].
-	self assert: (C multiplicityAt: (1,1)) = 1.
-	self assert: (C multiplicityAt: (0,0)) = 2
+	C := A
+		subscheme: A coordinateRing ! [ :x :y | (y raisedTo: 2) - (x raisedTo: 3) ].
+	self assert: (C multiplicityAt: 1 , 1) equals: 1.
+	self assert: (C multiplicityAt: 0 , 0) equals: 2
 ]
 
 { #category : #affine }
@@ -19,12 +20,16 @@ AlgebraicGeometryTest >> testAffineSchemeCartesianProduct [
 	X1 := AffineVariety circle.
 	X2 := AffineVariety romanSurface.
 	P := 'X1 ◊ X2'.
-	self assert: (P apply: (P ambient projection: 1)) = X1.
-	self assert: (P apply: (P ambient projection: 2)) = X2.
-	self assert: X1 dimension + X2 dimension = P dimension.
-	self assert: X1 ambient dimension + X2 ambient dimension = P ambient dimension.
-	self assert: (X1 pointsCountOver: ZZ/3) * (X2 pointsCountOver: ZZ/3) = (P pointsCountOver: ZZ/3).
-	self assert: (P satisfies: (5,2,6,2,6) % 7)
+	self assert: (P apply: (P ambient projection: 1)) equals: X1.
+	self assert: (P apply: (P ambient projection: 2)) equals: X2.
+	self assert: X1 dimension + X2 dimension equals: P dimension.
+	self
+		assert: X1 ambient dimension + X2 ambient dimension
+		equals: P ambient dimension.
+	self
+		assert: (X1 pointsCountOver: ZZ / 3) * (X2 pointsCountOver: ZZ / 3)
+		equals: (P pointsCountOver: ZZ / 3).
+	self assert: (P satisfies: (5 , 2 , 6 , 2 , 6) % 7)
 ]
 
 { #category : #affine }

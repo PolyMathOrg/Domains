@@ -171,10 +171,13 @@ Function >> backwardDifference: n at: h [
 
 { #category : #operations }
 Function >> centralDifference: n at: h [
-	^ 'self species
-			from: self domain
-			to: self codomain
-			evaluating: [:x| (0 to: n) sum: [:i| (-1)^i * (n choose: i) * (self value: x + ((n/2 - i)*h))]]'
+	^ self species
+		from: self domain
+		to: self codomain
+		evaluating: [ :x | 
+			(0 to: n)
+				sum:
+					[ :i | (-1 raisedTo: i) * (n choose: i) * (self value: x + ((n / 2 - i) * h)) ] ]
 ]
 
 { #category : #accessing }
@@ -214,15 +217,18 @@ Function >> expression: anExpression [
 
 { #category : #operations }
 Function >> forwardDifference: n at: h [
-	^ 'self species
-			from: self domain
-			to: self codomain
-			evaluating: [:x| (0 to: n) sum: [:i| (-1)^(n-i) * (n choose: i) * (self value: x + ((n-i)*h))]]'
+	^ self species
+		from: self domain
+		to: self codomain
+		evaluating: [ :x | 
+			(0 to: n)
+				sum:
+					[ :i | (-1 raisedTo: n - i) * (n choose: i) * (self value: x + ((n - i) * h)) ] ]
 ]
 
 { #category : #properties }
 Function >> hasProperty: aSymbol [
-	^ (properties ifNil: [^ false]) includesKey: aSymbol
+	^ (properties ifNil: [ ^ false ]) includesKey: aSymbol 
 ]
 
 { #category : #comparing }

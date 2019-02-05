@@ -26,7 +26,8 @@ Naturals >> atRandom: aRandom bits: bitSize [
 Naturals >> do: aBlock [
 	| n |
 	n := 1.
-	[aBlock value: n. n := n + 1] repeat
+	[ aBlock value: n.
+	n := n + 1 ] repeat
 ]
 
 { #category : #comparing }
@@ -56,7 +57,7 @@ Naturals >> isReal [
 
 { #category : #printing }
 Naturals >> printOn: aStream [
-	aStream nextPutAll: 'NN'
+	aStream nextPutAll: 'ℕ'
 ]
 
 { #category : #accessing }
