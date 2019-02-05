@@ -28,7 +28,8 @@ HomSet class >> from: aDomain to: anotherDomain [
 
 { #category : #elements }
 HomSet >> ! anObject [
-	anObject isEvaluable ifTrue: [^ self evaluating: anObject].
+	anObject isEvaluable 
+		ifTrue: [ ^ self evaluating: anObject ].
 	^ super ! anObject
 ]
 
@@ -64,12 +65,15 @@ HomSet >> evaluatingWithArguments: aBlock [
 
 { #category : #elements }
 HomSet >> identity [
-	^ self isEndomorphisms ifTrue: [self domain id]
+	^ self isEndomorphisms
+		ifTrue: [ self domain id ] 
 ]
 
 { #category : #testing }
 HomSet >> includes: aMorphism [
-	^ (aMorphism isKindOf: Morphism) and: [aMorphism domain = self domain and: [aMorphism codomain = self codomain]]
+	^ (aMorphism isKindOf: Morphism)
+		and: [ aMorphism domain = self domain
+				and: [ aMorphism codomain = self codomain ] ] 
 ]
 
 { #category : #testing }
@@ -85,6 +89,16 @@ HomSet >> opposite [
 { #category : #printing }
 HomSet >> printOn: aStream [
 	self isEndomorphisms
-		ifTrue: [aStream nextPutAll: 'End'; nextPut: $(; print: self domain; nextPut: $)]
-		ifFalse: [aStream nextPutAll: 'Hom'; nextPut: $(; print: self domain; nextPut: $,; print: self codomain; nextPut: $)]
+		ifTrue: [ aStream
+				nextPutAll: 'End';
+				nextPut: $(;
+				print: self domain;
+				nextPut: $) ]
+		ifFalse: [ aStream
+				nextPutAll: 'Hom';
+				nextPut: $(;
+				print: self domain;
+				nextPut: $,;
+				print: self codomain;
+				nextPut: $) ]
 ]

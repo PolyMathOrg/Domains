@@ -56,7 +56,9 @@ ProductProjectiveSpace >> isProduct [
 
 { #category : #printing }
 ProductProjectiveSpace >> printOn: aStream [
-	self components do: [:each| aStream print: each] separatedBy: [aStream nextPut: Character times]
+	self components
+		do: [ :each | aStream print: each ]
+		separatedBy: [ aStream nextPut: $✖]
 ]
 
 { #category : #'as yet unclassified' }
