@@ -9,7 +9,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 ProductProjectivePoint >> = aProductProjectivePoint [
-	self class = aProductProjectivePoint class ifFalse: [^ super = aProductProjectivePoint].
+	self class = aProductProjectivePoint class
+		ifFalse: [ ^ super = aProductProjectivePoint ].
 	^ self components = aProductProjectivePoint components
 ]
 
@@ -26,8 +27,11 @@ ProductProjectivePoint >> components: anArray [
 { #category : #'as yet unclassified' }
 ProductProjectivePoint >> coordinates [
 	| answer |
-	self components do: [:each|
-		answer := answer isNil ifTrue: [each coordinates] ifFalse: [answer, each coordinates]].
+	self components
+		do: [ :each | 
+			answer := answer isNil
+				ifTrue: [ each coordinates ]
+				ifFalse: [ answer , each coordinates ] ].
 	^ answer
 ]
 

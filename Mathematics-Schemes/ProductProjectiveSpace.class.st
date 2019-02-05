@@ -51,7 +51,7 @@ ProductProjectiveSpace >> coordinateRing [
 
 { #category : #testing }
 ProductProjectiveSpace >> isProduct [
-	^ true
+	^ true 
 ]
 
 { #category : #printing }
@@ -64,5 +64,6 @@ ProductProjectiveSpace >> printOn: aStream [
 { #category : #'as yet unclassified' }
 ProductProjectiveSpace >> segreEmbedding [
 	"Answer the Segre embedding into a projective space."
+
 	self notYetImplemented
 ]
