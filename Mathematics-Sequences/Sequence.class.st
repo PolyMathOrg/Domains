@@ -335,100 +335,123 @@ Sequence >> << anInteger [
 
 { #category : #operations }
 Sequence >> >> anInteger [
-	^ self shift: anInteger
+	^ self shift: anInteger 
 ]
 
 { #category : #converting }
 Sequence >> asStream [
-	^ ReadStream on: self
+	^ ReadStream on: self 
 ]
 
 { #category : #accessing }
 Sequence >> at: anInteger [
-	^ anInteger >= 0 ifTrue: [super value: anInteger]
+	^ anInteger >= 0
+		ifTrue: [ super value: anInteger ] 
 ]
 
 { #category : #operations }
 Sequence >> average [
-	^ self species to: self codomain evaluating: [:N| ((1 to: N) sum: [:n| self at: n]) / N]
+	^ self species
+		to: self codomain
+		evaluating: [ :N | ((1 to: N) sum: [ :n | self at: n ]) / N ]
 ]
 
 { #category : #comparing }
 Sequence >> beginsWith: aSequenceableCollection [
-	1 to: aSequenceableCollection size do: [:i| (self at: i) = (aSequenceableCollection at: i) ifFalse: [^ false]].
-	^ true
+	1 to: aSequenceableCollection size do: [ :i | 
+		(self at: i) = (aSequenceableCollection at: i)
+			ifFalse: [ ^ false ] ].
+	^ true 
 ]
 
 { #category : #series }
 Sequence >> bellSeries: p [
-	^ 'PowerSeries coefficients: (self species to: self codomain evaluating: [:n| self at: p^(n-1)])'
+	^ PowerSeries coefficients: (self species to: self codomain evaluating: [:n| self at: (p raisedTo: (n-1))])
 ]
 
 { #category : #operations }
 Sequence >> binomialTransform [
 	"The binomial transform is its own inverse, it's an involution."
-	^ 'self species to: self codomain evaluating: [:n| (0 to: n) sum: [:k| (-1)^(n-k) * (n choose: k) * (self at: k)]]'
+
+	^ self species to: self codomain evaluating: [:n| (0 to: n) sum: [:k| ((-1) raisedTo: (n-k)) * (n choose: k) * (self at: k)]]
 ]
 
 { #category : #operations }
 Sequence >> binomialTransform2 [
-	^ self species to: self codomain evaluating: [:n| (0 to: n) sum: [:k| (n choose: k) * (self at: k)]]
+	^ self species
+		to: self codomain
+		evaluating: [ :n | (0 to: n) sum: [ :k | (n choose: k) * (self at: k) ] ] 
 ]
 
 { #category : #accessing }
 Sequence >> codomain [
-	^ self propertyAt: #codomain ifAbsent: [ZZ]
+	^ self propertyAt: #codomain ifAbsent: [ ZZ ] 
 ]
 
 { #category : #enumerating }
 Sequence >> collect: aBlock [
-	^ self species evaluating: [:i| aBlock value: (self at: i)]
+	^ self species evaluating: [ :i | aBlock value: (self at: i) ] 
 ]
 
 { #category : #operations }
 Sequence >> convolution: aSequence [
-	^ self species to: self codomain evaluating: [:n| (0 to: n-1) sum: [:i| (self at: self startIndex + i) * (aSequence at: aSequence startIndex+n-1-i)]]
+	^ self species
+		to: self codomain
+		evaluating: [ :n | 
+			(0 to: n - 1)
+				sum: [ :i | 
+					(self at: self startIndex + i)
+						* (aSequence at: aSequence startIndex + n - 1 - i) ] ] 
 ]
 
 { #category : #copying }
 Sequence >> copyFrom: start to: end [
 	end isInfinite
-		ifTrue: [^ self shift: 1 - start].
-	^ (start to: end) collect: [:i| self at: i]
+		ifTrue: [ ^ self shift: 1 - start ].
+	^ (start to: end) collect: [ :i | self at: i ] 
 ]
 
 { #category : #enumerating }
 Sequence >> count: aBlock [
-	^ (self collect: [:each| (aBlock value: each) ifTrue: [1] ifFalse: [0]]) sum
+	^ (self
+		collect: [ :each | 
+			(aBlock value: each)
+				ifTrue: [ 1 ]
+				ifFalse: [ 0 ] ]) sum 
 ]
 
 { #category : #operations }
 Sequence >> difference [
 	"Answer the 'difference' sequence of the receiver, or delta, or discrete derivative."
-	^ (self shift: -1) - self
+
+	^ (self shift: -1) - self 
 ]
 
 { #category : #operations }
 Sequence >> dirichlet: aSequence [
 	"Answer the Dirichlet convolution of the receiver with the argument, assuming both are arithmetic functions (i.e. functions from the natural numbers to the complex numbers).
 	The set of arithmetic functions form a commutative ring (the Dirichlet ring) under pointwise addition and Dirichlet convolution."
-	^ self species to: self codomain evaluating: [:n| n divisors sum: [:d| (self at: d) * (aSequence at: n/d)]]
+
+	^ self species
+		to: self codomain
+		evaluating: [ :n | n divisors sum: [ :d | (self at: d) * (aSequence at: n / d) ] ] 
 ]
 
 { #category : #series }
 Sequence >> dirichletSeries [
 	"Answer the Dirichlet series generating function of the receiver."
-	^ DirichletSeries coefficients: self
+
+	^ DirichletSeries coefficients: self 
 ]
 
 { #category : #enumerating }
 Sequence >> do: aBlock [
-	1 to: self size do: [:each| aBlock value: (self at: each)]
+	1 to: self size do: [ :each | aBlock value: (self at: each) ] 
 ]
 
 { #category : #accessing }
 Sequence >> domain [
-	^ self propertyAt: #domain ifAbsent: [NN]
+	^ self propertyAt: #domain ifAbsent: [ NN ] 
 ]
 
 { #category : #comparing }
@@ -450,7 +473,8 @@ Sequence >> first: n [
 { #category : #series }
 Sequence >> generatingSeries [
 	"Answer the ordinary generating function of the receiver."
-	^ self ordinaryGeneratingSeries
+
+	^ self ordinaryGeneratingSeries 
 ]
 
 { #category : #operations }
@@ -494,14 +518,18 @@ Sequence >> printLimit: anInteger [
 
 { #category : #printing }
 Sequence >> printOn: aStream [
-	(self startIndex to: self printLimit) do: [:i| aStream print: (self at: i)] separatedBy: [aStream nextPutAll:', ' ].
-	aStream nextPutAll: '...'
+	(self startIndex to: self printLimit)
+		do: [ :i | aStream print: (self at: i) ]
+		separatedBy: [ aStream nextPutAll: ', ' ].
+	aStream nextPutAll: '...' 
 ]
 
 { #category : #printing }
 Sequence >> printOn: aStream base: base [
-	(1 to: self printLimit) do: [:i| (self at: i) printOn: aStream base: base] separatedBy: [aStream nextPutAll:', ' ].
-	aStream nextPutAll: '...'
+	(1 to: self printLimit)
+		do: [ :i | (self at: i) printOn: aStream base: base ]
+		separatedBy: [ aStream nextPutAll: ', ' ].
+	aStream nextPutAll: '...' 
 ]
 
 { #category : #printing }
@@ -513,7 +541,10 @@ Sequence >> printStringBase: base [
 { #category : #operations }
 Sequence >> product [
 	"Answer the indefinite product of the receiver."
-	^ self species to: self codomain evaluating: [:i| (1 to: i) collect: [:k| self at: k] andFold: [:a :b| a*b]]
+
+	^ self species
+		to: self codomain 
+		evaluating: [ :i | (1 to: i) collect: [ :k | self at: k ] andFold: [ :a :b | a * b ] ]
 ]
 
 { #category : #enumerating }
