@@ -86,28 +86,34 @@ DirichletSeries >> negated [
 DirichletSeries >> printOn: aStream [
 	| c n first |
 	first := true.
-	coefficients startIndex to: coefficients printLimit do: [:i|
+	coefficients startIndex to: coefficients printLimit do: [ :i | 
 		c := coefficients at: i.
 		c isZero
-			ifFalse:
-				[n := i - coefficients startIndex + 1.
+			ifFalse: [ n := i - coefficients startIndex + 1.
 				c printString first = $-
-					ifTrue: [first ifFalse: [aStream nextPutAll: ' - '].
-								c := c negated]
-					ifFalse: [first ifFalse: [aStream nextPutAll: ' + ']].
-				c printOn: aStream. first := false.
-				n > 1 ifTrue: [aStream nextPut: $/; print: n; nextPutAll: 'x' super]]].
+					ifTrue: [ first
+							ifFalse: [ aStream nextPutAll: ' - ' ].
+						c := c negated ]
+					ifFalse: [ first
+							ifFalse: [ aStream nextPutAll: ' + ' ] ].
+				c printOn: aStream.
+				first := false.
+				n > 1
+					ifTrue: [ aStream
+							nextPut: $/;
+							print: n;
+							nextPutAll: '^x' ] ] ].
 	aStream nextPutAll: ' + ...'
 ]
 
 { #category : #accessing }
 DirichletSeries >> scalars [
-	^ coefficients codomain
+	^ coefficients codomain 
 ]
 
 { #category : #arithmetic }
 DirichletSeries >> squared [
-	^ self * self
+	^ self * self 
 ]
 
 { #category : #operations }

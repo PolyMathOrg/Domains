@@ -35,7 +35,10 @@ SequenceTest >> testPowerSeries [
 	| cos sin |
 	sin := PowerSeries sin.
 	cos := PowerSeries cos.
-	self assert: ((cos squared + sin squared) coefficients beginsWith: #(1 0 0 0 0 0 0 0 0))
+	self
+		assert:
+			((cos squared + sin squared) coefficients
+				beginsWith: #(1 0 0 0 0 0 0 0 0))
 ]
 
 { #category : #accessing }
@@ -148,7 +151,7 @@ SequenceTest >> testRecursiveSum [
 	a := CFiniteSequence fibonacci.
 	b := CFiniteSequence lucasNumbers.
 	c := a + b.
-	c2 := Sequence evaluating: [:i| (a at: i) + (b at: i)].
+	c2 := Sequence evaluating: [ :i | (a at: i) + (b at: i) ].
 	self assert: (c isKindOf: CFiniteSequence).
-	self assert: (c equals: c2 upTo: 20)
+	self assert: (c equals: c2 upTo: 20) 
 ]

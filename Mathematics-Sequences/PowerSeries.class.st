@@ -27,7 +27,16 @@ PowerSeries class >> coefficients: aSequence [
 
 { #category : #examples }
 PowerSeries class >> cos [
-	^ self coefficients: (Sequence to: QQ evaluating: [:n| n even ifTrue: [0] ifFalse: [|k| k := n-1/2. ((-1) raiseTo:k) / (2*k) factorial]])
+	^ self
+		coefficients:
+			(Sequence
+				to: QQ
+				evaluating: [ :n | 
+					n even
+						ifTrue: [ 0 ]
+						ifFalse: [ | k |
+							k := (n - 1) / 2.
+							(-1 raisedTo: k) / (2 * k) factorial ] ])
 ]
 
 { #category : #examples }
@@ -42,7 +51,16 @@ PowerSeries class >> fromPolynomial: aPolynomial [
 
 { #category : #examples }
 PowerSeries class >> sin [
-	^ self coefficients: (Sequence to: QQ evaluating: [:n| n odd ifTrue: [0] ifFalse: [|k| k := n/2-1. ((-1) raiseTo:k) / (2*k+1) factorial]])
+	^ self
+		coefficients:
+			(Sequence
+				to: QQ
+				evaluating: [ :n | 
+					n odd
+						ifTrue: [ 0 ]
+						ifFalse: [ | k |
+							k := n / 2 - 1.
+							(-1 raisedTo: k) / (2 * k + 1) factorial ] ])
 ]
 
 { #category : #examples }

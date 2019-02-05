@@ -150,15 +150,17 @@ Integer >> factorizationDo: aBlock [
 { #category : #'*mathematics' }
 Integer >> factors [
 	"Answer a collection with the prime factors of the receiver (with multiplicity)."
+
 	| answer |
 	answer := Bag new.
-	self factorizationDo: [:p :e| answer add: p withOccurrences: e].
+	self factorizationDo: [ :p :e | answer add: p withOccurrences: e ].
 	^ answer
 ]
 
 { #category : #'*mathematics' }
 Integer >> height [
-	self = 0 ifTrue: [^ 1].
+	self = 0
+		ifTrue: [ ^ 1 ].
 	^ self abs
 ]
 
@@ -296,11 +298,16 @@ Integer >> minimalPolynomial [
 
 { #category : #'*mathematics' }
 Integer >> moebius [
-	"Answer the Moebius function mu of the receiver."
+	"Answer the Moebius function mu of the receiver.
+	https://en.wikipedia.org/wiki/M%C3%B6bius_function"
+
 	| factors |
 	factors := self factors.
-	factors asSet size = factors size ifFalse: [^ 0].
-	^ factors size even ifTrue: [1] ifFalse: [-1]
+	factors asSet size = factors size
+		ifFalse: [ ^ 0 ].
+	^ factors size even
+		ifTrue: [ 1 ]
+		ifFalse: [ -1 ]
 ]
 
 { #category : #'*mathematics' }

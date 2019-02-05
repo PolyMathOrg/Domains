@@ -77,12 +77,16 @@ ProjectiveLinePoint >> printOn: aStream [
 ]
 
 { #category : #arithmetic }
-ProjectiveLinePoint >> raiseTo: anInteger [
+ProjectiveLinePoint >> raisedTo: anInteger [
 	"Answer the receiver raised to the power anInteger."
-	anInteger = 1 ifTrue: [^ self].
-	anInteger = 0 ifTrue: [^ self one].
-	anInteger < 0 ifTrue: [^ 'self reciprocal ^ anInteger negated'].
-	^ '(self squared ^ (anInteger // 2)) * (self ^ (anInteger \\ 2))'
+
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	anInteger = 0
+		ifTrue: [ ^ self one ].
+	anInteger < 0
+		ifTrue: [ ^ (self reciprocal) raisedTo: (anInteger negated) ].
+	^ ((self squared) raisedTo: (anInteger // 2)) * (self raisedTo: (anInteger \\ 2))
 ]
 
 { #category : #arithmetic }

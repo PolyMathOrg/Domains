@@ -85,7 +85,8 @@ Sequence class >> calkinWilf [
 { #category : #examples }
 Sequence class >> catalanNumbers [
 	"The Catalan numbers."
-	^ Sequence evaluating: [:n| (2*(n-1) choose: n-1) / n]
+	
+	^ Sequence evaluating: [ :n | (2 * (n - 1) choose: n - 1) / n ]
 ]
 
 { #category : #'intance creation' }
@@ -108,7 +109,7 @@ Sequence class >> evaluating: aBlock [
 { #category : #examples }
 Sequence class >> fibonacci [
 	"The Fibonacci sequence defined as a recurrence."
-	
+
 	^ Sequence
 		initialValues: #(0 1)
 		recurrence: [ :f :n | (f at: n - 1) + (f at: n - 2) ]
@@ -117,7 +118,8 @@ Sequence class >> fibonacci [
 { #category : #examples }
 Sequence class >> harmonicNumbers [
 	"The harmonic numbers."
-	^ Sequence to: QQ evaluating: [:n| (1 to: n) sum: [:k| 1/k]]
+
+	^ Sequence to: QQ evaluating: [ :n | (1 to: n) sum: [ :k | 1 / k ] ]
 ]
 
 { #category : #examples }
@@ -162,9 +164,10 @@ Sequence class >> initialValues: anArray recurrence: aBinaryBlock [
 { #category : #examples }
 Sequence class >> liouville [
 	"The Liouville function."
+
 	| Omega |
 	Omega := Sequence Omega.
-	^ 'Sequence evaluating: [:n| (-1) ^ (Omega at: n)]'
+	^ Sequence evaluating: [:n| (-1) raisedTo: (Omega at: n)]
 ]
 
 { #category : #examples }
@@ -176,48 +179,61 @@ Sequence class >> mangoldt [
 { #category : #examples }
 Sequence class >> mangoldt2 [
 	"The log2 von Mangoldt function."
-	^ Sequence evaluating: [:n| | factors | factors := n factors. factors asSet size = 1 ifTrue: [factors anyOne highBit] ifFalse: [0]]
+
+	^ Sequence
+		evaluating: [ :n | 
+			| factors |
+			factors := n factors.
+			factors asSet size = 1
+				ifTrue: [ factors anyOne highBit ]
+				ifFalse: [ 0 ] ]
 ]
 
 { #category : #examples }
 Sequence class >> moebius [
 	"The Moebius function mu(n).
 	This is 0 if n is squarefree, and (-1)^k otherwise (where k is the number of prime factors counted with multiplicity)."
-	^ Sequence evaluating: [:n| n moebius]
+
+	^ Sequence evaluating: [ :n | n moebius ]
 ]
 
 { #category : #examples }
 Sequence class >> omega [
 	"Number of distinct primes dividing n. A001221."
-	^ Sequence evaluating: [:n| n factors asSet size]
+	
+	^ Sequence evaluating: [ :n | n factors asSet size ]
 ]
 
 { #category : #examples }
 Sequence class >> one [
 	"The constant sequence that is always 1."
+
 	^ Sequence constant: 1
 ]
 
 { #category : #examples }
 Sequence class >> partitions [
 	"The partition function p(n) = number of partition of n. OEIS A000041."
-	^ Sequence evaluating: [:n| n partitions size]
+	
+	^ Sequence evaluating: [ :n | n partitions size ]
 ]
 
 { #category : #examples }
 Sequence class >> phi [
 	"Euler's totient function."
-	^ Sequence evaluating: [:n| n phi]
+	
+	^ Sequence evaluating: [ :n | n phi ]
 ]
 
 { #category : #examples }
 Sequence class >> primeGaps [
 	"The sequence of prime gaps.
 	This is p(n+1) - p(n), the difference between concecutive primes."
+
 	| p |
 	p := 2.
-	^ Sequence streamming: [p negated + (p := p nextPrime)]
-"	^ Sequence primes difference"
+	^ Sequence
+		streamming: [ "	^ Sequence primes difference" p negated + (p := p nextPrime) ]
 ]
 
 { #category : #examples }
@@ -241,13 +257,15 @@ Sequence class >> recurrence: aBinaryBlock [
 Sequence class >> sigma [
 	"The sigma(n) function, defined as the sum of the positive divisors of n.
 	The number n is said to be a perfect number iff sigma(n) = 2*n."
-	^ Sequence evaluating: [:n| n divisors sum]
+
+	^ Sequence evaluating: [ :n | n divisors sum ] 
 ]
 
 { #category : #examples }
 Sequence class >> sigma: x [
 	"Answer the sigma(x,n) function."
-	^ Sequence evaluating: [:n| n divisors sum: [:d| d raiseTo: x]]
+
+	^ Sequence evaluating: [ :n | n divisors sum: [ :d | d raiseTo: x ] ]
 ]
 
 { #category : #'intance creation' }
@@ -258,7 +276,8 @@ Sequence class >> streamming: aBlock [
 { #category : #examples }
 Sequence class >> tau [
 	"Number of divisors of n, also called d(n) and sigma_O(n). A000005."
-	^ Sequence evaluating: [:n| n divisors size]
+
+	^ Sequence evaluating: [ :n | n divisors size ]
 ]
 
 { #category : #'intance creation' }
@@ -268,16 +287,18 @@ Sequence class >> to: aDomain constant: anObject [
 
 { #category : #'intance creation' }
 Sequence class >> to: aDomain dynamic: aBlock [
-	^ self to: aDomain evaluating:
-			[:n| | x |
+	^ self
+		to: aDomain
+		evaluating: [ :n | 
+			| x |
 			x := 0.
-			n timesRepeat: [x := aBlock value: x].
-			x]
+			n timesRepeat: [ x := aBlock value: x ].
+			x ] 
 ]
 
 { #category : #'intance creation' }
 Sequence class >> to: aDomain evaluating: aBlock [
-	^ self from: NN to: aDomain evaluating: aBlock
+	^ self from: NN to: aDomain evaluating: aBlock 
 ]
 
 { #category : #'intance creation' }
