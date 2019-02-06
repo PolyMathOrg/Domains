@@ -122,7 +122,9 @@ BitTuple >> asInteger [
 
 { #category : #accessing }
 BitTuple >> at: anInteger [
-	^ (integer bitAt: anInteger) = 1 ifTrue: [One] ifFalse: [Zero]
+	^ (integer bitAt: anInteger) = 1
+		ifTrue: [ One ]
+		ifFalse: [ Zero ]
 ]
 
 { #category : #accessing }
@@ -291,7 +293,10 @@ BitTuple >> size: anInteger [
 { #category : #operations }
 BitTuple >> sum [
 	"Answer the sum of the bits, i.e. the parity."
-	^ integer bitParity = 0 ifTrue: [Zero] ifFalse: [One]
+
+	^ integer bitParity = 0
+		ifTrue: [ Zero ]
+		ifFalse: [ One ]
 ]
 
 { #category : #operations }

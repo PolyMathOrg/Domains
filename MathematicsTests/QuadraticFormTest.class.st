@@ -12,8 +12,10 @@ QuadraticFormTest >> newQuadraticForm [
 { #category : #'instance creation' }
 QuadraticFormTest >> newQuadraticForm: n [
 	| V |
-	V := 'QQ^n'.
-	^ 'QuadraticForm from: V coefficients: (QQ^(n + 1 * n / 2) atRandomBits: 100)'
+	V := QQ raisedTo: n.
+	^ QuadraticForm
+		from: V
+		coefficients: ((QQ raisedTo: (n + 1 * n / 2)) atRandomBits: 100)
 ]
 
 { #category : #tests }
@@ -24,9 +26,9 @@ QuadraticFormTest >> testArithmetic [
 	Q2 := self newQuadraticForm: n.
 	p := Q1 domain atRandomBits: 100.
 	a := QQ atRandomBits: 100.
-	self assert: (Q1 value: p) + (Q2 value: p) = (Q1 + Q2 value: p).
-	self assert: (Q1 * a value: p) = ((Q1 value: p) * a).
-	self assert: Q1 + Q2 + Q2 negated = Q1
+	self assert: (Q1 value: p) + (Q2 value: p) equals: (Q1 + Q2 value: p).
+	self assert: (Q1 * a value: p) equals: (Q1 value: p) * a.
+	self assert: Q1 + Q2 + Q2 negated equals: Q1
 ]
 
 { #category : #tests }

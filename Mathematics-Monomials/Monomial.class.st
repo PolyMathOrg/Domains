@@ -304,11 +304,6 @@ Monomial >> printOn: aStream [
 ]
 
 { #category : #operations }
-Monomial >> raiseTo: anInteger [ "^ "
-	^ self parent exponents: exponents * anInteger
-]
-
-{ #category : #operations }
 Monomial >> raisedTo: anInteger [
 
 	^ self parent exponents: exponents * anInteger

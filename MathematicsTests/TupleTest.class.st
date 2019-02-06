@@ -8,10 +8,10 @@ Class {
 TupleTest >> testBitTupleBug [
 	| Z2 |
 	Z2 := PrimeField new: 2.
-	'self assert: ((1,0,0) % 2 :: sum = Z2 one).
-		self assert: ((0,1,0) % 2 :: sum = Z2 one).
-		self assert: ((1,1,0) % 2 :: sum = Z2 zero).
-		self assert: ((1,1,1) % 2 :: sum = Z2 one)'
+	self assert: ((1 , 0 , 0) % 2) sum equals: Z2 one.
+	self assert: ((0 , 1 , 0) % 2) sum equals: Z2 one.
+	self assert: ((1 , 1 , 0) % 2) sum equals: Z2 zero.
+	self assert: ((1 , 1 , 1) % 2) sum equals: Z2 one
 ]
 
 { #category : #tests }
@@ -34,7 +34,7 @@ TupleTest >> testBitTupleOperations [
 { #category : #tests }
 TupleTest >> testBitTupleReversed [
 	| v i |
-'	v := ZZ / 2 ^ 100 atRandom :: atRandom'.
+	v := ((ZZ / 2) raisedTo: (100 atRandom) ) atRandom.
 	i := v size atRandom.
 	self assert: (v reversed at: i) = (v at: v size - i + 1).
 	self assert: v reversed reversed = v
@@ -42,25 +42,29 @@ TupleTest >> testBitTupleReversed [
 
 { #category : #tests }
 TupleTest >> testBitTupleSum [
-	self assert: (BitTuple fromInteger: 2r1011101) sum representative = 1.
-	self assert: (BitTuple fromInteger: 2r10000100100010) sum representative = 0
+	self
+		assert: (BitTuple fromInteger: 2r1011101) sum representative
+		equals: 1.
+	self
+		assert: (BitTuple fromInteger: 2r10000100100010) sum representative
+		equals: 0
 ]
 
 { #category : #tests }
 TupleTest >> testHomogeneousTuples [
-	self assert: (1,2,3) ~ (2,4,6).
-	self deny: (1,2,3) ~ (-2,4,6)
+	self assert: (1 , 2 , 3) ~ (2 , 4 , 6).
+	self deny: (1 , 2 , 3) ~ (-2 , 4 , 6)
 ]
 
 { #category : #tests }
 TupleTest >> testHomogeneousTuples2 [
 	| P Q |
-	P := (1,2) over: ZZ.
-	Q := (2,4) over: ZZ.
+	P := 1 , 2 over: ZZ.
+	Q := 2 , 4 over: ZZ.
 	self assert: P ~ Q.
-	P := (1,2) over: ZZ.
-	Q := (1,0) over: ZZ.
-	self deny: P ~ Q
+	P := 1 , 2 over: ZZ.
+	Q := 1 , 0 over: ZZ.
+	self deny: P ~ Q 
 ]
 
 { #category : #tests }
@@ -132,9 +136,9 @@ TupleTest >> testModTupleOperations [
 { #category : #tests }
 TupleTest >> testModTupleSum [
 	| a b |
-	a := ZZ tuple: ((1 to: 10) collect: [:i| 100 atRandom]).
+	a := ZZ tuple: ((1 to: 10) collect: [ :i | 100 atRandom ]).
 	b := a % 7.
-	self assert: b sum = (a sum % 7)
+	self assert: b sum equals: a sum % 7
 ]
 
 { #category : #tests }

@@ -28,9 +28,13 @@ SLP >> printOn: aStream [
 ]
 
 { #category : #'as yet unclassified' }
-SLP >> raiseTo: anInteger [ "^ "
-	anInteger = 0 ifTrue: [^ self class word: Word empty].
-	anInteger = 1 ifTrue: [^ self].
+SLP >> raisedTo: anInteger [
+	"^ "
+
+	anInteger = 0
+		ifTrue: [ ^ self class word: Word empty ].
+	anInteger = 1
+		ifTrue: [ ^ self ].
 	^ self class word: (Word x: word to: anInteger)
 ]
 

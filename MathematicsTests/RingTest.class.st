@@ -310,7 +310,7 @@ RingTest >> testPrimeRingCanonicalProjections [
 RingTest >> testPrimeRingNilradical [
 	| R |
 	R := PrimeRing new: 3 to: 3.
-	self assert: R nilradical = (R * 3)
+	self assert: R nilradical equals: R * 3
 ]
 
 { #category : #general }
