@@ -228,6 +228,7 @@ RingTest >> testPolynomialRing [
 { #category : #polynomials }
 RingTest >> testPolynomialRingPrimeNotMaximalIdeal [
 	"Z[x]/<x> is isomorphic to Z, which is an integral domain but not a field. So <x> is prime but not maximal."
+
 	| R I |
 	R := ZZ polynomials.
 	I := R * R x.
@@ -238,6 +239,7 @@ RingTest >> testPolynomialRingPrimeNotMaximalIdeal [
 { #category : #polynomials }
 RingTest >> testPolynomialRingPrimeNotMaximalIdeal2 [
 	"Q[x,y]/<x> is isomorphic to Q[y], which is an integral domain but not a field. So <x> is prime but not maximal."
+
 	| R I |
 	R := QQ polynomialsIn: 2.
 	I := R * R x.
@@ -249,13 +251,17 @@ RingTest >> testPolynomialRingPrimeNotMaximalIdeal2 [
 RingTest >> testPrimeFieldLogarithm [
 	| F g a b p |
 	p := 17.
-	F := ZZ/p.
+	F := ZZ / p.
 	g := F primitiveRoot.
-	[(a := F atRandom) isZero] whileTrue.
-	[(b := F atRandom) isZero] whileTrue.
-	'self assert: g ^ (a log: g) = a'.
-	self assert: (a log: g) + (b log: g) \\ (p-1) = ((a*b log: g) \\ (p-1)).
-	self assert: (a log: g) - (b log: g) \\ (p-1) = ((a/b log: g) \\ (p-1))
+	[ (a := F atRandom) isZero ] whileTrue.
+	[ (b := F atRandom) isZero ] whileTrue.
+	self assert: (g raisedTo: (a log: g)) equals: a.
+	self
+		assert: ((a log: g) + (b log: g)) \\ (p - 1)
+		equals: (a * b log: g) \\ (p - 1).
+	self
+		assert: ((a log: g) - (b log: g)) \\ (p - 1)
+		equals: (a / b log: g) \\ (p - 1)
 ]
 
 { #category : #'finite rings' }
@@ -275,11 +281,11 @@ RingTest >> testPrimeFieldPrimitiveRoot [
 RingTest >> testPrimeRing [
 	| R |
 	R := PrimeRing new: 3 to: 3.
-	self assert: R characteristic = (3 raiseTo: 3).
-	self assert: R size = (3 raiseTo: 3).
+	self assert: R characteristic equals: (3 raisedTo: 3).
+	self assert: R size equals: (3 raisedTo: 3).
 	self assert: R isLocal.
 	self assert: R isEuclidean.
-	self assert: R maximalIdeal = (R*3).
+	self assert: R maximalIdeal equals: R * 3.
 	self testRing: R
 ]
 
