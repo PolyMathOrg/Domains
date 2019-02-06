@@ -106,13 +106,18 @@ AlgebraicExtension >> polynomial: aPolynomial [
 
 { #category : #printing }
 AlgebraicExtension >> printOn: aStream [
-	(self hasProperty: #name) ifTrue: [^ super printOn: aStream].
-	aStream print: self scalars; nextPut: $(; print: self polynomial; nextPut: $)
+	(self hasProperty: #name)
+		ifTrue: [ ^ super printOn: aStream ].
+	aStream
+		print: self scalars;
+		nextPut: $(;
+		print: self polynomial;
+		nextPut: $)
 ]
 
 { #category : #accessing }
 AlgebraicExtension >> size [
-	^ 'self scalars size ^ self degree'
+	^ (self scalars size) raisedTo: (self degree)
 ]
 
 { #category : #accessing }

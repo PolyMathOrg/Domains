@@ -191,8 +191,7 @@ PolynomialRing >> atRandom: aRandom bits: bitSize [
 PolynomialRing >> atRandom: aRandom bits: bitSize maxDegree: d [
 	| answer term n |
 	self isUnivariate
-		ifTrue: [ ^ self
-				coefficients: 'self scalars ^ (d+1) atRandom: aRandom bits: bitSize' ].
+		ifTrue: [ ^ self coefficients: (((self scalars) raisedTo: (d+1)) atRandom: aRandom bits: bitSize)].
 	answer := self zero.
 	n := 2 raisedTo: self rank.
 	n

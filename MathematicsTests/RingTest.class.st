@@ -71,11 +71,11 @@ RingTest >> testFiniteRing2Alternative [
 RingTest >> testFiniteRing3 [
 	| R |
 	R := 'ZZ/4 ◊ (ZZ/4)'.
-	self assert: R characteristic = 4.
+	self assert: R characteristic equals: 4.
 	self assert: R isField not.
-	self assert: R size = 16.
-	self assert: R zeroDivisors size = 12.
-	self assert: R units size = 4
+	self assert: R size equals: 16.
+	self assert: R zeroDivisors size equals: 12.
+	self assert: R units size equals: 4
 	"more about this ring: two maximal ideals (so not a local ring), and non-trivial jacobson radical"
 ]
 
@@ -149,12 +149,12 @@ RingTest >> testGaloisRingNilradical [
 { #category : #general }
 RingTest >> testKrullDimension [
 	| R I |
-	self assert: ZZ dimension = 1.
-	self assert: QQ dimension = 0.
-	self assert: (ZZ polynomialsIn: 2) dimension = 3.
+	self assert: ZZ dimension equals: 1.
+	self assert: QQ dimension equals: 0.
+	self assert: (ZZ polynomialsIn: 2) dimension equals: 3.
 	R := QQ polynomialsIn: #(x y).
-	I := R * {((R x) raisedTo: 2) + ((R y) raisedTo: 2) - 1}.
-	self assert: (R / I) dimension = 1
+	I := R * {((R x raisedTo: 2) + (R y raisedTo: 2) - 1)}.
+	self assert: (R / I) dimension equals: 1
 ]
 
 { #category : #localizations }
@@ -214,7 +214,7 @@ RingTest >> testMultivariatePolynomialRing [
 { #category : #general }
 RingTest >> testNilradical [
 	self assert: ZZ nilradical equals: ZZ * 0.
-	self assert: (ZZ / 12) nilradical = (ZZ / 12 * 6)
+	self assert: (ZZ / 12) nilradical equals: ZZ / 12 * 6
 ]
 
 { #category : #polynomials }

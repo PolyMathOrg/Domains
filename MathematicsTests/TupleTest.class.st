@@ -97,15 +97,19 @@ TupleTest >> testMakeZero: aTuple [
 
 { #category : #tests }
 TupleTest >> testModTupleConcatenation [
-	self assert: (1,2,3) % 7, ((2,3,4) % 7) = ((1,2,3,2,3,4) % 7)
+	self
+		assert: (1 , 2 , 3) % 7 , ((2 , 3 , 4) % 7)
+		equals: (1 , 2 , 3 , 2 , 3 , 4) % 7
 ]
 
 { #category : #tests }
 TupleTest >> testModTupleConvolution [
 	| a b |
-	a := (1,2,3).
-	b := (2,3,4).
-	self assert: (a % 7 convolution: b % 7) = ((a convolution: b) % 7)
+	a := 1 , 2 , 3.
+	b := 2 , 3 , 4.
+	self
+		assert: (a % 7 convolution: b % 7)
+		equals: (a convolution: b) % 7
 ]
 
 { #category : #tests }

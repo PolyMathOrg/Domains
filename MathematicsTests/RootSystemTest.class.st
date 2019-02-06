@@ -7,9 +7,14 @@ Class {
 { #category : #'as yet unclassified' }
 RootSystemTest >> rootSystem1 [
 	| V roots |
-	V := QQ  raisedTo: 3.
+	V := QQ raisedTo: 3.
 	roots := Set new.
-	1 to: 3 do: [:i| 1 to: i-1 do: [:j| |r| roots add: (r := (V e: i) - (V e: j)); add: r negated]].
+	1 to: 3 do: [ :i | 
+		1 to: i - 1 do: [ :j | 
+			| r |
+			roots
+				add: (r := (V e: i) - (V e: j));
+				add: r negated ] ].
 	^ RootSystem on: V roots: roots
 ]
 
@@ -18,13 +23,13 @@ RootSystemTest >> rootSystem2 [
 	| V roots |
 	V := QQ raisedTo: 3.
 	roots := Set new.
-	1 to: 3 do: [:i|
-		1 to: i-1 do: [:j|
+	1 to: 3 do: [ :i | 
+		1 to: i - 1 do: [ :j | 
 			roots
 				add: (V e: i) - (V e: j);
 				add: (V e: j) - (V e: i);
 				add: (V e: i) + (V e: j);
-				add: ((V e: i) + (V e: j)) negated]].
+				add: ((V e: i) + (V e: j)) negated ] ].
 	^ RootSystem on: V roots: roots
 ]
 
