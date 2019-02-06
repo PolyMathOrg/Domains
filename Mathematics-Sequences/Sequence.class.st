@@ -497,7 +497,10 @@ Sequence >> lookup [
 Sequence >> moebiusInverse [
 	"This is equivalent to the Dirichlet convolution of the Moebius arithmetic function with the receiver.
 	If f(n) and g(n) are two arithmetic functions satisfying g = f * 1 (Dirichlet convolution of f with the constant function 1), then the Moebius inversion formula can be used to retrieve f as f = mu * g. It is said that f and g and Moebius transforms of each other."
-	^ self species to: self codomain evaluating: [:n| n divisors sum: [:d| d moebius * (self at: n/d)]]
+
+	^ self species
+		to: self codomain
+		evaluating: [ :n | n divisors sum: [ :d | d moebius * (self at: n / d) ] ]
 ]
 
 { #category : #series }
@@ -508,7 +511,7 @@ Sequence >> ordinaryGeneratingSeries [
 
 { #category : #printing }
 Sequence >> printLimit [
-	^ self propertyAt: #printLimit ifAbsent: [17]
+	^ self propertyAt: #printLimit ifAbsent: [ 17 ]
 ]
 
 { #category : #printing }
@@ -549,12 +552,17 @@ Sequence >> product [
 
 { #category : #enumerating }
 Sequence >> select: aBlock [
-	^ self species evaluating: [:i|
-		| k j value |
-		k := 1.
-		j := 1.
-		[[aBlock value: (value := self at: k)] whileFalse: [k := k + 1]. j < i] whileTrue: [j := j + 1. k := k + 1].
-		value]
+	^ self species
+		evaluating: [ :i | 
+			| k j value |
+			k := 1.
+			j := 1.
+			[ [ aBlock value: (value := self at: k) ]
+				whileFalse: [ k := k + 1 ].
+			j < i ]
+				whileTrue: [ j := j + 1.
+					k := k + 1 ].
+			value ]
 ]
 
 { #category : #operations }

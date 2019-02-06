@@ -20,12 +20,12 @@ Class {
 
 { #category : #'instance creation' }
 DirichletSeries class >> coefficients: aSequence [
-	^ self new coefficients: aSequence
+	^ self new coefficients: aSequence 
 ]
 
 { #category : #examples }
 DirichletSeries class >> zeta [
-	^ self coefficients: (CFiniteSequence constant: 1)
+	^ self coefficients: (CFiniteSequence constant: 1) 
 ]
 
 { #category : #arithmetic }

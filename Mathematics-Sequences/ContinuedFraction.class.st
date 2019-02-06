@@ -50,6 +50,7 @@ ContinuedFraction class >> newFrom: aNumber [
 { #category : #examples }
 ContinuedFraction class >> phi [
 	"Answer the golden ratio."
+	
 	^ self coefficients: (Sequence constant: 1)
 ]
 
@@ -66,9 +67,10 @@ ContinuedFraction >> coefficients [
 
 { #category : #initialization }
 ContinuedFraction >> coefficients: aSequence [
-	coefficients := ((aSequence isKindOf: Tuple) or: [aSequence isKindOf: Sequence])
-		ifTrue: [aSequence]
-		ifFalse: [ZZ tuple: aSequence]
+	coefficients := ((aSequence isKindOf: Tuple)
+		or: [ aSequence isKindOf: Sequence ])
+		ifTrue: [ aSequence ]
+		ifFalse: [ ZZ tuple: aSequence ]
 ]
 
 { #category : #convergents }

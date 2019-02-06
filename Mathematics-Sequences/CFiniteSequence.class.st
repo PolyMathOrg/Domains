@@ -65,13 +65,15 @@ CFiniteSequence class >> initialValues: anArray coefficients: anotherArray [
 { #category : #examples }
 CFiniteSequence class >> jacobsthalNumbers [
 	"The Jacobsthal numbers."
+
 	^ CFiniteSequence initialValues: #(0 1) coefficients: #(2 1)
 ]
 
 { #category : #examples }
 CFiniteSequence class >> lucasNumbers [
 	"The Lucas numbers."
-	^ CFiniteSequence initialValues: #(2 1) coefficients: #(1 1)
+
+	^ CFiniteSequence initialValues: #(2 1) coefficients: #(1 1) 
 ]
 
 { #category : #examples }
