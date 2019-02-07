@@ -125,7 +125,7 @@ AlgebraicGeometryTest >> testEllipticCurvesAreSmooth [
 AlgebraicGeometryTest >> testEmpty [
 	| A X |
 	A := QQ polynomialsIn: #(x y z).
-	X := 'A / {A continuantOfOrder: 2. A continuantOfOrder: 3} :: spec'.
+	X := (A / {A continuantOfOrder: 2. A continuantOfOrder: 3}) spec.
 	self assert: X isEmpty
 ]
 
@@ -329,7 +329,7 @@ AlgebraicGeometryTest >> testNotFinite [
 	A := QQ polynomialsIn: #(x y).
 	x := A x.
 	y := A y.
-	X := 'A / {y*y - (x*x) - 3} :: spec'.
+	X := (A / {y*y - (x*x) - 3} )spec.
 	self assert: X isFinite not
 ]
 

@@ -256,7 +256,7 @@ GraphTest >> testTuttePolynomialK3 [
 	P := ZZ polynomialsIn: #(x y).
 	x := P x.
 	y := P y.
-	T := 'x^2 + x + y'.
+	T := (x raisedTo: 2) + x + y.
 	self assert: G tuttePolynomial = T
 ]
 
@@ -267,7 +267,7 @@ GraphTest >> testTuttePolynomialK4 [
 	P := ZZ polynomialsIn: #(x y).
 	x := P x.
 	y := P y.
-	T := 'x^3 + (x^2*3) + (x*2) + (x*y*4) + (y*2) + (y^2*3) + (y^3)'.
+	T := (x raisedTo: 3) + ((x raisedTo: 2)*3) + (x*2) + (x*y*4) + (y*2) + ((y raisedTo:2)*3) + (y raisedTo: 3).
 	self assert: G tuttePolynomial = T
 ]
 
