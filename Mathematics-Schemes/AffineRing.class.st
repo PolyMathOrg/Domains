@@ -140,8 +140,10 @@ AffineRing >> proj [
 ]
 
 { #category : #operations }
-AffineRing >> raisedTo: n [ "^ n"
-	(n isInteger and: [self isMultivariate]) ifFalse: [^ 'super raisedTo: n'].
+AffineRing >> raisedTo: n [
+
+	(n isInteger and: [ self isMultivariate ])
+		ifFalse: [ ^ super raisedTo: n ].
 	^ MultivariateTupleModule new: n over: self
 ]
 

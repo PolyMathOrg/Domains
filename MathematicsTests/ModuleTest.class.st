@@ -6,14 +6,18 @@ Class {
 
 { #category : #private }
 ModuleTest >> newFreeModule [
-	^ self newFreeModuleOver: {ZZ. QQ. ZZ / (10 atRandom + 1)} atRandom
+	^ self
+		newFreeModuleOver:
+			{ZZ.
+			QQ.
+			(ZZ / (10 atRandom + 1))} atRandom
 ]
 
 { #category : #private }
 ModuleTest >> newFreeModuleOver: scalars [
 	| M N |
 "	M := 2 atRandom = 1 ifTrue: [scalars ^ (5 atRandom - 1)] ifFalse: [scalars ^ (5 atRandom - 1 @ (5 atRandom - 1))]."
-	'M := 2 atRandom = 1 ifTrue: [scalars ^ 4 atRandom] ifFalse: [scalars ^ (4 atRandom @ 4 atRandom)]'.
+	M := 2 atRandom = 1 ifTrue: [scalars raisedTo: (4 atRandom)] ifFalse: [scalars raisedTo: (4 atRandom @ 4 atRandom)].
 	"don't let it get too big, or the test is too slow:"
 	M rank < 4 ifTrue:
 		[3 atRandom = 1 ifTrue: [^ M endomorphisms].
@@ -28,24 +32,37 @@ ModuleTest >> newFreeModuleOver: scalars [
 
 { #category : #private }
 ModuleTest >> newFreeModuleOverPID [
-	^ self newFreeModuleOver: {QQ. ZZ/2. ZZ. QQ polynomials} atRandom
+	^ self
+		newFreeModuleOver:
+			{QQ.
+			(ZZ / 2).
+			ZZ.
+			QQ polynomials} atRandom
 ]
 
 { #category : #private }
 ModuleTest >> newLinearMap [
 	| K V W |
-	K := {QQ. ZZ / #(2 3 5 7) atRandom} atRandom.
+	K := {QQ.
+	(ZZ / #(2 3 5 7) atRandom)} atRandom.
 	V := self newFreeModuleOver: K.
 	W := self newFreeModuleOver: K.
-	^ (V hom: W) ! (self newMatrix: W rank @ V rank over: K)
+	^ (V hom: W) ! (self newMatrix: W rank @ V rank over: K) 
 ]
 
 { #category : #private }
 ModuleTest >> newMatrix: dim over: aRing [
 	| samples |
-	'2 atRandom = 1 ifTrue: [^ aRing^dim atRandomBits: 100]'.
-	samples := {aRing zero. aRing one. aRing one negated}.
-	^ aRing matrix: dim evaluating: [:i :j| 2 atRandom > 1 ifTrue: [aRing zero] ifFalse: [samples atRandom]]
+	2 atRandom = 1 ifTrue: [^ (aRing raisedTo: dim) atRandomBits: 100].
+	samples := {aRing zero.
+	aRing one.
+	aRing one negated}.
+	^ aRing
+		matrix: dim
+		evaluating: [ :i :j | 
+			2 atRandom > 1
+				ifTrue: [ aRing zero ]
+				ifFalse: [ samples atRandom ] ]
 ]
 
 { #category : #private }
@@ -66,12 +83,18 @@ ModuleTest >> newSmallFreeModuleOver: scalars [
 
 { #category : #private }
 ModuleTest >> newSmallVectorSpace [
-	^ self newSmallFreeModuleOver: {QQ. ZZ / #(2 3 5 7) atRandom} atRandom
+	^ self
+		newSmallFreeModuleOver:
+			{QQ.
+			(ZZ / #(2 3 5 7) atRandom)} atRandom
 ]
 
 { #category : #private }
 ModuleTest >> newVectorSpace [
-	^ self newFreeModuleOver: {QQ. ZZ / #(2 3 5 7) atRandom} atRandom
+	^ self
+		newFreeModuleOver:
+			{QQ.
+			(ZZ / #(2 3 5 7) atRandom)} atRandom
 ]
 
 { #category : #other }
@@ -122,8 +145,12 @@ ModuleTest >> testAnnihilatorProperties [
 	T := V span: T basis.	"hack, otherwise T ambient = S"
 	self assert: T <= S.
 	self assert: T annihilator >= S annihilator.	"reverses inclusions"
-	self assert: (S + T) annihilator = S annihilator ï T annihilator.
-	self assert: S dimension + S annihilator dimension = V dimension.
+	self
+		assert: (S + T) annihilator
+		equals: S annihilator ï T annihilator.
+	self
+		assert: S dimension + S annihilator dimension
+		equals: V dimension.
 	self assert: V annihilator isTrivial
 	"	self assert: S annihilator annihilator = S dual dual"
 ]
@@ -131,23 +158,23 @@ ModuleTest >> testAnnihilatorProperties [
 { #category : #other }
 ModuleTest >> testAnnihilatorZ2 [
 	| V v S S0 |
-	V := '(ZZ / 2) ^ 4'.
-	[(v := V atRandom) isZero] whileTrue.
+	V := ZZ / 2 raisedTo: 4.
+	[ (v := V atRandom) isZero ] whileTrue.
 	S := V span: {v}.
 	S0 := S annihilator.
-	self assert: S0 dimension = S codimension.
-	S0 basis do: [:f| self assert: (f value: v) isZero]
+	self assert: S0 dimension equals: S codimension.
+	S0 basis do: [ :f | self assert: (f value: v) isZero ]
 ]
 
 { #category : #other }
 ModuleTest >> testCanonicalMorphisms [
 	| V W |
-	V := 'QQ^3'.
-	W := V span: {(1,2,3)}.
-	self assert: '(V null  W) isZero'. "canonical morphism from initial object"
-	self assert: '(V  W null) isZero'. "canonical morphism to terminal object"
+	V := QQ raisedTo: 3.
+	W := V span: {(1 , 2 , 3)}.
+	self assert: '(V null  W) isZero'.	"canonical morphism from initial object"
+	self assert: '(V  W null) isZero'.	"canonical morphism to terminal object"
 	self assert: '((W  W null) value: (1,2,3)) isZero'.
-	self assert: '(W  V value: (2,4,6)) = (2,4,6)'. "canonical morphism to overobject"
+	self assert: '(W  V value: (2,4,6)) = (2,4,6)'	"canonical morphism to overobject"
 ]
 
 { #category : #other }
@@ -164,40 +191,49 @@ ModuleTest >> testDirectSum [
 { #category : #basis }
 ModuleTest >> testDiscriminant [
 	| M |
-	M := 'ZZ^3'.
-	self assert: M discriminant = 1.
-	self assert: (M span: {(1,2,3)}) discriminant = 14.
-	self assert: (M span: {(1,2,3). (1,1,1)}) discriminant = 6 
+	M := ZZ raisedTo: 3.
+	self assert: M discriminant equals: 1.
+	self assert: (M span: {(1 , 2 , 3)}) discriminant equals: 14.
+	self
+		assert:
+			(M
+				span:
+					{(1 , 2 , 3).
+					(1 , 1 , 1)}) discriminant
+		equals: 6
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testFirstIsomorphismTheorem2 [
 	| V S T f |
-	V := 'QQ ^ 5'.
-	S := 'V grassmannian: (1 to: V dimension) atRandom :: atRandomBits: 50'.
-	T := 'V grassmannian: (1 to: V dimension) atRandom :: atRandomBits: 50'.
-	f := 'S hom: T :: atRandomBits: 50'.
+	V := QQ raisedTo: 5.
+	S := (V grassmannian: (1 to: V dimension) atRandom) atRandomBits: 50.
+	T := (V grassmannian: (1 to: V dimension) atRandom )atRandomBits: 50.
+	f := (S hom: T) atRandomBits: 50.
 	self assert: f domain / f kernel ~ f image
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testFirstIsomorphismTheorem: M [
 	| S T f phi |
-	S := 'M grassmannian: (1 to: M rank) atRandom :: atRandomBits: 50'.
-	T := 'M grassmannian: (1 to: M rank) atRandom :: atRandomBits: 50'.
-	f := 'S hom: T :: atRandomBits: 50'.
-	phi := S / f kernel to: f image evaluating: [:x| f value: x representative].
+	S := (M grassmannian: (1 to: M rank) atRandom) atRandomBits: 50.
+	T := (M grassmannian: (1 to: M rank) atRandom)atRandomBits: 50.
+	f := (S hom: T) atRandomBits: 50.
+	phi := S / f kernel
+		to: f image
+		evaluating: [ :x | f value: x representative ].
 	self assert: phi isIsomorphism
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testFirstIsomorphismTheoremOverCyclotomicField [
-	self testFirstIsomorphismTheorem: '(CyclotomicField new: 7) ^ 5'
+	self testFirstIsomorphismTheorem: ((CyclotomicField new: 7) raisedTo: 5)
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testFirstIsomorphismTheoremOverGaloisField [
-	self testFirstIsomorphismTheorem: '(GaloisField new: 10 atRandom nextPrime to: 3 atRandom + 1) ^ 5'
+	self
+		testFirstIsomorphismTheorem: ((GaloisField new: 10 atRandom nextPrime to: 3 atRandom + 1) raisedTo: 5)
 ]
 
 { #category : #isomorphisms }
@@ -231,25 +267,31 @@ ModuleTest >> testFreeModule: M [
 { #category : #other }
 ModuleTest >> testFreeModuleDiscriminant [
 	"From Sage documentation of FreeModule."
+
 	| M |
-	M := ZZ raiseTo: 3.
+	M := ZZ raisedTo: 3.
 	self assert: M discriminant = 1.
-	self assert: (M span: {(1,2,3)}) discriminant = 14.
-	self assert: (M span: {(1,2,3). (1,1,1)}) discriminant = 6
+	self assert: (M span: {(1 , 2 , 3)}) discriminant = 14.
+	self
+		assert:
+			(M
+				span:
+					{(1 , 2 , 3).
+					(1 , 1 , 1)}) discriminant = 6
 ]
 
 { #category : #other }
 ModuleTest >> testFreeZModule [
 	| A x0 x y0 y |
 	A := FormalSumsModule on: #(a b c) over: ZZ.
-	x0 := (-2,-1,3).
+	x0 := -2 , -1 , 3.
 	x := A elementAt: x0.
-	y0 := (1,1,1).
+	y0 := 1 , 1 , 1.
 	y := A elementAt: y0.
-	self assert: x+y = (A elementAt: x0+y0).
-	self assert: x*2-y = (A elementAt: x0*2-y0).
-	self assert: (x-y-(x-y)) isZero.
-	self assert: (A coordinatesOf: x) = x0
+	self assert: x + y equals: (A elementAt: x0 + y0).
+	self assert: x * 2 - y equals: (A elementAt: x0 * 2 - y0).
+	self assert: (x - y - (x - y)) isZero.
+	self assert: (A coordinatesOf: x) equals: x0
 ]
 
 { #category : #other }
@@ -265,120 +307,158 @@ ModuleTest >> testGrassmannian [
 { #category : #other }
 ModuleTest >> testInclusions [
 	| S |
-	'self assert: QQ^3 < (CC^3).
-		self assert: ZZ^3 < (QQ^3).
-		self assert: RR^3 > (QQ^3).
-		self assert: CC^3 > (RR^3)'.
-	
-	'S := QQ^3 span: {(1,2,3). (1,0,1)}.
-		self assert: S < (QQ^3).
-		self assert: S < (CC^3).
-		self deny: S < (ZZ^3).
-		self deny: S > (ZZ^3)'
+	self assert: (QQ raisedTo: 3) < (CC raisedTo: 3).
+	self assert: (ZZ raisedTo: 3) < (QQ raisedTo: 3).
+	self assert: (RR raisedTo: 3) > (QQ raisedTo: 3).
+	self assert: (CC raisedTo: 3) > (RR raisedTo: 3).
+	S := (QQ raisedTo: 3) span: {(1,2,3). (1,0,1)}.
+		self assert: S < (QQ raisedTo:3).
+		self assert: S < (CC raisedTo: 3).
+		self deny: S < (ZZ raisedTo: 3).
+		self deny: S > (ZZ raisedTo: 3)
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisChange [
 	| V B1 B2 C v |
-	V := 'QQ^3'.
-	B1 := LinearBasis on: V elements: {(1,2,3). (1,1,1)}.
-	B2 := LinearBasis on: V elements: {(2,2,2). (2,3,4)}.
+	V := QQ raisedTo: 3.
+	B1 := LinearBasis
+		on: V
+		elements:
+			{(1 , 2 , 3).
+			(1 , 1 , 1)}.
+	B2 := LinearBasis
+		on: V
+		elements:
+			{(2 , 2 , 2).
+			(2 , 3 , 4)}.
 	C := B1 changeTo: B2.
-	v := B1 elementAt: (3,7).
-	self assert: C * (3,7) = (B2 coordinatesOf: v)
+	v := B1 elementAt: 3 , 7.
+	self assert: C * (3 , 7) = (B2 coordinatesOf: v)
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisCoordinatesOf [
 	| V basis c |
-	V := 'QQ ^ 3'.
-	basis := LinearBasis on: V elements: {(-1,0,0). (0,0,2)}.
-	c := basis coordinatesOf: (1,0,4).
-	self assert: c = (-1,2)
+	V := QQ raisedTo: 3.
+	basis := LinearBasis
+		on: V
+		elements:
+			{(-1 , 0 , 0).
+			(0 , 0 , 2)}.
+	c := basis coordinatesOf: 1 , 0 , 4.
+	self assert: c equals: -1 , 2
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisCoordinatesOf2 [
 	| V basis c |
-	V := 'QQ ^ 3'.
-	basis := LinearBasis on: V elements: {(-1,0,0). (0,0,2)}.
-	c := basis coordinatesOf: (1,1,4).
+	V := QQ raisedTo: 3.
+	basis := LinearBasis
+		on: V
+		elements:
+			{(-1 , 0 , 0).
+			(0 , 0 , 2)}.
+	c := basis coordinatesOf: 1 , 1 , 4.
 	self assert: c isNil
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisCoordinatesOf3 [
 	| V B |
-	V := 'QQ^3'.
-	B := LinearBasis on: V elements: {(1,1,1). (1,2,3)}.
-	self assert: (B coordinatesOf: (1,1,1)) = (1,0).
-	self assert: (B coordinatesOf: (1,2,3)) = (0,1).
-	self assert: (B coordinatesOf: (0,1,2)) = (-1,1).
-
+	V := QQ raisedTo: 3.
+	B := LinearBasis
+		on: V
+		elements:
+			{(1 , 1 , 1).
+			(1 , 2 , 3)}.
+	self assert: (B coordinatesOf: 1 , 1 , 1) equals: 1 , 0.
+	self assert: (B coordinatesOf: 1 , 2 , 3) equals: 0 , 1.
+	self assert: (B coordinatesOf: 0 , 1 , 2) equals: -1 , 1
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisDual [
 	| V basis B Bdual I |
-	V := 'QQ ^ 3'.
-	basis := LinearBasis on: V elements: {(-1,0,0). (0,1,2). (0,1,1)}.
+	V := QQ raisedTo: 3.
+	basis := LinearBasis
+		on: V
+		elements:
+			{(-1 , 0 , 0).
+			(0 , 1 , 2).
+			(0 , 1 , 1)}.
 	B := basis matrix.
 	Bdual := basis dual matrix.
 	I := B identity.
-	self assert: B determinant = (1 / Bdual determinant).
-	self assert: B transposed * Bdual = I
+	self assert: B determinant equals: 1 / Bdual determinant.
+	self assert: B transposed * Bdual equals: I
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisDual2 [
 	| V B Bdual |
-	V := 'QQ ^ 3'.
-	B := LinearBasis on: V elements: {(-1,0,0). (0,1,2). (0,1,1)}.
+	V := QQ raisedTo: 3.
+	B := LinearBasis
+		on: V
+		elements:
+			{(-1 , 0 , 0).
+			(0 , 1 , 2).
+			(0 , 1 , 1)}.
 	Bdual := B dual.
 	self assert: B size = Bdual size.
-	1 to: B size do: [:i|
-		1 to: Bdual size do: [:j|
-			self assert: ((Bdual at: j) value: (B at: i)) = (i = j ifTrue: [1] ifFalse: [0])]]
+	1 to: B size do: [ :i | 
+		1 to: Bdual size do: [ :j | 
+			self
+				assert:
+					((Bdual at: j) value: (B at: i))
+						=
+							(i = j
+								ifTrue: [ 1 ]
+								ifFalse: [ 0 ]) ] ]
 ]
 
 { #category : #basis }
 ModuleTest >> testLinearBasisGenerates [
 	| V B |
-	V := 'QQ^3'.
-	B := LinearBasis on: V elements: {(1,1,1). (1,2,3)}.
-	self assert: (B generates: (1,1,1)).
-	self assert: (B generates: (0,1,2)).
-	self deny: (B generates: (2,2,3))
+	V := QQ raisedTo:3.
+	B := LinearBasis
+		on: V
+		elements:
+			{(1 , 1 , 1).
+			(1 , 2 , 3)}.
+	self assert: (B generates: 1 , 1 , 1).
+	self assert: (B generates: 0 , 1 , 2).
+	self deny: (B generates: 2 , 2 , 3)
 ]
 
 { #category : #'linear maps' }
 ModuleTest >> testLinearForm1 [
 	| V f |
-	V := 'QQ ^ 3'.
-	f := V dual evaluating: [:v| v x + v y - v z].
-	self assert: (f value: (1,1,1)) = 1.
-	self assert: (f value: (2,2,1)) = 3.
-	self assert: (f value: (3,1, -1)) = 5
+	V := QQ raisedTo: 3.
+	f := V dual evaluating: [ :v | v x + v y - v z ].
+	self assert: (f value: 1 , 1 , 1) equals: 1.
+	self assert: (f value: 2 , 2 , 1) equals: 3.
+	self assert: (f value: 3 , 1 , -1) equals: 5
 ]
 
 { #category : #'linear maps' }
 ModuleTest >> testLinearForm2 [
 	| V f |
-	V := 'QQ ^ 3'.
-	f := V dual evaluating: [:v| v x + v y - v z].
-	self assert: f domain = V.
-	self assert: f kernel dimension = 2.
-	self assert: f image dimension = 1
+	V := QQ raisedTo: 3.
+	f := V dual evaluating: [ :v | v x + v y - v z ].
+	self assert: f domain equals: V.
+	self assert: f kernel dimension equals: 2.
+	self assert: f image dimension equals: 1
 ]
 
 { #category : #'linear maps' }
 ModuleTest >> testLinearFormAsPolynomial [
 	| V f x |
-	V := 'QQ ^ 5' atRandom.
+	V := (QQ raisedTo: 5) atRandom.
 	f := V dual atRandomBits: 100.
 	x := V atRandomBits: 100.
-	self assert: (f value: x) = (f asPolynomial value: x).
-	self assert: f asPolynomial asLinearForm = f
+	self assert: (f value: x) equals: (f asPolynomial value: x).
+	self assert: f asPolynomial asLinearForm equals: f
 ]
 
 { #category : #'linear maps' }
@@ -396,7 +476,7 @@ ModuleTest >> testLinearFormZ2 [
 ModuleTest >> testLinearMap [
 	| f |
 	f := self newLinearMap.
-	self testLinearMap: f
+	self testLinearMap: f 
 ]
 
 { #category : #'linear maps' }
@@ -416,10 +496,10 @@ ModuleTest >> testLinearMapAdjoint [
 	| V W f fAdjoint phi |
 	V := self newFreeModuleOver: QQ.
 	W := self newFreeModuleOver: QQ.
-	f := 'V hom: W :: atRandomBits: 50'.
+	f := (V hom: W) atRandomBits: 50.
 	fAdjoint := f adjoint.
-	self assert: fAdjoint domain = f codomain dual.
-	self assert: fAdjoint codomain = f domain dual.
+	self assert: fAdjoint domain equals: f codomain dual.
+	self assert: fAdjoint codomain equals: f domain dual.
 	phi := W dual atRandomBits: 20.
 	'self assert: (fAdjoint value: phi) = (phi î f)'
 ]
@@ -455,7 +535,7 @@ ModuleTest >> testLinearMapFiber [
 	f := self newLinearMap.
 	w := f image atRandomBits: 100.
 	v := (f fiberAt: w) atRandomBits: 100.
-	self assert: (f value: v) = w
+	self assert: (f value: v) equals: w
 ]
 
 { #category : #'linear maps' }

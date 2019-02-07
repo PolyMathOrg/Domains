@@ -36,7 +36,7 @@ AlgebraicNumbersTest >> testMultiplicationByi [
 AlgebraicNumbersTest >> testNorm [
 	| a |
 	a := ComplexAlgebraicNumber phi.
-	self assert: a norm = a conjugates product
+	self assert: a norm equals: a conjugates product
 ]
 
 { #category : #tests }
@@ -89,14 +89,14 @@ AlgebraicNumbersTest >> testRealProduct [
 AlgebraicNumbersTest >> testRealSquare [
 	| sqrt2 |
 	sqrt2 := RealAlgebraicNumber sqrt2.
-	self assert: sqrt2 squared asRational = 2
+	self assert: sqrt2 squared asRational equals: 2
 ]
 
 { #category : #tests }
 AlgebraicNumbersTest >> testRealSquareRoot [
 	| a |
 	a := RealAlgebraicNumber sqrt2.
-	self assert: a squareRoot squared = a
+	self assert: a squareRoot squared equals: a
 ]
 
 { #category : #tests }
@@ -105,7 +105,7 @@ AlgebraicNumbersTest >> testRealSum [
 	sqrt2 := RealAlgebraicNumber sqrt: 2.
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
 	sqrt5 := RealAlgebraicNumber sqrt: 5.
-	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 = sqrt2
+	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 equals: sqrt2
 ]
 
 { #category : #tests }

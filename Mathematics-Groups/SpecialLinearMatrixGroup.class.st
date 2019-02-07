@@ -13,7 +13,7 @@ SpecialLinearMatrixGroup >> asAlgebraicVariety [
 	n := self degree.
 	P := self scalars polynomialsIn: n squared.
 	det := (P matrix: n@n evaluating: [:i :j| P x: i - 1 * n + j]) determinant.
-	^ 'P * (det - self scalars one) :: variety'
+	^ (P * (det - self scalars one)) variety
 ]
 
 { #category : #operations }
@@ -24,10 +24,11 @@ SpecialLinearMatrixGroup >> center [
 { #category : #testing }
 SpecialLinearMatrixGroup >> contains: aMatrix [
 	"Answer true if the receiver contains the given element of its ambient."
-	^ aMatrix determinant = self scalars one
+
+	^ aMatrix determinant = self scalars one 
 ]
 
 { #category : #printing }
 SpecialLinearMatrixGroup >> shortName [
-	^ 'SL'
+	^ 'SL' 
 ]
