@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 ModularTest >> testGamma0Index [
-	'self assert: (1 to: 19 :: collect: [:each| Gamma0CongruenceSubgroup new: each :: index]) = #(1 3 4 6 6 12 8 12 12 18 12 24 14 24 24 24 18 36 20)'.
+	self assert: ((1 to: 19) collect: [:each| (Gamma0CongruenceSubgroup new: each) index]) = #(1 3 4 6 6 12 8 12 12 18 12 24 14 24 24 24 18 36 20).
 	self
 		assert: (Gamma0CongruenceSubgroup new: 32041) index
 		equals: 32220

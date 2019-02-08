@@ -113,11 +113,11 @@ AlgebraicGeometryTest >> testEllipticCurvesAreSmooth [
 	R := QQ polynomialsIn: #(x y z).
 	x := R x.
 	y := R y.
-	C := 'R / (x^3 - (x*3) + 3 - (y^2) homogenizedIn: 3) :: proj'.
+	C := (R / ((x raisedTo: 3) - (x*3) + 3 - (y raisedTo: 2) homogenizedIn: 3) )proj.
 	self assert: C isSmooth.
-	C := 'R / (x^3 + x - (y^2) homogenizedIn: 3) :: proj'.
+	C := (R / ((x raisedTo: 3) + x - (y raisedTo: 2) homogenizedIn: 3) ) proj.
 	self assert: C isSmooth.
-	C := 'R / (x^3 - x - (y^2) homogenizedIn: 3) :: proj'.
+	C := (R / ((x raisedTo: 3) - x - (y raisedTo: 2) homogenizedIn: 3)) proj.
 	self assert: C isSmooth
 ]
 
@@ -531,14 +531,14 @@ AlgebraicGeometryTest >> testRationalMap [
 	A1 := AffineSpace new: #(t) over: QQ.
 	A2 := AffineSpace new: #(x y) over: QQ.
 
-	'f := A1 to: A2 evaluatingWithArguments: [:t| {t^3 + t. (t^2 - 3)}]'.
+	f := A1 to: A2 evaluatingWithArguments: [:t| {(t raisedTo: 3) + t. ((t raisedTo: 2) - 3)}].
 
 	self assert: f domain = A1.
 	self assert: f codomain = A2.
 
 	x := A2 coordinateRing x.
 	y := A2 coordinateRing y.
-	'X := A2 subscheme: {x^2*-1 + (y^3) + (y^2*11) + (y*40) + 48}'.
+	X := A2 subscheme: {(x raisedTo: 2)* -1 + (y raisedTo: 3) + ((y raisedTo: 2)*11) + (y*40) + 48}.
 	self assert: f image = X
 ]
 
@@ -631,7 +631,7 @@ AlgebraicGeometryTest >> testReduced [
 	x := R x.
 	y := R y.
 	z := R z.
-	X := 'A subscheme: {x*(y^3). x^2*z}'.
+	X := A subscheme: {x*(y raisedTo: 3). (x raisedTo: 2)*z}.
 	self assert: X isReduced not.
 	self assert: X reduced = (A subscheme: {x*y. x*z})
 ]
@@ -655,11 +655,11 @@ AlgebraicGeometryTest >> testSingularCubics [
 	R := QQ polynomialsIn: #(x y z).
 	x := R x.
 	y := R y.
-	C := 'R / (x^3 - (y^2) homogenizedIn: 3) :: proj'.
+	C := (R / ((x raisedTo: 3) - (y raisedTo: 2) homogenizedIn: 3) ) proj.
 	self assert: (C ! (1,1,1)) isSmooth.
 	self assert: (C ! (0,0,1)) isSmooth not.
 	self assert: C isSingular.
-	C := 'R / (x^3 + (x^2) - (y^2) homogenizedIn: 3) :: proj'.
+	C := (R / ((x raisedTo: 3) + (x raisedTo: 2) - (y raisedTo: 2) homogenizedIn: 3) ) proj.
 	self assert: C isSingular
 ]
 
@@ -881,11 +881,11 @@ AlgebraicGeometryTest >> testTwistedCubicDegree [
 	y := A y.
 	z := A z.
 	w := A x: #w.
-	X := 'A / {x^2 - (y*w). x*z - (y raiseTo: 2)} :: proj'.
+	X := (A / {(x raisedTo: 2) - (y*w). x*z - (y raisedTo: 2)} ) proj.
 	"At this point X is still reducible, it is the union of a line x=y=0 and the twisted cubic:"
 	self assert: X degree = 4.
 	"To cut out X, we impose an additional equation x^3 - (z * (w^2)) = 0:"
-	'X := A / {x^2 - (y*w). x*z - (y^2). x^3 - (z*(w^2))} :: proj'.
+	X := (A / {(x raisedTo: 2) - (y*w). x*z - (y raisedTo: 2). (x raisedTo: 3) - (z*(w raisedTo: 2))} ) proj.
 	"But we get the twisted cubic (in some sense) 'counted with multiplicity 2', so the degree is 6"
 	self assert: X degree = 6
 ]

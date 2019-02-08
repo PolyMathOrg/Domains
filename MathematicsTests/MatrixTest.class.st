@@ -23,8 +23,8 @@ MatrixTest >> testAdjugate [
 { #category : #'as yet unclassified' }
 MatrixTest >> testAdjugate2 [
 	| A B |
-	A := Matrix rows: { (-3,2,-5). (-1,0,-2). (3,-4,1) }.
-	B := Matrix rows: { (-8,18,-4). (-5,12,-1). (4,-6,2) }.
+	A := Matrix rows: { (-3,2, -5). (-1,0, -2). (3, -4,1) }.
+	B := Matrix rows: { (-8,18, -4). (-5,12, -1). (4, -6,2) }.
 	self assert: A adjugate = B
 ]
 

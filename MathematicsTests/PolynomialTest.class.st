@@ -159,9 +159,9 @@ PolynomialTest >> testDomainError [
 PolynomialTest >> testEPRS [
 	"Example from Zippel."
 	| a b eprs |
-	'a := ZZ polynomials coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
+	a := ZZ polynomials coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
 		b := ZZ polynomials coefficients: #(3 0 5 0 -4 -9 21) reversed.
-		eprs := a eprs: b :: collect: [:each| each coefficients reversed asArray] :: asArray'.
+		eprs := ((a eprs: b ) collect: [:each| each coefficients reversed asArray]) asArray.
 	self assert: eprs = #((1 0 1 0 -3 -3 8 2 -5)
 		(3 0 5 0 -4 -9 21)
 		(-15 0 3 0 -9) 
@@ -691,7 +691,7 @@ PolynomialTest >> testPPRS [
 	| a b pprs |
 	a := ZZ polynomials coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
 	b := ZZ polynomials coefficients: #(3 0 5 0 -4 -9 21) reversed.
-	pprs := 'a pprs: b :: collect: [:each| each coefficients reversed asArray] :: asArray'.
+	pprs := ((a pprs: b) collect: [:each| each coefficients reversed asArray]) asArray.
 	self assert: pprs = #((1 0 1 0 -3 -3 8 2 -5) 
 		(3 0 5 0 -4 -9 21)
 		(-5 0 1 0 -3)
@@ -927,7 +927,7 @@ PolynomialTest >> testSPRS [
 	| a b sprs |
 	a := ZZ polynomials coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
 	b := ZZ polynomials coefficients: #(3 0 5 0 -4 -9 21) reversed.
-	'sprs := a sprs: b :: collect: [:each| each coefficients reversed asArray] :: asArray'.
+	sprs :=( (a sprs: b) collect: [:each| each coefficients reversed asArray]) asArray.
 	self assert: sprs = #((1 0 1 0 -3 -3 8 2 -5)
 		#(3 0 5 0 -4 -9 21)
 		#(15 0 -3 0 9)

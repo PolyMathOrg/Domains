@@ -499,9 +499,9 @@ CommutativeAlgebraTest >> testIdealIntersection [
 	Qxy := QQ polynomialsIn: #(x y).
 	x := Qxy x.
 	y := Qxy y.
-	'I := Qxy * {x^2 * y}.
-		J := Qxy * {x * (y^2)}.
-		K := Qxy * {x^2*(y^2)}'.
+	I := Qxy * {(x raisedTo: 2) * y}.
+		J := Qxy * {x * (y raisedTo: 2)}.
+		K := Qxy * {(x raisedTo: 2)*(y raisedTo: 2)}.
 	self assert: 'I ï J = K'
 ]
 

@@ -152,7 +152,7 @@ ProjectiveVariety >> degree [
 	| t H |
 	t := QQ polynomials fractions x.
 	H := self coordinateRing hilbertSeriesAt: t.
-	^ '(1 - t) ^ (H orderAt: 1) negated * H value: 1'
+	^ ((1 - t) raisedTo: ((H orderAt: 1) negated)) * H value: 1
 ]
 
 { #category : #accessing }

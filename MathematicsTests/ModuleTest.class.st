@@ -521,12 +521,12 @@ ModuleTest >> testLinearMapComposition [
 { #category : #'linear maps' }
 ModuleTest >> testLinearMapCompositionError [
 	| X Y Z f g |
-	'X := QQ ^ 3.
-		Y := QQ ^ 5.
-		Z := QQ ^ 4'.
-	'f := (X hom: Y) atRandomBits: 1000.
-		g := (Y hom: Z) atRandomBits: 1000'.
-	self should: ['f î g'] raise: DomainError
+	X := QQ raisedTo: 3.
+	Y := QQ raisedTo: 5.
+	Z := QQ raisedTo: 4.
+	f := (X hom: Y) atRandomBits: 1000.
+	g := (Y hom: Z) atRandomBits: 1000.
+	self should: [ 'f î g' ] raise: DomainError
 ]
 
 { #category : #'linear maps' }
