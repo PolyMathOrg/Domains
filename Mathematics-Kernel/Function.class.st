@@ -193,32 +193,40 @@ Function >> codomain [
 
 { #category : #'accessing-private' }
 Function >> codomain: aDomain [
-	self propertyAt: #codomain put: aDomain
+	self propertyAt: #codomain put: aDomain 
 ]
 
 { #category : #operations }
 Function >> corestrictedTo: aCodomain [
-	^ self species from: self domain to: aCodomain evaluating: [:x| self value: x]
+	^ self species
+		from: self domain
+		to: aCodomain
+		evaluating: [ :x | self value: x ] 
 ]
 
 { #category : #accessing }
 Function >> domain [
-	^ self propertyAt: #domain
+	^ self propertyAt: #domain 
 ]
 
 { #category : #'accessing-private' }
 Function >> domain: aDomain [
-	self propertyAt: #domain put: aDomain
+	self propertyAt: #domain put: aDomain 
 ]
 
 { #category : #private }
 Function >> expression [
-	^ self propertyAt: #expression ifAbsent: [self]
+	^ self propertyAt: #expression ifAbsent: [ self ] 
 ]
 
 { #category : #private }
 Function >> expression: anExpression [
-	self propertyAt: #expression put: ((anExpression isKindOf: Function) ifTrue: [anExpression expression] ifFalse: [anExpression])
+	self
+		propertyAt: #expression
+		put:
+			((anExpression isKindOf: Function)
+				ifTrue: [ anExpression expression ] 
+				ifFalse: [ anExpression ])
 ]
 
 { #category : #operations }

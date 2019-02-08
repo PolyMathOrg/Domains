@@ -9,8 +9,6 @@ StandardTableaux >> size [
 	| answer Y |
 	answer := alphabet size factorial.
 	Y := self diagram.
-	Y do: [:each|
-		answer := answer / (Y hookLengthAt: each)].
-	^ answer
-
+	Y do: [ :each | answer := answer / (Y hookLengthAt: each) ].
+	^ answer 
 ]

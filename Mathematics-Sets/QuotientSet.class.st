@@ -30,7 +30,7 @@ QuotientSet >> do: aBlock [
 
 { #category : #testing }
 QuotientSet >> isQuotient [
-	^ true
+	^ true 
 ]
 
 { #category : #printing }
@@ -54,15 +54,18 @@ QuotientSet >> project: anElement [
 
 { #category : #morphisms }
 QuotientSet >> projection [
-	^ (Function from: self base to: self evaluating: [:v| self project: v]) name: Character pi asString
+	^ (Function
+		from: self base
+		to: self
+		evaluating: [ :v | self project: v ]) name: 'π'
 ]
 
 { #category : #accessing }
 QuotientSet >> relation [
-	^ self propertyAt: #relation
+	^ self propertyAt: #relation 
 ]
 
 { #category : #'accessing-private' }
 QuotientSet >> relation: anEquivalenceRelation [
-	self propertyAt: #relation put: anEquivalenceRelation
+	self propertyAt: #relation put: anEquivalenceRelation 
 ]

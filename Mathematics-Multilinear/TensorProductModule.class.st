@@ -117,7 +117,7 @@ TensorProductModule >> includes: anObject [
 
 { #category : #accessing }
 TensorProductModule >> indices [
-	^ self propertyAt: #indices ifAbsentPut: [self computeIndices]
+	^ self propertyAt: #indices ifAbsentPut: [ self computeIndices ] 
 ]
 
 { #category : #converting }
@@ -133,13 +133,13 @@ TensorProductModule >> printOn: aStream [
 
 { #category : #basis }
 TensorProductModule >> rank [
-	^ components product: [:each| each rank]
+	^ components product: [ :each | each rank ] 
 ]
 
 { #category : #accessing }
 TensorProductModule >> scalars [
-	components do: [:any| ^ any scalars].
-	^ nil
+	components do: [ :any | ^ any scalars ].
+	^ nil 
 ]
 
 { #category : #accessing }

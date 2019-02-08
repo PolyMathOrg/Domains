@@ -9,12 +9,12 @@ Class {
 
 { #category : #'instance creation' }
 YoungTableau class >> rows: anArray [
-	^ self basicNew rows: anArray
+	^ self basicNew rows: anArray 
 ]
 
 { #category : #'instance creation' }
 YoungTableau class >> shape: anArray [
-	^ self rows: (anArray collect: [:each| Array new: each])
+	^ self rows: (anArray collect: [ :each | Array new: each ]) 
 ]
 
 { #category : #accessing }
@@ -49,29 +49,36 @@ YoungTableau >> height [
 
 { #category : #testing }
 YoungTableau >> isSemistandard [
-	self withIndexDo: [:each :index|
-		(index x > 1 and: [each < (self at: index x - 1 @ index y)])
-			ifTrue: [^ false].
-		(index y > 1 and: [each < (self at: index x @ (index y - 1))])
-			ifTrue: [^ false]].
+	self
+		withIndexDo: [ :each :index | 
+			(index x > 1 and: [ each < (self at: (index x - 1) @ index y) ])
+				ifTrue: [ ^ false ]. 
+			(index y > 1 and: [ each < (self at: index x @ (index y - 1)) ])
+				ifTrue: [ ^ false ] ].
 	^ true
 ]
 
 { #category : #testing }
 YoungTableau >> isStandard [
 	"if it is semistandard and content = (1,1,..,1)"
-	self withIndexDo: [:each :index|
-		(index x > 1 and: [each <= (self at: index x - 1 @ index y)])
-			ifTrue: [^ false].
-		(index y > 1 and: [each <= (self at: index x @ (index y - 1))])
-			ifTrue: [^ false]].
-	^ true
+
+	self
+		withIndexDo: [ :each :index | 
+			(index x > 1 and: [ each <= (self at: (index x - 1) @ index y) ])
+				ifTrue: [ ^ false ].
+			(index y > 1 and: [ each <= (self at: index x @ (index y - 1)) ])
+				ifTrue: [ ^ false ] ].
+	^ true 
 ]
 
 { #category : #arithmetic }
 YoungTableau >> negated [
-	self height = 1 ifTrue: [^ self].
-	^ self copy at: 1@1 put: (self at: 1@2); at: 1@2 put: (self at: 1@1); yourself
+	self height = 1
+		ifTrue: [ ^ self ].
+	^ self copy
+		at: 1 @ 1 put: (self at: 1 @ 2);
+		at: 1 @ 2 put: (self at: 1 @ 1);
+		yourself 
 ]
 
 { #category : #printing }
@@ -104,7 +111,7 @@ YoungTableau >> shape [
 
 { #category : #arithmetic }
 YoungTableau >> sign [
-	self notYetImplemented
+	self notYetImplemented 
 ]
 
 { #category : #accessing }

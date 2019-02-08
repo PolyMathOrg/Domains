@@ -16,28 +16,31 @@ BilinearForms class >> on: aVectorSpace [
 { #category : #operations }
 BilinearForms >> alternate [
 	"Answer the subspace of alternating bilinear forms."
-	^ self notYetImplemented
+
+	^ self notYetImplemented 
 ]
 
 { #category : #accessing }
 BilinearForms >> codomain [
-	^ self scalars
+	^ self scalars 
 ]
 
 { #category : #basis }
 BilinearForms >> coordinatesOf: aBilinearForm [
 	"Answer the coordinates of aBilinearForm with respect to the domain canonical basis."
-	^ self matrices coordinatesOf: (self matrixOf: aBilinearForm)
+
+	^ self matrices coordinatesOf: (self matrixOf: aBilinearForm) 
 ]
 
 { #category : #accessing }
-BilinearForms >> domain [
-	^ (vectorSpace, vectorSpace)
+BilinearForms >> domain [ 
+	^ vectorSpace , vectorSpace
 ]
 
 { #category : #basis }
 BilinearForms >> e: anInteger [
 	"Answer the anInteger-th canonical vector."
+ 
 	^ BilinearForm
 		fromHalf: vectorSpace
 		matrix: (self matrices e: anInteger)
