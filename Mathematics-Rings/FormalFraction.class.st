@@ -16,18 +16,20 @@ Class {
 { #category : #'instance creation' }
 FormalFraction class >> numerator: anObject denominator: anotherObject [
 	| numerator denominator gcd |
-	(numerator := anObject) isZero ifTrue: [^ numerator].
+	(numerator := anObject) isZero
+		ifTrue: [ ^ numerator ]. 
 	denominator := anotherObject.
 	gcd := numerator gcd: denominator.
 	numerator := numerator /// gcd.
 	denominator := denominator /// gcd.
-	denominator = denominator one ifTrue: [^ numerator].
+	denominator = denominator one
+		ifTrue: [ ^ numerator ].
 	^ self reducedNumerator: numerator denominator: denominator
 ]
 
 { #category : #'instance creation' }
 FormalFraction class >> reducedNumerator: anObject denominator: anotherObject [
-	^ self new setNumerator: anObject denominator: anotherObject
+	^ self new setNumerator: anObject denominator: anotherObject 
 ]
 
 { #category : #arithmetic }
@@ -113,12 +115,19 @@ FormalFraction >> one [
 { #category : #printing }
 FormalFraction >> printOn: aStream [
 	| string |
-	denominator = denominator one ifTrue: [aStream print: numerator. ^ self].
-	aStream print: numerator; nextPutAll: ' / '.
+	denominator = denominator one
+		ifTrue: [ aStream print: numerator.
+			^ self ].
+	aStream
+		print: numerator;
+		nextPutAll: ' / '. 
 	string := denominator printString.
-	((string includes: $+) or: [string includes: $-])
-		ifTrue: [aStream nextPut: $(; print: denominator; nextPut: $)]
-		ifFalse: [aStream print: denominator]
+	((string includes: $+) or: [ string includes: $- ])
+		ifTrue: [ aStream
+				nextPut: $(;
+				print: denominator;
+				nextPut: $) ]
+		ifFalse: [ aStream print: denominator ]
 ]
 
 { #category : #arithmetic }

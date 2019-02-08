@@ -68,7 +68,7 @@ ResidueClass >> adaptToInteger: rcvr andSend: selector [
 
 { #category : #accessing }
 ResidueClass >> bitSize [
-	^ representative bitSize
+	^ representative bitSize 
 ]
 
 { #category : #conjugation }
@@ -127,18 +127,20 @@ ResidueClass >> isNilpotent [
 { #category : #testing }
 ResidueClass >> isUnit [
 	"Answer true if the receiver is invertible."
-	^ parent isUnit: self
+
+	^ parent isUnit: self 
 ]
 
 { #category : #testing }
 ResidueClass >> isZero [
 	"^ (ideal remainderOf: representative) isZero"
-	^ representative isZero
+
+	^ representative isZero 
 ]
 
 { #category : #testing }
 ResidueClass >> isZeroDivisor [
-	^ parent isZeroDivisor: self
+	^ parent isZeroDivisor: self 
 ]
 
 { #category : #operations }
