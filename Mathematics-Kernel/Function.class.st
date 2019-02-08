@@ -113,8 +113,14 @@ Function class >> newFrom: aFunction [
 { #category : #operations }
 Function >> * anObject [
 	^ (self codomain includes: anObject)
-		ifTrue: [self species from: self domain to: self codomain evaluating: [:each| (self value: each) * anObject]]
-		ifFalse: [self species from: self domain to: self codomain evaluating: [:each| (self value: each) * (anObject value: each)]]
+		ifTrue: [ self species
+				from: self domain
+				to: self codomain 
+				evaluating: [ :each | (self value: each) * anObject ] ]
+		ifFalse: [ self species
+				from: self domain
+				to: self codomain
+				evaluating: [ :each | (self value: each) * (anObject value: each) ] ]
 ]
 
 { #category : #operations }

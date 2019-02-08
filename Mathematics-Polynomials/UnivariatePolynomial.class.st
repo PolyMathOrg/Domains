@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 UnivariatePolynomial class >> coefficients: aTuple [
-	^ self basicNew coefficients: aTuple
+	^ self basicNew coefficients: aTuple 
 ]
 
 { #category : #arithmetic }

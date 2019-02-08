@@ -71,12 +71,14 @@ GroebnerBasis >> reduceFull: aPolynomial [
 { #category : #operations }
 GroebnerBasis >> reduceFull: aPolynomial startingAt: startIndex [
 	"Answer the tail-reduced normal form of aPolynomial with respect to the receiver (doing full tail reduction)."
+
 	| g h |
 	g := aPolynomial.
 	h := g zero.
-	[g isZero]
-		whileFalse:
-			[g := self reduce: g startingAt: startIndex.
-			g isZero ifFalse: [h := h + g leadingTerm. g := g tail]].
+	[ g isZero ]
+		whileFalse: [ g := self reduce: g startingAt: startIndex.
+			g isZero
+				ifFalse: [ h := h + g leadingTerm.
+					g := g tail ] ].
 	^ h / h leadingCoefficient
 ]

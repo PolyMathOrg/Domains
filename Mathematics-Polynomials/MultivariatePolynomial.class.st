@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 MultivariatePolynomial class >> parts: aCollection [
-	^ self basicNew parts: aCollection
+	^ self basicNew parts: aCollection 
 ]
 
 { #category : #arithmetic }

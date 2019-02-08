@@ -14,7 +14,7 @@ Class {
 
 { #category : #'instance creation' }
 Polynomial class >> new [
-	^ self shouldNotImplement
+	^ self shouldNotImplement 
 ]
 
 { #category : #arithmetic }
@@ -167,13 +167,16 @@ Polynomial >> classIndeterminate [
 { #category : #'accessing coefficients' }
 Polynomial >> coefficientAtDegree: anInteger [
 	"Answer the coefficient of the degree given by the argument. For univiariate polynomials."
-	^ self coefficientAt: (self parent monomials x: self leadingIndeterminate to: anInteger)
+
+	^ self
+		coefficientAt: (self parent monomials x: self leadingIndeterminate to: anInteger) 
 ]
 
 { #category : #'accessing coefficients' }
 Polynomial >> coefficients [
 	"Answer the collection of non-zero coefficients of this polynomial (with repetitions)."
-	^ Iterator on: self performing: #coefficientsDo:
+
+	^ Iterator on: self performing: #coefficientsDo: 
 ]
 
 { #category : #factorization }
@@ -218,13 +221,16 @@ Polynomial >> degreeIn: anIndeterminate [
 { #category : #operations }
 Polynomial >> dehomogenizedIn: anIndeterminate [
 	"Answer the dehomogenization of the receiver in the given indeterminate."
-	^ self monomialsApply: [:each| each dehomogenizedIn: anIndeterminate]
+
+	^ self
+		monomialsApply: [ :each | each dehomogenizedIn: anIndeterminate ] 
 ]
 
 { #category : #accessing }
 Polynomial >> denominator [
 	"Considering the receiver as an element of the fraction ring, answer the denominator."
-	^ self one
+
+	^ self one 
 ]
 
 { #category : #'accessing monomials' }
@@ -386,7 +392,7 @@ Polynomial >> homogenizedIn: anIndeterminate [
 Polynomial >> independentCoefficient [
 	"Answer the coefficient of the constant monomial of the receiver."
 
-	^ self at: self parent monomials identity
+	^ self at: self parent monomials identity 
 ]
 
 { #category : #'accessing indeterminates' }
@@ -443,10 +449,16 @@ Polynomial >> isBinomial [
 
 { #category : #printing }
 Polynomial >> isBroken [
-	self monomials do: [:each|
-		each indeterminates do: [:i| (self parent has: i) ifFalse: [^ true]].
-		each exponents size = self parent rank ifFalse: [^ true]].
-	^ self coefficients anySatisfy: [:any| (self parent scalars includes: any) not]
+	self monomials
+		do: [ :each | 
+			each indeterminates
+				do: [ :i | 
+					(self parent has: i)
+						ifFalse: [ ^ true ] ].
+			each exponents size = self parent rank
+				ifFalse: [ ^ true ] ].
+	^ self coefficients
+		anySatisfy: [ :any | (self parent scalars includes: any) not ]
 ]
 
 { #category : #testing }
@@ -504,7 +516,7 @@ Polynomial >> isSquareFree [
 
 { #category : #testing }
 Polynomial >> isUnivariate [
-	^ self parent isUnivariate
+	^ self parent isUnivariate 
 ]
 
 { #category : #testing }
@@ -534,7 +546,7 @@ Polynomial >> karatsubaMultiplyBy: aPolynomial [
 Polynomial >> lcm: aPolynomial [
 	"Answer the least common multiple of the receiver and aPolynomial."
 
-	^ (self exactlyDividedBy: (self gcd: aPolynomial)) * aPolynomial
+	^ (self exactlyDividedBy: (self gcd: aPolynomial)) * aPolynomial 
 ]
 
 { #category : #'accessing terms' }
@@ -567,13 +579,15 @@ Polynomial >> leadingTerm [
 
 { #category : #operations }
 Polynomial >> length [
-	self isZero ifTrue: [^ 0].
-	^ self coefficients sum: [:each| each height]
+	self isZero
+		ifTrue: [ ^ 0 ].
+	^ self coefficients sum: [ :each | each height ] 
 ]
 
 { #category : #accessing }
 Polynomial >> lift [
 	"If the coefficients ring is a quotient R/I, nswer a representative of the receiver over R. See >>%."
+
 	^ self apply: self scalars lifting
 ]
 
@@ -627,12 +641,13 @@ Polynomial >> normMax [
 { #category : #accessing }
 Polynomial >> numerator [
 	"Considering the receiver as an element of the fraction ring, answer the numerator."
-	^ self
+
+	^ self 
 ]
 
 { #category : #constants }
 Polynomial >> one [
-	^ self parent one
+	^ self parent one 
 ]
 
 { #category : #'accessing monomials' }
@@ -661,12 +676,12 @@ Polynomial >> parent [
 
 { #category : #'accessing-private' }
 Polynomial >> parent: aPolynomialRing [
-	parent := aPolynomialRing
+	parent := aPolynomialRing 
 ]
 
 { #category : #'accessing terms' }
 Polynomial >> parts [
-	^ Iterator on: self performing: #partsDo:
+	^ Iterator on: self performing: #partsDo: 
 ]
 
 { #category : #operations }
@@ -710,7 +725,9 @@ Polynomial >> pprs: aPolynomial [
 { #category : #factorization }
 Polynomial >> primitive [
 	"Answer the primitive part of the receiver."
-	self isZero ifTrue: [^ self].
+
+	self isZero
+		ifTrue: [ ^ self ].
 	^ self /// self content
 ]
 
@@ -884,7 +901,8 @@ Polynomial >> reciprocal [
 { #category : #accessing }
 Polynomial >> representative [
 	"If the coefficients ring is a quotient R/I, nswer a representative of the receiver over R. See >>%."
-	^ self apply: self scalars projection section
+
+	^ self apply: self scalars projection section 
 ]
 
 { #category : #operations }
@@ -899,7 +917,7 @@ Polynomial >> s: aPolynomial [
 
 { #category : #accessing }
 Polynomial >> scalars [
-	^ parent scalars
+	^ parent scalars 
 ]
 
 { #category : #factorization }
@@ -1023,14 +1041,16 @@ Polynomial >> valueWithArguments: anArray [
 
 { #category : #constants }
 Polynomial >> zero [
-	^ self parent zero
+	^ self parent zero 
 ]
 
 { #category : #testing }
 Polynomial >> | aPolynomial [
 	"Answer true if the receiver divides aPolynomial."
-	self scalars isField ifTrue: [^ (aPolynomial \\ self) isZero].
-	^ (aPolynomial pseudoRem: self) isZero
+
+	self scalars isField
+		ifTrue: [ ^ (aPolynomial \\ self) isZero ].
+	^ (aPolynomial pseudoRem: self) isZero 
 ]
 
 { #category : #arithmetic }
