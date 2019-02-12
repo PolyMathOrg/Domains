@@ -883,31 +883,59 @@ CommutativeAlgebraTest >> testMultivariateDivisionExample [
 CommutativeAlgebraTest >> testMultivariateDivisionExample2 [
 	| R f f1 f2 |
 	R := QQ polynomialsIn: #(x y z) ordering: #lex.
-	'f := R ! [:x :y :z| x^5*(y^3)].
-		f1 := R ! [:x :y :z| x^3*(y^2) - ((y^2)*z)].
-		f2 := R ! [:x :y :z| x*(y^2) - (y*z)]'.
-	self assert: (f divisionBy: {f1. f2}) printString = 'x^5y^3 = (x^2y)(x^3y^2 - y^2z) + (xyz + z^2)(xy^2 - yz) + yz^3'
+	f := R ! [ :x :y :z | (x raisedTo: 5) * (y raisedTo: 3) ].
+	f1 := R
+		! [ :x :y :z | (x raisedTo: 3) * (y raisedTo: 2) - ((y raisedTo: 2) * z) ].
+	f2 := R ! [ :x :y :z | x * (y raisedTo: 2) - (y * z) ].
+	self
+		assert:
+			(f
+				divisionBy:
+					{f1.
+					f2}) printString
+		equals: 'x^5y^3 = (x^2y)(x^3y^2 - y^2z) + (xyz + z^2)(xy^2 - yz) + yz^3'
 ]
 
 { #category : #'division and normal forms' }
 CommutativeAlgebraTest >> testMultivariateDivisionExample3 [
 	| R f f1 f2 |
 	R := QQ polynomialsIn: #(x y z) ordering: #lex.
-'	f := R ! [:x :y :z| x^3*(y^2) + (x*y) + x + 1].
-	f1 := R ! [:x :y :z| x^3 + 1].
-	f2 := R ! [:x :y :z| y^2 + 1]'.
-	self assert: (f divisionBy: {f1. f2}) printString = 'x^3y^2 + xy + x + 1 = (y^2)(x^3 + 1) + (-1)(y^2 + 1) + xy + x + 2'
+	f := R
+		! [ :x :y :z | (x raisedTo: 3) * (y raisedTo: 2) + (x * y) + x + 1 ].
+	f1 := R ! [ :x :y :z | (x raisedTo: 3) + 1 ].
+	f2 := R ! [ :x :y :z | (y raisedTo: 2) + 1 ].
+	self
+		assert:
+			(f
+				divisionBy:
+					{f1.
+					f2}) printString
+		equals: 'x^3y^2 + xy + x + 1 = (y^2)(x^3 + 1) + (-1)(y^2 + 1) + xy + x + 2'
 ]
 
 { #category : #'division and normal forms' }
 CommutativeAlgebraTest >> testMultivariateDivisionExample4 [
 	| R f f1 f2 |
 	R := QQ polynomialsIn: #(x y) ordering: #lex.
-'	f := R ! [:x :y| x^2*(y^3) - (x*(y^2)*2)].
-	f1 := R ! [:x :y| x^2*y - (x*2)].
-	f2 := R ! [:x :y| y^3 + 4]'.
-	self assert: (f divisionBy: {f1. f2}) printString = 'x^2y^3 - 2xy^2 = (y^2)(x^2y - 2x) + (0)(y^3 + 4) + 0'.
-	self assert: (f divisionBy: {f2. f1}) printString = 'x^2y^3 - 2xy^2 = (x^2)(y^3 + 4) + (0)(x^2y - 2x) + -4x^2 - 2xy^2'
+	f := R
+		!
+			[ :x :y | (x raisedTo: 2) * (y raisedTo: 3) - (x * (y raisedTo: 2) * 2) ].
+	f1 := R ! [ :x :y | (x raisedTo: 2) * y - (x * 2) ].
+	f2 := R ! [ :x :y | (y raisedTo: 3) + 4 ].
+	self
+		assert:
+			(f
+				divisionBy:
+					{f1.
+					f2}) printString
+		equals: 'x^2y^3 - 2xy^2 = (y^2)(x^2y - 2x) + (0)(y^3 + 4) + 0'.
+	self
+		assert:
+			(f
+				divisionBy:
+					{f2.
+					f1}) printString
+		equals: 'x^2y^3 - 2xy^2 = (x^2)(y^3 + 4) + (0)(x^2y - 2x) + -4x^2 - 2xy^2'
 ]
 
 { #category : #'ideal operations' }
@@ -917,8 +945,15 @@ CommutativeAlgebraTest >> testPolynomialRingHomomorphismKernel [
 	B := QQ polynomialsIn: #(x y).
 	x := B x.
 	y := B y.
-	phi := A to: B evaluating: [:f| f value: {x-y. x. y}].
-	self assert: phi kernel = (A * (A x - A y + A z)).
+	phi := A
+		to: B
+		evaluating: [ :f | 
+			f
+				value:
+					{(x - y).
+					x.
+					y} ].
+	self assert: phi kernel equals: A * (A x - A y + A z).
 	self assert: (phi value: (phi kernel atRandomBits: 15)) isZero
 ]
 
