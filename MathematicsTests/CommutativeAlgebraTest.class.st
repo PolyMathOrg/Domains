@@ -529,19 +529,23 @@ CommutativeAlgebraTest >> testIdealIsPrime [
 	R := QQ polynomialsIn: #(x y).
 	x := R x: #x.
 	y := R x: #y.
-	'I := R * {x^2 - (y^2) - 1}'.
+	I := R * {(x raisedTo: 2) - (y raisedTo: 2) - 1}.
 	self assert: I isPrime
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealIsRadical [
 	"Becker, Weispfenning, 'Groebner Bases', Exercise 8.21."
+
 	| R x y I |
 	R := QQ polynomialsIn: #(x y).
 	x := R x: #x.
 	y := R x: #y.
-	I := 'R * {x^2 + y. y^2 + x}'.
-	self assert: I dimension = 0.
+	I := R
+		*
+			{((x raisedTo: 2) + y).
+			((y raisedTo: 2) + x)}.
+	self assert: I dimension equals: 0.
 	self assert: I isRadical
 ]
 
@@ -551,12 +555,18 @@ CommutativeAlgebraTest >> testIdealMembership [
 	Qxy := QQ polynomialsIn: #(x y).
 	x := Qxy x.
 	y := Qxy y.
-	'f := x^2 - y.
-		g := x^3 - x'.
-	I := Qxy * {f. g}.
-	'J := Qxy * {x^2. y^3}.
-		h := y^2 - y'.
-	k := x*y - x.
+	f := (x raisedTo: 2) - y.
+	g := (x raisedTo: 3) - x.
+	I := Qxy
+		*
+			{f.
+			g}.
+	J := Qxy
+		*
+			{(x raisedTo: 2).
+			(y raisedTo: 3)}.
+	h := (y raisedTo: 2) - y.
+	k := x * y - x.
 	self assert: (I includes: h).
 	self assert: (I includes: k).
 	self assert: (J includes: h) not.
@@ -581,13 +591,16 @@ CommutativeAlgebraTest >> testIdealMembership3 [
 	y := Qx y.
 	z := Qx z.
 	w := Qx x: #w.
-	f := 'x*z-(y^2)'. "twisted cubic"
-	g := 'z*(y*w-(z^2)) - (w*(x*w-(y*z)))'.
-	I := Qx * {f. g}.
+	f := x * z - (y raisedTo: 2).	"twisted cubic"
+	g := z * (y * w - (z raisedTo: 2)) - (w * (x * w - (y * z))).
+	I := Qx
+		*
+			{f.
+			g}.
 	"The twisted cubic C in P^3 is the set-theoretic complete intersection
 	of f=0 and g=0, but not a scheme-theoretic or ideal-theoretic complete
 	intersection (the ideal is not radical since includes f^2):"
-	self assert: (I includes: (f raiseTo: 2))
+	self assert: (I includes: (f raisedTo: 2))
 ]
 
 { #category : #'ideal operations' }
@@ -635,52 +648,77 @@ CommutativeAlgebraTest >> testIdealRadical [
 	R := QQ polynomialsIn: #(x y).
 	x := R x: #x.
 	y := R x: #y.
-	I := 'R * {x^3. y^2}'.
-	J := R * {x. y}.
-	self assert: I radical = J
+	I := R
+		*
+			{(x raisedTo: 3).
+			(y raisedTo: 2)}.
+	J := R
+		*
+			{x.
+			y}.
+	self assert: I radical equals: J
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealRadicalZeroDimNotPerfectField [
 	"Counterexample that shows how Seidenberg algorithm fails over a non-perfect field.
 	From Becker and Weispfenning 'Groebner Bases', Springer-Verlag, 1993. Example 8.16."
+
 	| p F R t x y I |
 	p := #(3 5 7 11) atRandom.
-	F := '(ZZ / p) polynomialsIn: #(t) :: fractions'.
+	F := (ZZ / p polynomialsIn: #(t)) fractions.
 	R := F polynomialsIn: #(x y).
 	t := F x: #t.
 	x := R x.
 	y := R y.
-	'I := R * {x^p - t. y^p - t}.
-		self assert: (I includes: x^p - (y^p))'.
+	I := R
+		*
+			{((x raisedTo: p) - t).
+			((y raisedTo: p) - t)}.
+	self assert: (I includes: ((x raisedTo: p) - (y raisedTo: p))).
 	self deny: (I includes: x - y).
 	self assert: (I radical includes: x - y)
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealRadicalZeroDimPerfectField [
-	"Seidenberg algorithm works for 0-dimensional ideals over a perfect field." 
+	"Seidenberg algorithm works for 0-dimensional ideals over a perfect field."
+
 	| R y z I J |
 	R := QQ polynomialsIn: #(y z).
 	y := R x: #y.
 	z := R x: #z.
-	'I := R * {y + z. z^2}'.
-	J := R * {y. z}.
-	self assert: I radical = J
+	I := R
+		*
+			{(y + z).
+			(z raisedTo: 2)}.
+	J := R
+		*
+			{y.
+			z}.
+	self assert: I radical equals: J
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testIdealSaturation [
 	"Example from SageMath reference."
+
 	| R x y z I J S |
 	R := QQ polynomialsIn: #(x y z).
 	x := R x.
 	y := R y.
 	z := R z.
-	'I := R * {x^5*(z^3). x*y*z. y*(z^4)}.
-		J := R * z.
-		S := R * {y. x^5}'.
-	self assert: (I saturation: J) = S
+	I := R
+		*
+			{((x raisedTo: 5) * (z raisedTo: 3)).
+			(x * y * z).
+			(y * (z raisedTo: 4))}.
+	J := R * z.
+	S := R
+		*
+			{y.
+			(x raisedTo: 5)}.
+	self assert: (I saturation: J) equals: S
 ]
 
 { #category : #'testing examples' }
@@ -696,69 +734,93 @@ CommutativeAlgebraTest >> testKatsura7Correctness [
 CommutativeAlgebraTest >> testKrullDimension [
 	| R I Q |
 	R := QQ polynomialsIn: #(x y).
-	self assert: R dimension = 2.
-	I := R * {R x. R y}.
+	self assert: R dimension equals: 2.
+	I := R
+		*
+			{R x.
+			R y}.
 	Q := R / I.
-	self assert: Q dimension = 0.
-	I := R * R zero. "zero ideal"
+	self assert: Q dimension equals: 0.
+	I := R * R zero.	"zero ideal"
 	Q := R / I.
-	self assert: Q dimension = 2
+	self assert: Q dimension equals: 2
 ]
 
 { #category : #'krull dimension' }
 CommutativeAlgebraTest >> testKrullDimension2 [
 	"Example from SageMath."
+
 	| R x y I |
 	R := QQ polynomialsIn: #(x y).
 	x := R x.
 	y := R y.
-	I := R * {x*y. x*y + 1}.
+	I := R
+		*
+			{(x * y).
+			(x * y + 1)}.
 	self assert: (R / I) dimension < 0.
-	I := R * {x*(x*y + 1). y*(x*y + 1)}.
-	self assert: (R / I) dimension = 1.
-	I := 'R * {x^3*y. x*(y raiseTo: 2)}'.
-	self assert: (R / I) dimension = 1
+	I := R
+		*
+			{(x * (x * y + 1)).
+			(y * (x * y + 1))}.
+	self assert: (R / I) dimension equals: 1.
+	I := R
+		*
+			{((x raisedTo: 3) * y).
+			(x * (y raisedTo: 2))}.
+	self assert: (R / I) dimension equals: 1
 ]
 
 { #category : #'krull dimension' }
 CommutativeAlgebraTest >> testKrullDimensionFiniteField [
 	"Example from SageMath."
+
 	| R x y I Q |
-	R := ZZ/32003 polynomialsIn: #(x y z).
-	self assert: R dimension = 3.
+	R := ZZ / 32003 polynomialsIn: #(x y z).
+	self assert: R dimension equals: 3.
 	x := R x.
 	y := R y.
-	I := 'R * {x^2 - y. x^3}'.
+	I := R
+		*
+			{((x raisedTo: 2) - y).
+			(x raisedTo: 3)}.
 	Q := R / I.
-	self assert: Q dimension = 1
+	self assert: Q dimension equals: 1
 ]
 
 { #category : #'krull dimension' }
 CommutativeAlgebraTest >> testKrullDimensionFiniteField2 [
 	"Example from SageMath."
+
 	| R x y I |
-	R := ZZ/2147483659 polynomialsIn: #(x y).
+	R := ZZ / 2147483659 polynomialsIn: #(x y).
 	x := R x.
 	y := R y.
-	I := R * {x*y. x*y + 1}.
+	I := R
+		*
+			{(x * y).
+			(x * y + 1)}.
 	self assert: (R / I) dimension < 0.
-	I := R * {x*(x*y + 1). y*(x*y + 1)}.
-	self assert: (R / I) dimension = 1.
-	I := 'R * {x^3*y. x*(y^2)}'.
-	self assert: (R / I) dimension = 1
+	I := R
+		*
+			{(x * (x * y + 1)).
+			(y * (x * y + 1))}.
+	self assert: (R / I) dimension equals: 1.
+	I := R
+		*
+			{((x raisedTo: 3) * y).
+			(x * (y raisedTo: 2))}.
+	self assert: (R / I) dimension equals: 1
 ]
 
 { #category : #'krull dimension' }
 CommutativeAlgebraTest >> testKrullDimensionOverZZ [
 	| R I Q |
 	R := ZZ polynomialsIn: #(x y).
-	self assert: R dimension = 3.
-"	I := R * {R x. R y}.
+	self assert: R dimension equals: 3.
+	I := R * R zero.	"zero ideal"
 	Q := R / I.
-	self assert: Q dimension = 0.
-"	I := R * R zero. "zero ideal"
-	Q := R / I.
-	self assert: Q dimension = 3
+	self assert: Q dimension equals: 3
 ]
 
 { #category : #'ideal operations' }
@@ -786,12 +848,21 @@ CommutativeAlgebraTest >> testLocalIdeals [
 { #category : #'division and normal forms' }
 CommutativeAlgebraTest >> testMoraNormalForm [
 	"A Singular Introduction to Commutative Algebra, Example 1.7.7."
+
 	| R f G h |
 	R := QQ polynomialsIn: #(x y z) ordering: #lgrevlex.
-	f := 'R ! [:x :y :z| x^2 + (y^2) + (z^3) + (x^4) + (y^5)]'.
-	G := StandardBasis new add: R x; add: R y; yourself.
+	f := R
+		! [ :x :y :z | 
+			(x raisedTo: 2) + (y raisedTo: 2) + (z raisedTo: 3) + (x raisedTo: 4)
+				+ (y raisedTo: 5) ].
+	G := StandardBasis new
+		add: R x;
+		add: R y;
+		yourself.
 	h := G reduce: f.
-	'self assert: h = (R ! [:x :y :z| z^3 + (x^4) + (y^5)])'
+	self
+		assert: h
+		equals: R ! [ :x :y :z | (z raisedTo: 3) + (x raisedTo: 4) + (y raisedTo: 5) ]
 ]
 
 { #category : #'division and normal forms' }
@@ -801,9 +872,11 @@ CommutativeAlgebraTest >> testMultivariateDivisionExample [
 	x := P x.
 	y := P y.
 	z := P z.
-	'F := {x^2 - (y*z). y^2 - (z*x). z^2 - (x*y)}.
-		f := x^3 + (y^3 * 3).
-		self assert: (f divisionBy: F) remainder = (y^3 * 4)'
+	F := {((x raisedTo: 2) - (y * z)).
+	(y raisedTo: 2 - (z * x)).
+	((z raisedTo: 2) - (x * y))}.
+	f := (x raisedTo: 3) + ((y raisedTo: 3) * 3).
+	self assert: (f divisionBy: F) remainder equals: (y raisedTo: 3) * 4
 ]
 
 { #category : #'division and normal forms' }
@@ -856,28 +929,66 @@ CommutativeAlgebraTest >> testRadicalMembership [
 	x := R x.
 	y := R y.
 	z := R z.
-	g1 := 'x^4*(y^2) + (z^2) - (x*(y^3)*z*4) - (y^5*z*2)'.
-	g2 := '(x + (y^2)) ^ 2'.
-	f := 'y*z - (x^3)'.
-	I := R * {g1. g2}.
+	g1 := (x raisedTo: 4) * (y raisedTo: 2) + (z raisedTo: 2)
+		- (x * (y raisedTo: 3) * z * 4) - ((y raisedTo: 5) * z * 2).
+	g2 := (x + (y raisedTo:2)) raisedTo: 2.
+	f := y*z - (x raisedTo:3).
+	I := R
+		*
+			{g1.
+			g2}.
 	self assert: (I radicalContains: f)
 ]
 
 { #category : #'ideal operations' }
 CommutativeAlgebraTest >> testSquarefreeMonomialIdealPrimaryDecomposition [
 	"Miller, Sturmfels, 'Combinatorial Commutative Algebra', Example 1.8."
+
 	| R a b c d e I |
 	R := QQ polynomialsIn: #(a b c d e).
-	a := R x: 1. b := R x: 2. c := R x: 3. d := R x: 4. e := R x: 5.
-	I := R * {a*d. a*e. b*c*d. b*e. c*e. d*e}.
-	self assert: I primaryDecomposition = {R * {d. e}. R * {a. b. e}. R * {a. c. e}. R * {a. b. c. d}} asSet
+	a := R x: 1.
+	b := R x: 2.
+	c := R x: 3.
+	d := R x: 4.
+	e := R x: 5.
+	I := R
+		*
+			{(a * d).
+			(a * e).
+			(b * c * d).
+			(b * e).
+			(c * e).
+			(d * e)}.
+	self
+		assert: I primaryDecomposition
+		equals:
+			{(R
+				*
+					{d.
+					e}).
+			(R
+				*
+					{a.
+					b.
+					e}).
+			(R
+				*
+					{a.
+					c.
+					e}).
+			(R
+				*
+					{a.
+					b.
+					c.
+					d})} asSet
 ]
 
 { #category : #'ideal basics' }
 CommutativeAlgebraTest >> testZeroIdeal [
 	| zero |
-	zero := ZZ * #(). "the zero ideal {0}"
+	zero := ZZ * #().	"the zero ideal {0}"
 	self assert: zero isZero.
 	self assert: (zero includes: 0).
-	self deny: (zero includes: 42)
+	self deny: (zero includes: 42) 
 ]

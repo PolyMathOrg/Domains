@@ -342,12 +342,15 @@ FreeModule >> hom: aModule [
 { #category : #operations }
 FreeModule >> hull: aCollection [
 	"Answer the affine hull (flat) spanned by the vectors in aCollection."
+
 	| vectors x0 |
 	vectors := aCollection asArray.
 	x0 := vectors at: 1.
 	^ AffineSubspace
 		representative: x0
-		direction: (self span: ((2 to: vectors size) collect: [:i| x0 - (vectors at: i)]))
+		direction:
+			(self
+				span: ((2 to: vectors size) collect: [ :i | x0 - (vectors at: i) ]))
 ]
 
 { #category : #morphisms }
