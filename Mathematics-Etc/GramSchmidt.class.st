@@ -39,7 +39,7 @@ GramSchmidt class >> basis: aLinearBasis innerProduct: aFunction [
 GramSchmidt class >> example [
 	"Compute an orthogonal basis for {(1,1,0); {0,1,1); (1,0,1)}."
 	| V basis |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	basis := LinearBasis on: V elements: {(1, 1, 0). (0, 1, 1). (1, 0, 1)}.
 	^ (GramSchmidt basis: basis) orthogonalBasis
 ]

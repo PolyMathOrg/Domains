@@ -507,9 +507,9 @@ ModuleTest >> testLinearMapAdjoint [
 { #category : #'linear maps' }
 ModuleTest >> testLinearMapComposition [
 	| X Y Z f g x |
-	'X := QQ ^ 3.
-		Y := QQ ^ 5.
-		Z := QQ ^ 4'.
+	X := QQ raisedTo: 3.
+		Y := QQ raisedTo: 5.
+		Z := QQ raisedTo: 4.
 	f := (X hom: Y) atRandomBits: 1000.
 	g := (Y hom: Z) atRandomBits: 1000.
 	x := X atRandomBits: 1000.
@@ -551,7 +551,7 @@ ModuleTest >> testLinearMapImage [
 { #category : #'linear maps' }
 ModuleTest >> testLinearMapInverse [
 	| V f |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	f := V automorphisms atRandomBits: 1000.
 	'self assert: (f î f inverse) isIdentity.
 		self assert: (f inverse î f) isIdentity'
@@ -638,7 +638,7 @@ ModuleTest >> testMatrixTraceAsLinearMap [
 { #category : #other }
 ModuleTest >> testOrthogonalProjection [
 	| V S p v |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	S := V span: {(1, 1, 0). (1, 0, 0)}.
 	p := S orthogonalProjection.
 	self testProjection: p.
@@ -679,7 +679,7 @@ ModuleTest >> testPIDCoordinatesOfBug [
 { #category : #other }
 ModuleTest >> testPerp [
 	| V S p perp |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	S := V span: {(1, 1, 1). (2, 0, -2)}.
 	perp := S perp.
 	self assert: perp dimension = 1.
@@ -692,7 +692,7 @@ ModuleTest >> testPerp [
 { #category : #other }
 ModuleTest >> testPerpProperties [
 	| V S T |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	S := V span: {(1, 1, 1). (2, 0, -2)}.
 	T := V span: {(1, -1, -3)}. "subspace of S"
 	self assert: S + S perp = V.
@@ -936,7 +936,7 @@ ModuleTest >> testSubspaceOfSubspace [
 { #category : #other }
 ModuleTest >> testSubspaceSum [
 	| V v w S T P |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	[v := V atRandomBits: 10. v isZero not] whileFalse.
 	[w := V atRandomBits: 10. w isZero not and: [v ~= w]] whileFalse.
 	S := V span: {v}.
@@ -951,7 +951,7 @@ ModuleTest >> testSubspaceSum [
 { #category : #other }
 ModuleTest >> testSubspaceSumRandom [
 	| V S T U |
-	V := 'QQ^5'.
+	V := QQ raisedTo: 5.
 	S := (V grassmannian: (0 to: V dimension) atRandom) atRandomBits: 100.
 	T := (V grassmannian: (0 to: V dimension) atRandom) atRandomBits: 100.
 	U := S + T.
@@ -985,8 +985,8 @@ ModuleTest >> testTensorProductAssociativity [
 { #category : #'tensor product' }
 ModuleTest >> testTensorProductCommutativity [
 	| V W |
-	'V := QQ ^ 3.
-		W := QQ ^ 4'.
+	V := QQ raisedTo: 3.
+	W := QQ raisedTo: 4.
 	'self assert: V í W ~ (W í V)'
 ]
 
@@ -1027,7 +1027,7 @@ ModuleTest >> testTensorProductDualIsomorphism [
 { #category : #'tensor product' }
 ModuleTest >> testTensorProductOfLinearForms [
 	| V f g t v w |
-	'V := QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	f := V dual atRandomBits: 10.
 	g := V dual atRandomBits: 10.
 	't := f í g'.
@@ -1049,24 +1049,74 @@ ModuleTest >> testTensorProductRelations [
 	w1 := W atRandomBits: 100.
 	w2 := W atRandomBits: 100.
 	c := V scalars atRandomBits: 100.
-	self assert: (T ! {v1. w}) + (T ! {v2. w}) = (T ! {v1 + v2. w}).
-	self assert: (T ! {v. w1}) + (T ! {v. w2}) = (T ! {v. w1 + w2}).
-	self assert: (T ! {v. w})*c = (T ! {v*c. w}).
-	self assert: (T ! {v. w})*c = (T ! {v. w*c})
+	self
+		assert:
+			(T
+				!
+					{v1.
+					w})
+				+
+					(T
+						!
+							{v2.
+							w})
+				=
+					(T
+						!
+							{(v1 + v2).
+							w}).
+	self
+		assert:
+			(T
+				!
+					{v.
+					w1})
+				+
+					(T
+						!
+							{v.
+							w2})
+		equals:
+			T
+				!
+					{v.
+					(w1 + w2)}.
+	self
+		assert:
+			(T
+				!
+					{v.
+					w}) * c
+				=
+					(T
+						!
+							{(v * c).
+							w}).
+	self
+		assert:
+			(T
+				!
+					{v.
+					w}) * c
+		equals:
+			T
+				!
+					{v.
+					(w * c)}
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testThirdIsomorphismTheorem: M [
 	| S T |
-	'S := M grassmannian: (0 to: M rank) atRandom :: atRandomBits: 50.
-		T := S grassmannian: (0 to: S rank) atRandom :: atRandomBits: 50'.
-	self assert: S/T <= (M/T).
-	self assert: (M/T)/(S/T) ~ (M/S)
+	S := (M grassmannian: (0 to: M rank) atRandom) atRandomBits: 50.
+	T := (S grassmannian: (0 to: S rank) atRandom) atRandomBits: 50.
+	self assert: S / T <= (M / T).
+	self assert: M / T / (S / T) ~ (M / S)
 ]
 
 { #category : #isomorphisms }
 ModuleTest >> testThirdIsomorphismTheoremOverCyclotomicField [
-	self testThirdIsomorphismTheorem: '(CyclotomicField new: 7) ^ 5'
+	self testThirdIsomorphismTheorem: ((CyclotomicField new: 7) raisedTo: 5)
 ]
 
 { #category : #isomorphisms }
@@ -1081,7 +1131,7 @@ ModuleTest >> testThirdIsomorphismTheoremOverPID [
 
 { #category : #isomorphisms }
 ModuleTest >> testThirdIsomorphismTheoremOverQ [
-	self testThirdIsomorphismTheorem: 'QQ ^ 5'
+	self testThirdIsomorphismTheorem: (QQ raisedTo: 5)
 ]
 
 { #category : #isomorphisms }
@@ -1103,7 +1153,7 @@ ModuleTest >> testTuplesRationalFunctionsQ [
 
 { #category : #other }
 ModuleTest >> testTuplesZ [
-	self testFreeModule: '(ZZ ^ 5 atRandom)'
+	self testFreeModule: (ZZ raisedTo: (5 atRandom))
 ]
 
 { #category : #other }

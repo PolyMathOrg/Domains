@@ -54,7 +54,7 @@ RootSystem class >> D: V [
 RootSystem class >> example1 [
 	"This is a normalized root system in R^n. The Weyl group associated to it is the symmetric group S_n."
 	| V roots |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	roots := Set new.
 	1 to: V dimension do: [:i|
 		1 to: i-1 do: [:j|
@@ -84,7 +84,7 @@ RootSystem class >> example2 [
 RootSystem class >> example3 [
 	"This is a normalized root system in R^n. The Weyl group associated to it is an index 2 subgroup of the hyperoctahedral group."
 	| V roots |
-	V := 'QQ ^ 3'.
+	V := QQ raisedTo: 3.
 	roots := Set new.
 	1 to: 3 do: [:i|
 		1 to: i-1 do: [:j|

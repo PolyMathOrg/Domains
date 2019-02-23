@@ -952,21 +952,23 @@ Polynomial >> sprs2: aPolynomial [
 { #category : #'remainder sequences' }
 Polynomial >> sprs: aPolynomial [
 	"Answer the Subresultant Polynomial Remainder Sequence of the receiver with the argument."
+
 	| delta phi beta f1 f2 r answer |
 	self assert: self scalars isUFD.
 	self assert: self degree >= aPolynomial degree.
-	f2 := self. f1 := aPolynomial."f1 is F_{i-1}, f2 is F_{i-2}, r is F_i"
+	f2 := self.
+	f1 := aPolynomial.	"f1 is F_{i-1}, f2 is F_{i-2}, r is F_i"
 	phi := self scalars one.
 	answer := OrderedCollection new.
 	answer add: f2.
-	[f1 isZero]
-		whileFalse:
-			[answer add: f1.
+	[ f1 isZero ]
+		whileFalse: [ answer add: f1.
 			delta := f2 degree - f1 degree + 1.
-			beta := '(-1) ^ delta * (phi ^ (delta - 1)) * f2 leadingCoefficient'.
-			phi := 'phi * ((f1 leadingCoefficient / phi) ^ (delta - 1))'.
+			beta := ((-1) raisedTo: delta) * (phi raisedTo: (delta - 1)) * f2 leadingCoefficient.
+			phi := phi * (f1 leadingCoefficient / phi raisedTo: delta - 1).
 			r := (f2 pseudoRem: f1) /// beta.
-			f2 := f1. f1 := r].
+			f2 := f1.
+			f1 := r ].
 	^ answer
 ]
 
