@@ -99,8 +99,9 @@ GroupTest >> testCauchyFrobeniusLemma [
 { #category : #tests }
 GroupTest >> testConjugacyClasses [
 	"From wikipedia article on conjugacy classes."
-	self assert: (SymmetricGroup new: 3) conjugacyClasses size = 3.
-	self assert: (SymmetricGroup new: 4) conjugacyClasses size = 5
+
+	self assert: (SymmetricGroup new: 3) conjugacyClasses size equals: 3.
+	self assert: (SymmetricGroup new: 4) conjugacyClasses size equals: 5
 ]
 
 { #category : #tests }
@@ -120,9 +121,15 @@ GroupTest >> testDirectProduct [
 	| S A G g |
 	S := self smallGroupAtRandom.
 	A := self smallGroupAtRandom.
-	G := 'S ◊ A'.
+	G := S directProduct: A.
 	g := G atRandom.
-	self assert: (G operation value: {g. G inverseMap value: g}) = G identity.
+	self
+		assert:
+			(G operation
+				value:
+					{g.
+					(G inverseMap value: g)})
+		equals: G identity.
 	self testGroup: G.
 	self testGroupHomomorphism: (G projection: 1).
 	self testGroupHomomorphism: (G projection: 2)
@@ -137,11 +144,51 @@ GroupTest >> testGroup: G [
 	a := G atRandomBits: 100.
 	b := G atRandomBits: 100.
 	c := G atRandomBits: 100.
-	self assert: (op value: {e. a}) = a.
-	self assert: (op value: {a. e}) = a.
-	self assert: (op value: {a. inv value: a}) = e.
-	self assert: (op value: {inv value: a. a}) = e.
-	self assert: (op value: {op value: {a. b}. c}) = (op value: {a. op value: {b. c}})
+	self
+		assert:
+			(op
+				value:
+					{e.
+					a})
+		equals: a.
+	self
+		assert:
+			(op
+				value:
+					{a.
+					e})
+		equals: a.
+	self
+		assert:
+			(op
+				value:
+					{a.
+					(inv value: a)})
+		equals: e.
+	self
+		assert:
+			(op
+				value:
+					{(inv value: a).
+					a})
+		equals: e.
+	self
+		assert:
+			(op
+				value:
+					{(op
+						value:
+							{a.
+							b}).
+					c})
+		equals:
+			(op
+				value:
+					{a.
+					(op
+						value:
+							{b.
+							c})})
 ]
 
 { #category : #tests }

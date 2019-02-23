@@ -35,7 +35,7 @@ StandardSymmetricGroup >> ! anObject [
 
 { #category : #random }
 StandardSymmetricGroup >> atRandom: aRandom [
-	^ self mapping: ((1 to: degree) asArray shuffledBy: aRandom)
+	^ self mapping: ((1 to: degree) asArray shuffleBy: aRandom)
 ]
 
 { #category : #elements }

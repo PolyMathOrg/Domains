@@ -396,6 +396,21 @@ Group >> derivedSeriesDo: aBlock [
 ]
 
 { #category : #operations }
+Group >> directProduct: aGroupOrAction [
+	"◊ "
+
+	(aGroupOrAction isKindOf: GroupAction)
+		ifTrue: [ ^ SemidirectProductGroup
+				left: self
+				right: aGroupOrAction group
+				action: aGroupOrAction ].
+	^ DirectProductGroup
+		components:
+			{self.
+			aGroupOrAction}
+]
+
+{ #category : #operations }
 Group >> directSum: aGroup [
 	"Answer the direct sum of the receiver and the argument."
 	^ 'self ◊ aGroup' "finite direct sums of groups are the same as direct products"

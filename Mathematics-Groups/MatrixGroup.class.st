@@ -30,7 +30,7 @@ MatrixGroup class >> generators: aCollection [
 MatrixGroup class >> klein [
 	"The Klein four-group (or Vierergruppe) as a matrix group."
 	| a b |
-	a := Matrix rows: {(1,0). (0,-1)}.
+	a := Matrix rows: {(1,0). (0, -1)}.
 	b := a negated.
 	^ self generators: {a. b}
 ]

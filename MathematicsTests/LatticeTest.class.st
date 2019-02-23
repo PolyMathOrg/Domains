@@ -17,23 +17,32 @@ LatticeTest >> testE8 [
 	self assert: E8 isSelfDual
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLLL [
 	| b1 b2 b3 lll |
-	b1 := (1, 1, 1).
-	b2 := (-1, 0, 2).
-	b3 := (3, 5, 6).
-	lll := LLL basis: { b1. b2. b3 }.
-	self assert: lll reducedBasis = {(0,1,0). (1,0,1). (-1,0,2)}
+	b1 := 1 , 1 , 1.
+	b2 := -1 , 0 , 2.
+	b3 := 3 , 5 , 6.
+	lll := LLL
+		basis:
+			{b1.
+			b2.
+			b3}.
+	self
+		assert: lll reducedBasis
+		equals:
+			{(0 , 1 , 0).
+			(1 , 0 , 1).
+			(-1 , 0 , 2)}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLatticeAnDual [
 	| A3 D |
 	A3 := Lattice A: 3.
 	D := Lattice Adual: 3.
-	self assert: A3 reciprocal = D.
-	self assert: A3 = D reciprocal
+	self assert: A3 reciprocal equals: D.
+	self assert: A3 equals: D reciprocal
 ]
 
 { #category : #'as yet unclassified' }
@@ -43,24 +52,30 @@ LatticeTest >> testLatticeD4SelfDual [
 	self assert: D4 isSelfDual
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLatticeDnDual [
 	| D R |
 	D := Lattice D: 5.
 	R := Lattice Ddual: 5.
-	self assert: D reciprocal = R.
+	self assert: D reciprocal equals: R.
 	self assert: D = R reciprocal
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLatticeDual [
 	| L R I |
-	L := Lattice basis: {(-1,0,0). (0,1,2). (0,1,1)}.
+	L := Lattice
+		basis:
+			{(-1 , 0 , 0).
+			(0 , 1 , 2).
+			(0 , 1 , 1)}.
 	R := L reciprocal.
 	I := L matrix identity.
-	self assert: (L ambient span: L basis) = (R ambient span: R basis).
-	self assert: L determinant = (1 / R determinant).
-	self assert: R matrix * L matrix transposed = I
+	self
+		assert: (L ambient span: L basis)
+		equals: (R ambient span: R basis).
+	self assert: L determinant equals: 1 / R determinant.
+	self assert: R matrix * L matrix transposed equals: I
 ]
 
 { #category : #'as yet unclassified' }

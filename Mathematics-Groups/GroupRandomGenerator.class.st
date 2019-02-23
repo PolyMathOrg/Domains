@@ -24,7 +24,7 @@ GroupRandomGenerator >> next [
 	g := state atRandom: random.
 	[(state at: (i := state size atRandom: random)) == g and: [state size > 1 "otherwise fails with cyclic groups"]] whileTrue.
 	(2 atRandom: random) = 1 ifTrue: [g := self domain inverseMap value: g].
-	h := self domain operation value: ({g. state at: i} shuffledBy: random).
+	h := self domain operation value: ({g. state at: i} shuffleBy: random).
 	state size < 10 ifTrue: [state add: h] ifFalse: [state at: i put: h].
 	^ h
 ]

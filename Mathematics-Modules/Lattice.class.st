@@ -89,7 +89,7 @@ Lattice class >> Z: n [
 Lattice class >> basis: aCollection [
 	| V M |
 	M := Matrix rows: aCollection asArray.
-	V := 'M scalars ^ M width'.
+	V := (M scalars) raisedTo: (M width).
 	^ self new ambient: V; matrix: M
 ]
 
