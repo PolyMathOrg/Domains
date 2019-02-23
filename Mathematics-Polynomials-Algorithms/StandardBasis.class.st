@@ -201,17 +201,23 @@ StandardBasis >> printOn: aStream [
 ]
 
 { #category : #operations }
-StandardBasis >> reduce1: aPolynomial [ 
+StandardBasis >> reduce1: aPolynomial [
 	"Answer Mora's normal form of aPolynomial with respect to the receiver)."
+
 	| h L M |
 	h := aPolynomial.
 	L := OrderedCollection withAll: self.
-	([h isZero or: [(M := L select: [:g| g leadingMonomial | h leadingMonomial]) isEmpty]])
-		whileFalse:
-			[| g |
-			g := M argmin: [:each| each ecart].
-			g ecart > h ecart ifTrue: [L add: h].
-			h := h - (g * (h leadingMonomial / g leadingMonomial) * (h leadingCoefficient / g leadingCoefficient))].
+	[ h isZero
+		or: [ (M := L select: [ :g | g leadingMonomial | h leadingMonomial ])
+				isEmpty ] ]
+		whileFalse: [ | g |
+			g := M detectMin: [ :each | each ecart ].
+			g ecart > h ecart
+				ifTrue: [ L add: h ].
+			h := h
+				-
+					(g * (h leadingMonomial / g leadingMonomial)
+						* (h leadingCoefficient / g leadingCoefficient)) ].
 	^ h
 ]
 

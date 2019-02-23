@@ -41,7 +41,7 @@ NumericalComplexRootIsolator >> initialize [
 NumericalComplexRootIsolator >> rootNear: aComplex [
 "	[self roots do: [:each| (each approximation - aComplex) abs < epsilon ifTrue: [^ each]].
 	self roots do: [:each| each refine]] repeat"
-	^ self roots argmin: [:each| (each approximation - aComplex) abs]
+	^ self roots detectMin: [:each| (each approximation - aComplex) abs]
 ]
 
 { #category : #private }
