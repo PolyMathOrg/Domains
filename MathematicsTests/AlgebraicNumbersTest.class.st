@@ -54,10 +54,9 @@ AlgebraicNumbersTest >> testRealArithmetic [
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
 	sqrt5 := RealAlgebraicNumber sqrt: 5.
 	sqrt6 := RealAlgebraicNumber sqrt: 6.
-	self assert: sqrt2 squared asRational = 2.
-	self assert: (sqrt2 + sqrt3) * sqrt2 = (2 + sqrt6).
-	self assert: (sqrt3 / sqrt5) squared reciprocal = (5/3).
-"	self assert: (((five root: 3) + sqrt2 - sqrt2) ^ 3) asRational = 5"
+	self assert: sqrt2 squared asRational equals: 2.
+	self assert: (sqrt2 + sqrt3) * sqrt2 equals: 2 + sqrt6.
+	self assert: (sqrt3 / sqrt5) squared reciprocal equals: 5 / 3
 ]
 
 { #category : #tests }
@@ -82,7 +81,7 @@ AlgebraicNumbersTest >> testRealProduct [
 	| sqrt3 sqrt5 |
 	sqrt3 := RealAlgebraicNumber sqrt: 3.
 	sqrt5 := RealAlgebraicNumber sqrt: 5.
-	self assert: (sqrt3 * sqrt5 * sqrt3 * sqrt5) asRational = 15
+	self assert: (sqrt3 * sqrt5 * sqrt3 * sqrt5) asRational equals: 15
 ]
 
 { #category : #tests }
@@ -112,14 +111,14 @@ AlgebraicNumbersTest >> testRealSum [
 AlgebraicNumbersTest >> testSquare [
 	| sqrt2 |
 	sqrt2 := ComplexAlgebraicNumber sqrt2.
-	self assert: sqrt2 squared = 2
+	self assert: sqrt2 squared equals: 2
 ]
 
 { #category : #tests }
 AlgebraicNumbersTest >> testSquareRoot [
 	| a |
 	a := ComplexAlgebraicNumber sqrt2.
-	self assert: a squareRoot squared = a
+	self assert: a squareRoot squared equals: a
 ]
 
 { #category : #tests }
@@ -128,7 +127,7 @@ AlgebraicNumbersTest >> testSum [
 	sqrt2 := ComplexAlgebraicNumber sqrt: 2.
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
 	sqrt5 := ComplexAlgebraicNumber sqrt: 5.
-	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 = sqrt2
+	self assert: sqrt3 + sqrt5 + sqrt2 - sqrt3 - sqrt5 equals: sqrt2
 ]
 
 { #category : #tests }

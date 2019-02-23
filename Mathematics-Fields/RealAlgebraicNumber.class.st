@@ -42,7 +42,7 @@ RealAlgebraicNumber class >> polynomial: aPolynomial bounds: aRealInterval [
 	"Answer an instance of the receiver representing the unique zero of aPolynomial in the given interval."
 	| approximation |
 	approximation := aRealInterval midpoint.
-	^ self minimalPolynomial: (aPolynomial factors argmin: [:f| (f value: approximation) abs]) bounds: aRealInterval
+	^ self minimalPolynomial: (aPolynomial factors detectMin: [:f| (f value: approximation) abs]) bounds: aRealInterval
 ]
 
 { #category : #examples }

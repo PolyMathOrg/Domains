@@ -34,7 +34,7 @@ ComplexAlgebraicNumber class >> fromRational: anIntegerOrFraction [
 ComplexAlgebraicNumber class >> i [
 	| x |
 	x := QQ polynomials x.
-	^ self minimalPolynomial: (x raiseTo:2) + 1 approximation: 1 i radius: 0
+	^ self minimalPolynomial: (x raisedTo:2) + 1 approximation: 1 i radius: 0
 ]
 
 { #category : #'instance creation' }
@@ -58,7 +58,7 @@ ComplexAlgebraicNumber class >> phi [
 { #category : #'instance creation' }
 ComplexAlgebraicNumber class >> polynomial: aPolynomial approximation: aComplex radius: aNumber [
 	| minimalPolynomial |
-	minimalPolynomial := aPolynomial factors argmin: [:f| (f value: aComplex) abs].
+	minimalPolynomial := aPolynomial factors detectMin: [:f| (f value: aComplex) abs].
 	minimalPolynomial degree = 1 ifTrue: [^ minimalPolynomial independentCoefficient negated / minimalPolynomial leadingCoefficient].
 	^ self minimalPolynomial: minimalPolynomial approximation: aComplex radius: aNumber
 ]
