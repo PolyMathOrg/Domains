@@ -148,11 +148,17 @@ AlgebraicGeometryTest >> testEqualVarietiesDifferentIdeals2 [
 	A := QQ polynomialsIn: #(x y).
 	x := A x.
 	y := A y.
-	I := A * {x. y}.
-	I2 := A * {x raiseTo: 2. y}.
+	I := A
+		*
+			{x.
+			y}.
+	I2 := A
+		*
+			{(x raisedTo: 2).
+			y}.
 	V := I variety.
 	V2 := I2 variety.
-	self assert: V = V2.
+	self assert: V equals: V2.
 	self assert: I ~= I2
 ]
 
@@ -162,7 +168,7 @@ AlgebraicGeometryTest >> testFinite [
 	A := QQ polynomialsIn: #(x y).
 	x := A x.
 	y := A y.
-	X := 'A / {x*x - 1. y*y - (x*x) - 3} :: spec'.
+	X := (A / {x*x - 1. y*y - (x*x) - 3}) spec.
 	self assert: X isFinite
 ]
 
@@ -182,9 +188,9 @@ AlgebraicGeometryTest >> testIntersection [
 { #category : #general }
 AlgebraicGeometryTest >> testLinearSubspaceAsAlgebraicVariety [
 	| S V |
-	S := 'QQ ^ 3 grassmannian: 2 :: atRandomBits: 10'.
+	S := ((QQ raisedTo: 3) grassmannian: 2) atRandomBits: 10.
 	V := S asAlgebraicVariety.
-	self assert: V dimension + 1 = S dimension. "because it's projective"
+	self assert: V dimension + 1 equals: S dimension.
 	self assert: (V satisfies: (S e: 1)).
 	self assert: (V satisfies: (S e: 2))
 ]
