@@ -41,9 +41,10 @@ Function class >> evaluating: anExpression [
 
 { #category : #examples }
 Function class >> example1Function [
-	"The function 'x^2 + 1' with domain the ring of rational integers
+"The function 'x^2 + 1' with domain the ring of rational integers
 	and codomain the set of natural numbers."
-	^ Function from: ZZ to: NN evaluating: [:x| x squared + 1]
+
+	^ Function from: ZZ to: NN evaluating: [ :x | x squared + 1 ]
 ]
 
 { #category : #examples }
@@ -52,7 +53,10 @@ Function class >> example2Morphism1 [
 	QQ^3 is the vector space of 3-tuples with rational coefficients,
 	and this defines a linear map on it (an endomorphism)
 	by sending the message #to:evaluating: to the vector space."
-	^ 'QQ^3 to: QQ^3 evaluating: [:v| (v x - v y, v x, v z)]'
+
+	^ (QQ raisedTo: 3)
+		to: (QQ raisedTo: 3)
+		evaluating: [ :v | v x - v y , v x , v z ]
 ]
 
 { #category : #examples }
@@ -66,7 +70,8 @@ Function class >> example2Morphism2 [
 Function class >> example2Morphism3 [
 	"And yet a third way. Here Hom(Q^3, Q^3) is created
 	by sending the message #endomorphisms to the vector space."
-	^ '(QQ^3) endomorphisms evaluating: [:v| (v x - v y, v x, v z)]'
+
+	^ (QQ raisedTo: 3) endomorphisms evaluating: [:v| (v x - v y, v x, v z)]
 ]
 
 { #category : #examples }

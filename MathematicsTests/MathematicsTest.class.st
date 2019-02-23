@@ -192,9 +192,9 @@ MathematicsTest >> testFunctionComposition3 [
 { #category : #tests }
 MathematicsTest >> testFunctionNewFrom [
 	| f g |
-	'f := QQ^3 :: endomorphisms atRandomBits: 1000'. "f is a LinearMap"
-	g := f as: Function. "downgrade it to a simple Function, not a LinearMap any more"
-	self assert: (g as: LinearMap) = f
+	'f := (QQ raisedTo: 3) endomorphisms atRandomBits: 1000'.	"f is a LinearMap"
+	g := f as: Function.	"downgrade it to a simple Function, not a LinearMap any more"
+	self assert: (g as: LinearMap) equals: f
 ]
 
 { #category : #tests }
