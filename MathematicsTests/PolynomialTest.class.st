@@ -620,69 +620,100 @@ PolynomialTest >> testIsIrreducibleOverZ [
 
 { #category : #tests }
 PolynomialTest >> testIsSeparableNot [
-	"A tipical example of a polynomial that is NOT separable."
+	"A typical example of a polynomial that is NOT separable."
+
 	| p F x Fy y f |
-	p := 5. "any prime p"
-	F := 'ZZ/p :: polynomials fractions'.
+	p := 5.	"any prime p"
+	F := (ZZ / p) polynomials fractions.
 	x := F x.
 	Fy := F polynomialsIn: #(y).
 	y := Fy x.
-	f := 'y^p - x'.
+	f := (y raisedTo: p) - x.
 	self assert: f isSeparable not
 ]
 
 { #category : #tests }
 PolynomialTest >> testMultivariateDivision [
 	"Example from Cox IVA 62 p."
+
 	| Zxy x y f f1 f2 division |
-	Zxy := ZZ polynomialsIn: #(x y) ordering: (MonomialOrdering lex: #(2 1)).
+	Zxy := ZZ
+		polynomialsIn: #(x y)
+		ordering: (MonomialOrdering lex: #(2 1)).
 	x := Zxy x.
 	y := Zxy y.
-	'f := x*(y^2)+1'.
-	f1 := x*y+1.
-	f2 := y+1.
-	division := f divisionBy: {f1. f2}.
-	self assert: division quotients = {y. y one negated}.
-	self assert: division remainder = (y one * 2).
+	f := x * (y raisedTo: 2) + 1.
+	f1 := x * y + 1.
+	f2 := y + 1.
+	division := f
+		divisionBy:
+			{f1.
+			f2}.
+	self
+		assert: division quotients
+		equals:
+			{y.
+			y one negated}.
+	self assert: division remainder equals: y one * 2.
 	self assert: division verify
 ]
 
 { #category : #tests }
 PolynomialTest >> testMultivariateDivision2 [
 	"Example from Cox IVA 63 p."
+
 	| Zxy x y f f1 f2 division |
-	Zxy := ZZ polynomialsIn: #(x y) ordering: (MonomialOrdering lex: #(2 1)).
+	Zxy := ZZ
+		polynomialsIn: #(x y)
+		ordering: (MonomialOrdering lex: #(2 1)).
 	x := Zxy x.
 	y := Zxy y.
-'	f := x^2*y + (x*(y^2)) + (y^2).
-	f1 := x*y-1.
-	f2 := y^2-1'.
-	division := f divisionBy: {f1. f2}.
-	self assert: division quotients = {x+y. y one}.
-	self assert: division remainder = (x+y+1).
+	f := (x raisedTo: 2) * y + (x * (y raisedTo: 2)) + (y raisedTo: 2).
+	f1 := x * y - 1.
+	f2 := (y raisedTo: 2) - 1.
+	division := f
+		divisionBy:
+			{f1.
+			f2}.
+	self
+		assert: division quotients
+		equals:
+			{(x + y).
+			y one}.
+	self assert: division remainder equals: x + y + 1.
 	self assert: division verify
 ]
 
 { #category : #tests }
 PolynomialTest >> testMultivariateDivision3 [
 	"Example from Cox IVA 67 p."
+
 	| Zxy x y f f1 f2 division |
-	Zxy := ZZ polynomialsIn: #(x y) ordering: (MonomialOrdering lex: #(2 1)).
+	Zxy := ZZ
+		polynomialsIn: #(x y)
+		ordering: (MonomialOrdering lex: #(2 1)).
 	x := Zxy x.
 	y := Zxy y.
-	'f := x^2*y + (x*(y^2)) + (y^2).
-		f1 := x*y-1.
-		f2 := y^2-1'.
-	division := f divisionBy: {f2. f1}.
-	self assert: division quotients = {x+1. x}.
-	self assert: division remainder = (x*2+1).
+	f := (x raisedTo: 2) * y + (x * (y raisedTo: 2)) + (y raisedTo: 2).
+	f1 := x * y - 1.
+	f2 := (y raisedTo: 2) - 1.
+	division := f
+		divisionBy:
+			{f2.
+			f1}.
+	self
+		assert: division quotients
+		equals:
+			{(x + 1).
+			x}.
+	self assert: division remainder equals: x * 2 + 1.
 	self assert: division verify
 ]
 
 { #category : #tests }
 PolynomialTest >> testMultivariateGCDBug [
 	| x |
-	x := 'QQ polynomialsIn: 3 :: x'.
+	x := (QQ polynomialsIn: 3) x.
 	self assert: ((x raisedTo: 2) gcd: x) equals: x
 ]
 
