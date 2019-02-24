@@ -134,6 +134,22 @@ LinearMap >> codomain: aFreeModule [
 	codomain := aFreeModule
 ]
 
+{ #category : #operations }
+LinearMap >> compose: aLinearMap [ "î"
+self domain == aLinearMap codomain
+		ifTrue: [ ^ self class
+				from: aLinearMap domain
+				to: codomain
+				matrix: matrix * aLinearMap matrix ].
+	"Answer the composition of the receiver with the argument."
+	self domain >= aLinearMap codomain
+		ifTrue: [ ^ self class
+				from: aLinearMap domain
+				to: codomain
+				evaluating: [ :each | self value: (aLinearMap value: each) ] ].
+	^ DomainError signal: 'domains don''t match'
+]
+
 { #category : #private }
 LinearMap >> computeLeftInverse [
 	^ self isMonomorphism ifTrue: [self class from: codomain to: domain matrix: matrix leftInverse]

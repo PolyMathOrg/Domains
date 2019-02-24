@@ -122,7 +122,7 @@ ModuleTest >> testAdjointProperties [
 	self assert: (f * a) adjoint equals: f adjoint * a.
 	U := QQ raisedTo: (1 to: 4) atRandom.
 	f := (U hom: V) atRandomBits: 100.
-	self assert: g î f adjoint equals: f adjoint î g adjoint
+	self assert: (g compose: f) adjoint equals: (f adjoint compose: g adjoint)
 ]
 
 { #category : #other }

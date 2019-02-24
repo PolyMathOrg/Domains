@@ -623,10 +623,10 @@ AlgebraicGeometryTest >> testRationalMapLinearMapConversion [
 { #category : #'rational points' }
 AlgebraicGeometryTest >> testRationalPointsOverFiniteField [
 	| P C |
-	P := ProjectiveSpace new: 2 over: ZZ/7.
+	P := ProjectiveSpace new: 2 over: ZZ / 7.
 	C := 'P subscheme: P coordinateRing ! [:x :y :z| x^3 + (y^3) - (z^3)]'.
-	self assert: C points size = 9.
-	self assert: (Iterator on: C points performing: #do:) size = 9
+	self assert: C points size equals: 9.
+	self assert: (Iterator on: C points performing: #do:) size equals: 9
 ]
 
 { #category : #general }

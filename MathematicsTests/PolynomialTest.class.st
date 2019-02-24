@@ -158,15 +158,16 @@ PolynomialTest >> testDomainError [
 { #category : #tests }
 PolynomialTest >> testEPRS [
 	"Example from Zippel."
+
 	| a b eprs |
 	a := ZZ polynomials coefficients: #(1 0 1 0 -3 -3 8 2 -5) reversed.
-		b := ZZ polynomials coefficients: #(3 0 5 0 -4 -9 21) reversed.
-		eprs := ((a eprs: b ) collect: [:each| each coefficients reversed asArray]) asArray.
-	self assert: eprs = #((1 0 1 0 -3 -3 8 2 -5)
-		(3 0 5 0 -4 -9 21)
-		(-15 0 3 0 -9) 
-		(15795 30375 -59535) 
-		(1254542875143750 -1654608338437500) (12593338795500743100931141992187500))
+	b := ZZ polynomials coefficients: #(3 0 5 0 -4 -9 21) reversed.
+	eprs := ((a eprs: b)
+		collect: [ :each | each coefficients reversed asArray ]) asArray.
+	self
+		assert: eprs
+		equals:
+			#(#(1 0 1 0 -3 -3 8 2 -5) #(3 0 5 0 -4 -9 21) #(-15 0 3 0 -9) #(15795 30375 -59535) #(1254542875143750 -1654608338437500) #(12593338795500743100931141992187500))
 ]
 
 { #category : #tests }
