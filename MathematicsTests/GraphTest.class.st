@@ -4,52 +4,63 @@ Class {
 	#category : #MathematicsTests
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testAutomorphismsK3 [
 	"Aut(K3) = Sym(3)"
+
 	| G A |
 	G := Graph K: 3.
 	A := G automorphisms.
-	self assert: A = A ambient
-
+	self assert: A equals: A ambient
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testAutomorphismsP3 [
 	"Aut(P3) = {id, (1 3)}"
+
 	| G A |
 	G := Graph P: 3.
 	A := G automorphisms.
-	self assert: A = (PermutationGroup on: G values generators: {#((1 3))})
+	self
+		assert: A
+		equals: (PermutationGroup on: G values generators: {#(#(1 3))})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testCartesianProduct [
 	| G H |
-	G := Graph unordered addEdge: 1 -> 2; yourself.
-	H := 'G ◊ G'.
-	self assert: H size = 4.
-	self assert: H numberOfEdges = 4
+	G := Graph unordered
+		addEdge: 1 -> 2;
+		yourself.
+	H := G cartesianProduct: G.
+	self assert: H size equals: 4.
+	self assert: H numberOfEdges equals: 4
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testChromaticNumber [
 	| G |
-	G := Graph unordered add: 1; add: 2; add: 3; yourself. 
-	self assert: G chromaticNumber = 1. "edgeless graph"
-	self assert: (Graph K: 3) chromaticNumber = 3.
-	self assert: (Graph C: 5) chromaticNumber = 3.
-	self assert: (Graph C: 6) chromaticNumber = 2.
-	self assert: (Graph W: 6) chromaticNumber = 4.
-	self assert: (Graph W: 5) chromaticNumber = 3.
-	self assert: (Graph S: 6) chromaticNumber = 2
+	G := Graph unordered
+		add: 1;
+		add: 2;
+		add: 3;
+		yourself.
+	self assert: G chromaticNumber equals: 1.
+	self assert: (Graph K: 3) chromaticNumber equals: 3.
+	self assert: (Graph C: 5) chromaticNumber equals: 3.
+	self assert: (Graph C: 6) chromaticNumber equals: 2.
+	self assert: (Graph W: 6) chromaticNumber equals: 4.
+	self assert: (Graph W: 5) chromaticNumber equals: 3.
+	self assert: (Graph S: 6) chromaticNumber equals: 2
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testChromaticPolynomialComplete [
 	| x |
 	x := ZZ polynomials x.
-	self assert: (Graph K: 3) chromaticPolynomial = (x*(x-1)*(x-2))
+	self
+		assert: (Graph K: 3) chromaticPolynomial
+		equals: x * (x - 1) * (x - 2)
 ]
 
 { #category : #'as yet unclassified' }
@@ -60,12 +71,14 @@ GraphTest >> testChromaticPolynomialCylic [
 	'self assert: (Graph C: n) chromaticPolynomial = (x-1^n + ((-1)^n * (x-1)))'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GraphTest >> testChromaticPolynomialPath [
 	| x n |
 	x := ZZ polynomials x.
 	n := 4 atRandom + 1.
-	'self assert: (Graph P: n) chromaticPolynomial = (x-1^(n-1)*x)'
+	self
+		assert: (Graph P: n) chromaticPolynomial
+		equals: (x - 1 raisedTo: n - 1) * x
 ]
 
 { #category : #'as yet unclassified' }
