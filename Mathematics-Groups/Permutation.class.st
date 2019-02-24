@@ -74,21 +74,29 @@ Permutation >> * aPermutation [
 
 { #category : #comparing }
 Permutation >> = aPermutation [
-	(aPermutation isKindOf: self species) ifFalse: [^ super = aPermutation].
-	map keysAndValuesDo: [:key :value| (aPermutation at: key) = value ifFalse: [^ false]].
-	aPermutation map size <= map size ifTrue: [^ true].
-	aPermutation map keysAndValuesDo: [:key :value| value = (self at: key) ifFalse: [^ false]].
+	(aPermutation isKindOf: self species)
+		ifFalse: [ ^ super = aPermutation ].
+	map
+		keysAndValuesDo: [ :key :value | 
+			(aPermutation at: key) = value
+				ifFalse: [ ^ false ] ].
+	aPermutation map size <= map size
+		ifTrue: [ ^ true ].
+	aPermutation map
+		keysAndValuesDo: [ :key :value | 
+			value = (self at: key)
+				ifFalse: [ ^ false ] ].
 	^ true
 ]
 
 { #category : #converting }
 Permutation >> asArray [
-	^ (1 to: map size) collect: [:each| self at: each]
+	^ (1 to: map size) collect: [ :each | self at: each ]
 ]
 
 { #category : #accessing }
 Permutation >> at: anObject [
-	^ map at: anObject ifAbsent: [anObject]
+	^ map at: anObject ifAbsent: [ anObject ] 
 ]
 
 { #category : #accessing }

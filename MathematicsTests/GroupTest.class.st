@@ -15,11 +15,16 @@ GroupTest >> smallGroupAtRandom [
 
 { #category : #tests }
 GroupTest >> testActionOrbitOf [
-	| G |
-	G := PermutationGroup on: (1 to: 8) generators: {#((1 3 2) (4 6 5)). #((1 2 3) (4 5 6)). #((7 8))}.
-	self assert: (G action orbitOf: 1) = #(1 2 3) asSet.
-	self assert: (G action orbitOf: 4) = #(4 6 5) asSet.
-	self assert: (G action orbitOf: 7) = #(7 8) asSet
+	| g |
+	g := PermutationGroup
+		on: (1 to: 8)
+		generators:
+			{#(#(1 3 2) #(4 6 5)).
+			#(#(1 2 3) #(4 5 6)).
+			#(#(7 8))}.
+	self assert: (g action orbitOf: 1) equals: #(1 2 3) asSet.
+	self assert: (g action orbitOf: 4) equals: #(4 6 5) asSet.
+	self assert: (g action orbitOf: 7) equals: #(7 8) asSet
 ]
 
 { #category : #tests }
@@ -88,12 +93,16 @@ This is the Mathieu group on 12 points, the second smallest of the 26 sporadic s
 { #category : #tests }
 GroupTest >> testCauchyFrobeniusLemma [
 	"Also called Brunside's lemma, Burnside counting theorem, or orbit-counting theorem."
+
 	| X G phi sum |
 	X := 1 to: 3.
 	G := Group alternating: X.
-	phi := GroupAction from: (G, X) to: X evaluatingWithArguments: [:f :x| f value: x].
-	sum := G elements sum: [:g| (phi fixedPointsOf: g) size].
-	self assert: phi orbits size * G order = sum
+	phi := GroupAction
+		from: G , X
+		to: X
+		evaluatingWithArguments: [ :f :x | f value: x ].
+	sum := G elements sum: [ :g | (phi fixedPointsOf: g) size ].
+	self assert: phi orbits size * G order equals: sum
 ]
 
 { #category : #tests }

@@ -34,6 +34,15 @@ AbstractPermutation >> commutator: aPermutation [
 ]
 
 { #category : #operations }
+AbstractPermutation >> compose: aPermutation [
+	"î "
+
+	"Answer the composition of the receiver with the argument."
+
+	^ self * aPermutation
+]
+
+{ #category : #operations }
 AbstractPermutation >> conjugateBy: aPermutation [
 	^ aPermutation inverse * self * aPermutation
 ]
@@ -153,12 +162,6 @@ AbstractPermutation >> printOn: aStream [
 		aStream nextPut: $(.
 		cycle do: [:element| element isSymbol ifTrue: [aStream nextPutAll: element] ifFalse: [aStream print: element]] separatedBy: [aStream space].
 		aStream nextPut: $)]
-]
-
-{ #category : #operations }
-AbstractPermutation >> quotequote: aPermutation [ "î "
-	"Answer the composition of the receiver with the argument."
-	^ self * aPermutation
 ]
 
 { #category : #operations }

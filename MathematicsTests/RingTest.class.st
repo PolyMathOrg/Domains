@@ -15,9 +15,16 @@ RingTest >> newQuotientRing [
 
 { #category : #private }
 RingTest >> newRing [
-	4 atRandom = 1 ifTrue: [^ self newQuotientRing].
-	2 atRandom = 1 ifTrue: [^ {ZZ. QQ. ZZ / (2 to: 10) atRandom} atRandom polynomialsIn: (1 to: 3) atRandom].
-	^ {ZZ. QQ. ZZ / (2 to: 10) atRandom} atRandom
+	4 atRandom = 1
+		ifTrue: [ ^ self newQuotientRing ].
+	2 atRandom = 1
+		ifTrue: [ ^ {ZZ.
+			QQ.
+			(ZZ / (2 to: 10) atRandom)} atRandom
+				polynomialsIn: (1 to: 3) atRandom ].
+	^ {ZZ.
+	QQ.
+	(ZZ / (2 to: 10) atRandom)} atRandom
 ]
 
 { #category : #general }

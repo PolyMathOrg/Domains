@@ -17,7 +17,7 @@ Class {
 { #category : #examples }
 Group class >> alternating: aCollection [
 	"Answer the group of alternate permutations of aCollection."
-	^ ((self symmetric: aCollection) select: [:each| each even]) name: 'Alt(', aCollection printText, ')'
+	^ ((self symmetric: aCollection) select: [:each| each even]) name: 'Alt(', aCollection printString, ')'
 ]
 
 { #category : #examples }
@@ -248,7 +248,7 @@ Group >> compositiveInverseMap [
 
 { #category : #private }
 Group >> compositiveOperation [
-	^ (GroupAction from: (self, self) to: self evaluatingWithArguments: [:x :y| x î y]) name: 'î'
+	^ (GroupAction from: (self, self) to: self evaluatingWithArguments: [:x :y| x compose: y]) name: 'î'
 ]
 
 { #category : #private }
