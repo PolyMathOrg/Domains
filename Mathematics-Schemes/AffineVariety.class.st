@@ -138,13 +138,20 @@ AffineVariety >> asHypersurface [
 ]
 
 { #category : #operations }
-AffineVariety >> cartProd: anAffineVariety [ "◊ "
+AffineVariety >> cartesianProduct: anAffineVariety [
+	"◊ "
+
 	"Answer the cartesian product of the receiver and the argument."
-	self scalars = anAffineVariety scalars ifFalse: [self error: 'scalars don''t match'].
-	(anAffineVariety isKindOf: AffineVariety) ifFalse: [self notYetImplemented].
-	^ '(self coordinateRing í anAffineVariety coordinateRing) spec
-			propertyAt: #ambient put: self ambient ◊ anAffineVariety ambient;
-			yourself'
+	
+	self scalars = anAffineVariety scalars
+		ifFalse: [ self error: 'scalars don''t match' ].
+	(anAffineVariety isKindOf: AffineVariety)
+		ifFalse: [ self notYetImplemented ].
+	^ (self coordinateRing
+		tensorProduct: anAffineVariety coordinateRing) spec
+		propertyAt: #ambient
+			put: (self ambient cartesianProduct: anAffineVariety ambient);
+		yourself
 ]
 
 { #category : #testing }

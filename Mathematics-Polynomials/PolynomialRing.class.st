@@ -793,6 +793,28 @@ PolynomialRing >> symmetric: r [
 	^ answer
 ]
 
+{ #category : #operations }
+PolynomialRing >> tensorProduct: aRing [
+
+	"Answer the tensor product of the receiver and the argument.
+	This is implemented for the special case of the argument being another polynomial ring over the same coefficients ring."
+	| answer |
+	aRing = self scalars ifTrue: [^ self tensorProduct: (aRing polynomials)].
+	((aRing isKindOf: PolynomialRing) and: [aRing scalars = self scalars])
+		ifFalse: [^ self notYetImplemented].
+	answer := self scalars polynomialsIn: self rank + aRing rank "ordering: self ordering, aRing ordering".
+	(self names notNil and: [aRing names notNil])
+		ifTrue:
+			[| names xi |
+			names := self names asOrderedCollection.
+			aRing names do: [:each|
+				xi := each.
+				[names includes: xi] whileTrue: [xi := xi, ''''].
+				names add: xi].
+			answer names: names].
+	^ answer
+]
+
 { #category : #morphisms }
 PolynomialRing >> to: aRing evaluating: aBlock [
 	(aRing isKindOf: PolynomialRing) ifFalse: [^ super to: aRing evaluating: aBlock].

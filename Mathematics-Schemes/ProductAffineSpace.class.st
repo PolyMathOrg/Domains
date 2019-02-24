@@ -58,7 +58,7 @@ ProductAffineSpace >> coordinateRing [
 	^ self
 		propertyAt: #coordinateRing
 		ifAbsentPut: [ self components
-				fold: [ :A :B | A coordinateRing í B coordinateRing ] ]
+				fold: [ :A :B | A coordinateRing tensorProduct: B coordinateRing ] ]
 ]
 
 { #category : #testing }

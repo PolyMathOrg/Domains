@@ -40,11 +40,17 @@ AffineSpace >> ambient [
 ]
 
 { #category : #operations }
-AffineSpace >> cartProd: anAffineSpace [ "◊ "
+AffineSpace >> cartesianProduct: anAffineSpace [
+	"◊ "
+
 	"Answer the cartesian product of the receiver and the argument."
+
 	(anAffineSpace isKindOf: AffineSpace)
-		ifFalse: [^' super ◊ anAffineSpace'].
-	^ ProductAffineSpace components: {self. anAffineSpace}
+		ifFalse: [ ^ ' super ◊ anAffineSpace' ].
+	^ ProductAffineSpace
+		components:
+			{self.
+			anAffineSpace}
 ]
 
 { #category : #accessing }

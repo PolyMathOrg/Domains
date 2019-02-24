@@ -19,7 +19,7 @@ AlgebraicGeometryTest >> testAffineSchemeCartesianProduct [
 	| X1 X2 P |
 	X1 := AffineVariety circle.
 	X2 := AffineVariety romanSurface.
-	P := 'X1 ◊ X2'.
+	P := X1 cartesianProduct: X2.
 	self assert: (P apply: (P ambient projection: 1)) equals: X1.
 	self assert: (P apply: (P ambient projection: 2)) equals: X2.
 	self assert: X1 dimension + X2 dimension equals: P dimension.
@@ -40,10 +40,9 @@ AlgebraicGeometryTest >> testAffineSchemeCreation [
 	y := A coordinateRing y.
 	z := A coordinateRing z.
 	X := A subscheme: x - y.
-	'Y := X subscheme: {x^2 - (z^3). y^3 - (z^4)}'.
-	self assert: X ambient = A.
-	"Y is defined as subscheme of X, so it contains the equations of X plus the two new equations, but its ambient space is still A (not X):"
-	self assert: Y ambient = A
+	Y := X subscheme: {(x raisedTo: 2) - (z raisedTo: 3). (y raisedTo: 3) - (z raisedTo: 4)}.
+	self assert: X ambient equals: A.
+	self assert: Y ambient equals: A
 ]
 
 { #category : #affine }
@@ -97,13 +96,13 @@ AlgebraicGeometryTest >> testDifference [
 	C := A subscheme: x * y.	"union of x-axis and y-axis"
 	X2 := A subscheme: (x raisedTo: 2).	"y-axis with double multiplicity"
 	D := X2 - C.	"y-axis with multiplicity 1"
-	self assert: D ideal = (A coordinateRing * x).
+	self assert: D ideal equals: A coordinateRing * x.
 	O := A
 		subscheme:
 			{x.
 			y}.
 	D := C - O.
-	self assert: D = C.
+	self assert: D equals: C.
 	self assert: (C - A) isEmpty	"removing the ambient space removes all"
 ]
 
@@ -178,11 +177,11 @@ AlgebraicGeometryTest >> testIntersection [
 	A := QQ polynomialsIn: #(x y).
 	x := A x.
 	y := A y.
-	'V := A / {y} :: spec.
-	V2 := A / {x*x - 1} :: spec.
-		W := V ï V2'.
-	self assert: (W satisfies: (1, 0)).
-	self assert: (W satisfies: (0, 1)) not
+	V := (A / {y}) spec.
+	V2 := (A / {x*x - 1} ) spec.
+	'W := V ï V2'.
+	self assert: (W satisfies: 1 , 0).
+	self assert: (W satisfies: 0 , 1) not
 ]
 
 { #category : #general }
@@ -713,7 +712,7 @@ AlgebraicGeometryTest >> testSmoothnessOverFiniteField [
 AlgebraicGeometryTest >> testSmoothnessOverQQ [
 	| P C |
 	P := ProjectiveSpace new: 2 over: QQ.
-	C := 'P subscheme: P coordinateRing ! [:x :y :z| x^3 - (y^2*z)]'.
+	C := P subscheme: P coordinateRing ! [:x :y :z| (x raisedTo: 3) - ((y raisedTo: 2)*z)].
 	self assert: C isSingular
 ]
 

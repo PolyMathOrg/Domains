@@ -165,6 +165,21 @@ AffineRing >> spec [
 	^ AffineVariety coordinateRing: self
 ]
 
+{ #category : #operations }
+AffineRing >> tensorProduct: aRing [
+	| R relations |
+	((aRing isKindOf: AffineRing) and: [ aRing scalars = self scalars ])
+		ifFalse: [ ^ self notYetImplemented ].
+	"Answer the tensor product of the receiver with the argument."
+	R := (self base) tensorProduct: (aRing base).
+	relations := OrderedCollection new.
+	self relations generators do: [ :f | relations add: R ! f ].
+	aRing relations generators
+		do:
+			[ :g | relations add: (R ! g substitute: [ :i | i + self base rank ]) ].
+	^ R / relations
+]
+
 { #category : #accessing }
 AffineRing >> vectorSpaceDimension [
 	"Answer the dimension of the receiver as vector space over the coefficients field."
