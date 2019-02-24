@@ -124,13 +124,19 @@ Morphism >> comp: aMorphism [
 ]
 
 { #category : #operations }
-Morphism >> compMul: anInteger [ "îî"
+Morphism >> composeWithMeTimes: anInteger [
+	"îî"
+
 	"Answer the receiver composed with itself anInteger times."
-	anInteger = 1 ifTrue: [^ self].
-	anInteger = 0 ifTrue: [^ self identity].
-	'anInteger > 1
-			ifTrue: [^ (self î self îî (anInteger // 2)) î (self îî (anInteger \\ 2))]'.
-	^ '(self îî anInteger negated) inverse'
+
+	anInteger = 1
+		ifTrue: [ ^ self ].
+	anInteger = 0
+		ifTrue: [ ^ self identity ].
+	anInteger > 1
+		ifTrue: [ ^ ((self compose: self) composeWithMeTimes: anInteger // 2)
+				compose: (self composeWithMeTimes: anInteger \\ 2) ].
+	^ (self composeWithMeTimes: anInteger negated) inverse
 ]
 
 { #category : #operations }

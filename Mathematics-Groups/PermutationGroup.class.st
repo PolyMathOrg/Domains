@@ -68,7 +68,8 @@ PermutationGroup class >> McL [
 { #category : #examples }
 PermutationGroup class >> cyclic: n [
 	"Answer the cyclic group of order n as a permutation group."
-	^ 'self new: n generators: {{(1 to: n)}} :: name: ''C'', n printString sub'
+
+	^ (self new: n generators: {{(1 to: n)}} ) name: 'C', n printString 
 ]
 
 { #category : #examples }

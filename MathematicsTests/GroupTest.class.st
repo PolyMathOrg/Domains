@@ -84,8 +84,8 @@ GroupTest >> testBigOrder1 [
 
 { #category : #tests }
 GroupTest >> testBigOrder2 [
-"Test fast computation of group order with Schreier-Sims algorithm.
-This is the Mathieu group on 12 points, the second smallest of the 26 sporadic simple groups, with order 95040."
+	"Test fast computation of group order with Schreier-Sims algorithm.
+	This is the Mathieu group on 12 points, the second smallest of the 26 sporadic simple groups, with order 95040."
 
 	self assert: PermutationGroup M12 order equals: 95040
 ]
@@ -107,7 +107,8 @@ GroupTest >> testCauchyFrobeniusLemma [
 
 { #category : #tests }
 GroupTest >> testConjugacyClasses [
-	"From wikipedia article on conjugacy classes."
+	"From wikipedia article on conjugacy classes.
+	https://en.wikipedia.org/wiki/Conjugacy_class"
 
 	self assert: (SymmetricGroup new: 3) conjugacyClasses size equals: 3.
 	self assert: (SymmetricGroup new: 4) conjugacyClasses size equals: 5
@@ -209,8 +210,30 @@ GroupTest >> testGroupAction: phi [
 	g := G atRandomBits: 100.
 	h := G atRandomBits: 100.
 	x := X atRandomBits: 100.
-	self assert: (phi value: {e. x}) = x.
-	self assert: (phi value: {g. phi value: {h. x}}) = (phi value: {G operation value: {g. h}. x})
+	self
+		assert:
+			(phi
+				value:
+					{e.
+					x})
+		equals: x.
+	self
+		assert:
+			(phi
+				value:
+					{g.
+					(phi
+						value:
+							{h.
+							x})})
+		equals:
+			(phi
+				value:
+					{(G operation
+						value:
+							{g.
+							h}).
+					x})
 ]
 
 { #category : #tests }
@@ -335,12 +358,13 @@ GroupTest >> testPermutationGroupAction [
 { #category : #tests }
 GroupTest >> testPermutationGroupHomomorphism [
 	"Magma Handbook, Example H57E2."
+
 	| C15 h im |
 	C15 := PermutationGroup cyclic: 15.
-	'h := C15 to: C15 evaluating: [:g| g ^ 3]'.
+	h := C15 to: C15 evaluating: [ :g | g raisedTo: 3 ].
 	im := h image.
-	self assert: im space size = 15. "a permutation group acting on a set of cardinality 15"
-	self assert: im size = 5. "of order 5"
+	self assert: im space size equals: 15.
+	self assert: im size equals: 5.
 	self assert: im isCyclic
 ]
 
@@ -363,7 +387,7 @@ GroupTest >> testQuotientGroup [
 GroupTest >> testSymmetricOrder [
 	| G |
 	G := Group symmetric: (1 to: 4).
-	self assert: G order = 4 factorial
+	self assert: G order equals: 4 factorial
 ]
 
 { #category : #tests }

@@ -165,8 +165,8 @@ AbstractPermutation >> printOn: aStream [
 ]
 
 { #category : #operations }
-AbstractPermutation >> raiseTo: anInteger [
-	^ self îî anInteger
+AbstractPermutation >> raisedTo: anInteger [
+	^ self composeWithMeTimes: anInteger
 ]
 
 { #category : #operations }

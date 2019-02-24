@@ -121,7 +121,7 @@ DirectProductGroup >> printOn: aStream [
 
 { #category : #morphisms }
 DirectProductGroup >> projection: i [
-	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: Character pi asText, i printText sub
+	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: 'Pi', i printString
 ]
 
 { #category : #accessing }
