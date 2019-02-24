@@ -79,6 +79,16 @@ AffineMap >> codomain [
 	^ linearMap codomain
 ]
 
+{ #category : #arithmetic }
+AffineMap >> compose: anAffineMap [ "î"
+ self domain >= anAffineMap codomain
+		ifFalse: [ ^ DomainError signal: 'domains don''t match' ].
+	^ self class
+		from: anAffineMap domain
+		to: self codomain
+		evaluating: [ :x | self value: (anAffineMap value: x) ]
+]
+
 { #category : #accessing }
 AffineMap >> domain [
 	^ linearMap domain

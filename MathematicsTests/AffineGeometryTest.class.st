@@ -69,9 +69,9 @@ AffineGeometryTest >> testAffineMapComposition [
 	f := ((X hom: Y) atRandomBits: 1000) + (Y atRandomBits: 100).
 	g := ((Y hom: Z) atRandomBits: 1000) + (Z atRandomBits: 100).
 	x := X atRandomBits: 1000.
-	"	self assert: ((X hom: Z) includes: g î f)."
-	self assert: (g î f value: x) equals: (g value: (f value: x)).
-	self should: [ f î g ] raise: DomainError
+	"	self assert: ((X hom: Z) includes: (g compose: f))."
+	self assert: ((g compose: f) value: x) equals: (g value: (f value: x)).
+	self should: [ f compose: g ] raise: DomainError
 ]
 
 { #category : #tests }
@@ -87,8 +87,8 @@ AffineGeometryTest >> testAffineMapInverse [
 	| A f |
 	A := QQ raisedTo: 3.
 	f := (A automorphisms atRandomBits: 1000) + (A atRandomBits: 100).
-	self assert: f î f inverse isIdentity.
-	self assert: f inverse î f isIdentity
+	self assert: (f compose: (f inverse)) isIdentity.
+	self assert: (f inverse compose: f) isIdentity
 ]
 
 { #category : #tests }
