@@ -170,11 +170,14 @@ FreeModule >> basis [
 ]
 
 { #category : #operations }
-FreeModule >> catProd: aModule [ "◊"
+FreeModule >> catProd: aModule [
+	"◊"
+
 	"Answer the categorical product, i.e. direct sum of the receiver and the argument."
-	^ (aModule isFreeModule and: [aModule scalars = self scalars])
-		ifTrue: [self ê aModule]
-		ifFalse: ['super ◊ aModule']
+
+	^ (aModule isFreeModule and: [ aModule scalars = self scalars ])
+		ifTrue: [ self directSum: aModule ]
+		ifFalse: [ 'super ◊ aModule' ]
 ]
 
 { #category : #basis }
@@ -263,6 +266,24 @@ FreeModule >> denominator [
 FreeModule >> dimension [
 	"Custom notation for vector spaces."
 	^ self rank
+]
+
+{ #category : #operations }
+FreeModule >> directSum: aModule [
+	"ê"
+
+	aModule isFreeModule
+		ifFalse: [ ^ super directSum: aModule ].
+	"Answer the direct sum of the receiver and the argument."
+	self scalars = aModule scalars
+		ifFalse: [ DomainError signal: 'scalars don''t match' ].
+	(self isEmbedded or: [ aModule isEmbedded ])
+		ifTrue:
+			[ ^ (self ambient compose: (aModule ambient)) span: (self matrix compose: aModule matrix) ].
+	^ FreeDirectSumModule
+		components:
+			{self.
+			aModule}
 ]
 
 { #category : #basis }

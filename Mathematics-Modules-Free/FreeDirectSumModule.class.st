@@ -73,7 +73,7 @@ FreeDirectSumModule >> e: anInteger [
 
 { #category : #morphisms }
 FreeDirectSumModule >> embedding: i [
-	^ ((self at: i) to: self evaluating: [:x| components withIndexCollect: [:each :k| k = i ifTrue: [x] ifFalse: [each zero]]]) name: 'i', i printText sub
+	^ ((self at: i) to: self evaluating: [:x| components withIndexCollect: [:each :k| k = i ifTrue: [x] ifFalse: [each zero]]]) name: 'i', i printString
 ]
 
 { #category : #testing }
@@ -107,7 +107,7 @@ FreeDirectSumModule >> printOn: aStream [
 
 { #category : #morphisms }
 FreeDirectSumModule >> projection: i [
-	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: Character pi asText, i printText sub
+	^ (self to: (self at: i) evaluating: [:x| x at: i]) name: 'Pi' , i printString
 ]
 
 { #category : #basis }

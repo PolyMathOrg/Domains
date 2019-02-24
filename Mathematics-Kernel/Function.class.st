@@ -202,6 +202,20 @@ Function >> codomain: aDomain [
 ]
 
 { #category : #operations }
+Function >> compose: aFunction [ "î"
+
+self domain >= aFunction codomain
+		ifFalse: [ DomainError signal: 'domains don''t match' ].
+	"Answer the composition of the receiver with the argument.
+	Given the argument f:X -> Y and the receiver g:Y -> Z, answer gîf:X -> Z.
+	This is, (gîf)(x) = g(f(x))."
+	^ self species
+		from: aFunction domain
+		to: self codomain
+		evaluating: [ :x | self value: (aFunction value: x) ]
+]
+
+{ #category : #operations }
 Function >> corestrictedTo: aCodomain [
 	^ self species
 		from: self domain

@@ -22,10 +22,10 @@ ModuleTest >> newFreeModuleOver: scalars [
 	M rank < 4 ifTrue:
 		[3 atRandom = 1 ifTrue: [^ M endomorphisms].
 		N := self newFreeModuleOver: scalars.
-		N rank < 5 ifFalse: [^ M ê N].
+		N rank < 5 ifFalse: [^ M directSum: N].
 		2 atRandom = 1 ifTrue: [^ M hom: N].
 		'2 atRandom = 1 ifTrue: [^ M í N]'.
-		^ M ê N].
+		^ M directSum: N].
 	3 atRandom = 1 ifTrue: [^ M dual].
 	^ M
 ]
@@ -182,7 +182,7 @@ ModuleTest >> testDirectSum [
 	| M N S |
 	M := self newFreeModule.
 	N := self newFreeModuleOver: M scalars.
-	S := M ê N.
+	S := M directSum: N.
 	self testFreeModule: S.
 	self testLinearMap: (S ambient projection: 2 atRandom).
 	self testLinearMap: (S ambient embedding: 2 atRandom)
@@ -270,14 +270,15 @@ ModuleTest >> testFreeModuleDiscriminant [
 
 	| M |
 	M := ZZ raisedTo: 3.
-	self assert: M discriminant = 1.
-	self assert: (M span: {(1 , 2 , 3)}) discriminant = 14.
+	self assert: M discriminant equals: 1.
+	self assert: (M span: {(1 , 2 , 3)}) discriminant equals: 14.
 	self
 		assert:
 			(M
 				span:
 					{(1 , 2 , 3).
-					(1 , 1 , 1)}) discriminant = 6
+					(1 , 1 , 1)}) discriminant
+		equals: 6
 ]
 
 { #category : #other }
