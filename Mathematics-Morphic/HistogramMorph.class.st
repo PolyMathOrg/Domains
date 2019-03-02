@@ -6,7 +6,7 @@ A good number of bins can be n^(1/2) or n^(1/3), where n is the total number of 
 "
 Class {
 	#name : #HistogramMorph,
-	#superclass : #Object,
+	#superclass : #Morph,
 	#instVars : [
 		'backgroundColor',
 		'textColor',

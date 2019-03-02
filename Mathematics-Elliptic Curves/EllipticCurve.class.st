@@ -73,14 +73,17 @@ EllipticCurve class >> secp256k1 [
 
 { #category : #converting }
 EllipticCurve >> % anInteger [
-	"Answer the reduction of the receiver modulo anInteger."
-	(self scalars isKindOf: RationalField) ifFalse: [^ DomainError signal: 'not over the rationals'].
+"Answer the reduction of the receiver modulo anInteger."
+
+	(self scalars isKindOf: RationalField)
+		ifFalse: [ ^ DomainError signal: 'not over the rationals' ].
 	^ self over: ZZ % anInteger
 ]
 
 { #category : #operations }
 EllipticCurve >> badPrimes [
 	"Answer the set of primes for which the receiver doesn't have 'good reduction'."
+	
 	^ self discriminant factors asSet
 ]
 
@@ -91,54 +94,93 @@ EllipticCurve >> discriminant [
 
 { #category : #private }
 EllipticCurve >> divisionPolynomial0: n at: x [
-	"Answer the n-th division polynomial, without the 2-torsion factor if n is even, evaluated at x."
-	n = -2 ifTrue: [^ (self divisionPolynomial: -1 at: x) squared].
-	'n = -1 ifTrue: [^ x^3 * 4 + (x^2 * equation b2) + (x * equation b4 * 2) + equation b6]'.
-	n <= 0 ifTrue: [DomainError signal].
-	(n = 1 or: [n = 2]) ifTrue: [^ x one].
-	'n = 3 ifTrue: [^ x^4 + (x^3 * equation b2) + (x^2 * equation b4 * 3) + (x * equation b6 * 3) + equation b8]'.
-		'n = 4 ifTrue: [^ (x^2 * 6 + (x * equation b2) + equation b4) * (self divisionPolynomial: 3 at: x) + (self divisionPolynomial: -2 at: x)]'.
-	^ 'n even
-			ifTrue:
-				[| m |
-				m := n - 2 // 2.
-				(self divisionPolynomial: m+1 at: x) *
-				((self divisionPolynomial: m at: x)^2 * (self divisionPolynomial: m+3 at: x) -
-				((self divisionPolynomial: m+2 at: x)^2 * (self divisionPolynomial: m-1 at: x)))]
-			ifFalse:
-				[| m |
-				m := n - 1 // 2.
-				m even
-					ifTrue: [(self divisionPolynomial: m at: x)^3 * (self divisionPolynomial: -2 at: x) * (self divisionPolynomial: m+2 at: x) - ((self divisionPolynomial: m+1 at: x)^3 * (self divisionPolynomial: m-1 at: x))]
-					ifFalse: [(self divisionPolynomial: m at: x)^3 * (self divisionPolynomial: m+2 at: x) - ((self divisionPolynomial: m+1 at: x)^3 * (self divisionPolynomial: m-1 at: x) * (self divisionPolynomial: -2 at: x))]]'
+"Answer the n-th division polynomial, without the 2-torsion factor if n is even, evaluated at x."
+
+	n = -2
+		ifTrue: [ ^ (self divisionPolynomial: -1 at: x) squared ].
+	n = -1
+		ifTrue: [ ^ (x raisedTo: 3) * 4 + ((x raisedTo: 2) * equation b2)
+				+ (x * equation b4 * 2) + equation b6 ].
+	n <= 0
+		ifTrue: [ DomainError signal ].
+	(n = 1 or: [ n = 2 ])
+		ifTrue: [ ^ x one ].
+	n = 3
+		ifTrue: [ ^ (x raisedTo: 4) + ((x raisedTo: 3) * equation b2)
+				+ ((x raisedTo: 2) * equation b4 * 3) + (x * equation b6 * 3)
+				+ equation b8 ].
+	n = 4
+		ifTrue: [ ^ ((x raisedTo: 2) * 6 + (x * equation b2) + equation b4)
+				* (self divisionPolynomial: 3 at: x)
+				+ (self divisionPolynomial: -2 at: x) ].
+	^ n even
+		ifTrue: [ | m |
+			m := (n - 2) // 2.
+			(self divisionPolynomial: m + 1 at: x)
+				*
+					(((self divisionPolynomial: m at: x) raisedTo: 2)
+						* (self divisionPolynomial: m + 3 at: x)
+						-
+							(((self divisionPolynomial: m + 2 at: x) raisedTo: 2)
+								* (self divisionPolynomial: m - 1 at: x))) ]
+		ifFalse: [ | m |
+			m := (n - 1) // 2.
+			m even
+				ifTrue: [ ((self divisionPolynomial: m at: x) raisedTo: 3)
+						* (self divisionPolynomial: -2 at: x)
+						* (self divisionPolynomial: m + 2 at: x)
+						-
+							(((self divisionPolynomial: m + 1 at: x) raisedTo: 3)
+								* (self divisionPolynomial: m - 1 at: x)) ]
+				ifFalse: [ ((self divisionPolynomial: m at: x) raisedTo: 3)
+						* (self divisionPolynomial: m + 2 at: x)
+						-
+							(((self divisionPolynomial: m + 1 at: x) raisedTo: 3)
+								* (self divisionPolynomial: m - 1 at: x)
+								* (self divisionPolynomial: -2 at: x)) ] ]
 ]
 
 { #category : #operations }
 EllipticCurve >> divisionPolynomial: n [
-	"Answer the n-th division polynomial."
+"Answer the n-th division polynomial."
+
 	^ self divisionPolynomial: n at: self scalars polynomials x
 ]
 
 { #category : #operations }
 EllipticCurve >> divisionPolynomial: n at: x [
-	"Answer the n-th division polynomial of the receiver evaluated at x."
+"Answer the n-th division polynomial of the receiver evaluated at x."
+
 	^ self notYetImplemented
 ]
 
 { #category : #operations }
 EllipticCurve >> divisionPolynomialNew: n [
 	"Answer the n-th division polynomial."
+
 	| R w x y |
 	R := ZZ polynomialsIn: #(x y).
-	n == 1 ifTrue: [^ R one].
+	n == 1
+		ifTrue: [ ^ R one ].
 	w := self equation.
 	x := R x.
 	y := R y.
-	'n == 2 ifTrue: [^ y*2 + (w a1 * x) + w a3].
-		n == 3 ifTrue: [^ x^4 * 3 + (x^3 * w b2) + (x^2 * 3 * w b4) + (x * 3 * w b6) + w b8].
-		n == 4 ifTrue: [^ (self divisionPolynomial: 2) * (x^6 * 2 + (x^5 * w b2) + (x^4 * w b4 * 5) + (x^3 * 10 * w b6) + (x^2 * 10 * w b8) + (x * (w b2 * w b8 - (w b4 * w b6))) + (w b4 * w b8 - w b6 squared))].'
-"	n odd ifTrue: [
-		m := n - 1 // 2.
+	n == 2
+		ifTrue: [ ^ y * 2 + (w a1 * x) + w a3 ].
+	n == 3
+		ifTrue: [ ^ (x raisedTo: 4) * 3 + ((x raisedTo: 3) * w b2)
+				+ ((x raisedTo: 2) * 3 * w b4) + (x * 3 * w b6) + w b8 ].
+	n == 4
+		ifTrue: [
+			^ (self divisionPolynomial: 2)
+				*
+					((x raisedTo: 6) * 2 + ((x raisedTo: 5) * w b2)
+						+ ((x raisedTo: 4) * w b4 * 5) + ((x raisedTo: 3) * 10 * w b6)
+						+ ((x raisedTo: 2) * 10 * w b8)
+						+ (x * (w b2 * w b8 - (w b4 * w b6)))
+						+ (w b4 * w b8 - w b6 squared)) ]			
+		"	n odd ifTrue: [
+		m _ n - 1 // 2.
 		^ (self divisionPolynomial: m+2) * ((self divisionPolynomial: m) ^ 3) - (self divisionPolynomial"
 ]
 
@@ -146,8 +188,11 @@ EllipticCurve >> divisionPolynomialNew: n [
 EllipticCurve >> divisionPolynomials [
 	"Answer the sequence of division polynomials.
 	Reference: Silverman, 'The Arithmetic of Elliptic Curves', Exercise 3.7, pag. 105."
+
 	| R x y phi1 phi2 phi3 phi4 a1 a3 b2 b4 b6 b8 |
-	R := self scalars polynomialsIn: #(x y). x := R x. y := R y.
+	R := self scalars polynomialsIn: #(x y).
+	x := R x.
+	y := R y.
 	a1 := self equation a1.
 	a3 := self equation a3.
 	b2 := self equation b2.
@@ -155,18 +200,31 @@ EllipticCurve >> divisionPolynomials [
 	b6 := self equation b6.
 	b8 := self equation b8.
 	phi1 := R one.
-	phi2 := y*2 + (a1 * x) + a3.
-	'phi3 := x^4 * 3 + (x^3 * b2) + (x^2 * 3 * b4) + (x * 3 * b6) + b8.
-		phi4 := phi2 * (x^6 * 2 + (x^5 * b2) + (x^4 * b4 * 5) + (x^3 * 10 * b6) + (x^2 * 10 * b8) + (x * (b2 * b8 - (b4 * b6))) + (b4 * b8 - b6 squared))'.
-	^ 'Sequence to: R initialValues: {phi1. phi2. phi3. phi4} recurrence: [:phi :n|
+	phi2 := y * 2 + (a1 * x) + a3.
+	phi3 := (x raisedTo: 4) * 3 + ((x raisedTo: 3) * b2)
+		+ ((x raisedTo: 2) * 3 * b4) + (x * 3 * b6) + b8.
+	phi4 := phi2
+		*
+			((x raisedTo: 6) * 2 + ((x raisedTo: 5) * b2)
+				+ ((x raisedTo: 4) * b4 * 5) + ((x raisedTo: 3) * 10 * b6)
+				+ ((x raisedTo: 2) * 10 * b8) + (x * (b2 * b8 - (b4 * b6)))
+				+ (b4 * b8 - b6 squared)).
+	^ Sequence
+		to: R
+		initialValues:
+			{phi1.
+			phi2.
+			phi3.
+			phi4}
+		recurrence: [ :phi :n | 
 			| m |
 			n odd
-				ifTrue:
-					[m := n - 1 // 2.
-					(phi at: m+2) * ((phi at: m) ^ 3) - ((phi at: m - 1) * ((phi at: m + 1) ^ 3))]
-				ifFalse:
-					[m := n // 2.
-					(phi at: m-1) squared * (phi at: m) * (phi at: m+2) - ((phi at: m-2) * (phi at: m) * (phi at: m+1) squared // phi2)]]'
+				ifTrue: [ m := (n - 1) // 2.
+					(phi at: m + 2) * ((phi at: m) raisedTo: 3)
+						- ((phi at: m - 1) * ((phi at: m + 1) raisedTo: 3)) ]
+				ifFalse: [ m := n // 2.
+					(phi at: m - 1) squared * (phi at: m) * (phi at: m + 2)
+						- ((phi at: m - 2) * (phi at: m) * (phi at: m + 1) squared // phi2) ] ]
 ]
 
 { #category : #accessing }
@@ -176,45 +234,62 @@ EllipticCurve >> equation [
 
 { #category : #'accessing-private' }
 EllipticCurve >> equation: aWeierstrassEquation [
-	equation := aWeierstrassEquation.
-	self coordinateRing: aWeierstrassEquation homogeneousPolynomial asIdeal quotientRing
+equation := aWeierstrassEquation.
+	self
+		coordinateRing: aWeierstrassEquation homogeneousPolynomial asIdeal quotientRing
 ]
 
 { #category : #accessing }
 EllipticCurve >> genus [
-	"Answer the geometric genus of the receiver."
+"Answer the geometric genus of the receiver."
+
 	^ 1
 ]
 
 { #category : #testing }
 EllipticCurve >> isSmooth [
-	^ self discriminant isZero not
+^ self discriminant isZero not
 ]
 
 { #category : #operations }
 EllipticCurve >> multiplicationBy: m [
-	| F f omega phi psi x |
+| F f omega phi psi x |
 	psi := self divisionPolynomials.
 	f := psi at: m.
 	x := psi codomain x.
-"	y := psi codomain y."
+	"	y := psi codomain y."
 	F := self ambient functionField.
-	phi := x * f squared - ((psi at: m+1) * (psi at: m-1)).
-	omega := (psi at: m+2) * (psi at: m-1) squared - ((psi at: m-2) * (psi at: m+1) squared).
-	f := f value: {F x. F y}.
-	omega := (omega value: {F x. F y}) / (F y * 4).
-	phi := phi value: {F x. F y}.
-	^ "self from: self to: self representatives:" {phi / f squared. omega / (f raiseTo: 3). F z}
+	phi := x * f squared - ((psi at: m + 1) * (psi at: m - 1)).
+	omega := (psi at: m + 2) * (psi at: m - 1) squared
+		- ((psi at: m - 2) * (psi at: m + 1) squared).
+	f := f
+		value:
+			{F x.
+			F y}.
+	omega := (omega
+		value:
+			{F x.
+			F y}) / (F y * 4).
+	phi := phi
+		value:
+			{F x.
+			F y}.
+	^ {(phi / f squared).
+	(omega / (f raiseTo: 3)).
+	F z}	"self from: self to: self representatives:"
 ]
 
 { #category : #converting }
 EllipticCurve >> over: aRing [
-	^ self class equation: (self equation over: aRing)
+^ self class equation: (self equation over: aRing)
 ]
 
 { #category : #points }
 EllipticCurve >> pointAt: aTuple [
-	aTuple size = 2 ifTrue: [^ EllipticCurvePoint on: self coordinates: (aTuple copyWith: aTuple scalars one)].
+aTuple size = 2
+		ifTrue: [ ^ EllipticCurvePoint
+				on: self
+				coordinates: (aTuple copyWith: aTuple scalars one) ].
 	^ EllipticCurvePoint on: self coordinates: aTuple
 ]
 
@@ -228,15 +303,21 @@ EllipticCurve >> pointAtRandom: aRandom [
 
 { #category : #points }
 EllipticCurve >> pointsAtX: x [
-	"Answer the points with x coordinate as given by the argument."
+"Answer the points with x coordinate as given by the argument."
+
 	| P |
 	P := self scalars polynomials.
-	^ (self polynomial value: {P ! x. P x. P one}) roots collect: [:y| self pointAt: (x,y)]
+	^ (self polynomial
+		value:
+			{(P ! x).
+			P x.
+			P one}) roots collect: [ :y | self pointAt: x , y ]
 ]
 
 { #category : #points }
 EllipticCurve >> pointsOver: aField [
-	"Answer the group of K-rational points on the receiver."
+"Answer the group of K-rational points on the receiver."
+
 	^ EllipticCurveGroup on: self over: aField
 ]
 
