@@ -1,6 +1,6 @@
 Class {
 	#name : #ImplicitFunctionPlotMorph,
-	#superclass : #Object,
+	#superclass : #Morph,
 	#instVars : [
 		'function',
 		'image',
@@ -24,7 +24,7 @@ ImplicitFunctionPlotMorph class >> example [
 ImplicitFunctionPlotMorph >> box: aRectangle [
 	box := aRectangle.
 	image := nil.
-	self redrawNeeded
+	"self redrawNeeded"
 ]
 
 { #category : #'as yet unclassified' }
@@ -59,15 +59,15 @@ ImplicitFunctionPlotMorph >> drawOn: aCanvas [
 ImplicitFunctionPlotMorph >> function: aFunction [
 	function := aFunction.
 	image := nil.
-	self redrawNeeded
+"	self redrawNeeded"
 ]
 
 { #category : #'as yet unclassified' }
 ImplicitFunctionPlotMorph >> initialize [
 	super initialize.
-	extent := 150@150.
+	self extent:150@150.
 	color := Color lightGray.
-	box := -1@-1 extent: 2@2
+	box := -1@ -1 extent: 2@2
 ]
 
 { #category : #'as yet unclassified' }

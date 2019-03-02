@@ -242,5 +242,5 @@ EllipticCurve >> pointsOver: aField [
 
 { #category : #printing }
 EllipticCurve >> printOn: aStream [
-	aStream "nextPutAll: 'E : ';" print: self equation
+   aStream "nextPutAll: 'E : ';" print: self equation
 ]

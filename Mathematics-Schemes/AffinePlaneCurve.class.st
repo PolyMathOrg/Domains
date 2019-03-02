@@ -20,7 +20,7 @@ AffinePlaneCurve class >> iminus [
 
 { #category : #morphic }
 AffinePlaneCurve >> plot [
-	^ self plot: (-5@-5 extent: 10@10)
+	^ self plot: (-5 @ -5 extent: 10@10)
 ]
 
 { #category : #morphic }
