@@ -21,47 +21,54 @@ EllipticCurve class >> coefficients: aTuple [
 { #category : #examples }
 EllipticCurve class >> cremona11a1 [
 	"Elliptic curve 11a1, first curve in the Cremona database."
-	^ EllipticCurve coefficients: (0,-1,1,-10,-20)
+
+	^ EllipticCurve coefficients: 0 , -1 , 1 , -10 , -20
 ]
 
 { #category : #examples }
 EllipticCurve class >> cremona11a2 [
 	"Elliptic curve 11a2 from the Cremona database."
-	^ EllipticCurve coefficients: (0,-1,1,-7820,-263580)
+
+	^ EllipticCurve coefficients: 0 , -1 , 1 , -7820 , -263580
 ]
 
 { #category : #examples }
 EllipticCurve class >> cremona11a3 [
 	"Elliptic curve 11a3 from the Cremona database."
-	^ EllipticCurve coefficients: (0,-1,1,0,0)
+
+	^ EllipticCurve coefficients: 0 , -1 , 1 , 0 , 0
 ]
 
 { #category : #examples }
 EllipticCurve class >> cremona37a [
 	"Elliptic curve 37a from the Cremona database.
 	This is the elliptic curve of rank 1 with smallest conductor."
-	^ EllipticCurve coefficients: (0,0,1,-1,0)
+
+	^ EllipticCurve coefficients: 0 , 0 , 1 , -1 , 0
 ]
 
 { #category : #examples }
 EllipticCurve class >> cremona389a1 [
 	"Elliptic curve 389a1 from the Cremona database."
 	"http://www.lmfdb.org/EllipticCurve/Q/389/a/1"
-	^ EllipticCurve coefficients: (0, 1 , 1 , -2, 0)
+
+	^ EllipticCurve coefficients: 0 , 1 , 1 , -2 , 0
 ]
 
 { #category : #'instance creation' }
 EllipticCurve class >> equation: aWeierstrassEquation [
-	^ self new equation: aWeierstrassEquation
+	^ self new equation: aWeierstrassEquation 
 ]
 
 { #category : #examples }
 EllipticCurve class >> secp256k1 [
 	"Answer the SECP256K1 elliptic curve, used by Bitcoin.
 	The group of this curve has order 115792089237316195423570985008687907852837564279074904382605163141518161494337."
+
 	| F |
-	F := PrimeField new: 16rFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F.
-	^ self coefficients: ((0,0,0,0,7) over: F)
+	F := PrimeField
+		new: 16rFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F.
+	^ self coefficients: (0 , 0 , 0 , 0 , 7 over: F)
 ]
 
 { #category : #converting }
