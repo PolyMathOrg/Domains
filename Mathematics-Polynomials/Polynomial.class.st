@@ -746,23 +746,36 @@ Polynomial >> printCoefficient: coefficient on: aStream [
 { #category : #printing }
 Polynomial >> printOn: aStream [
 	| monomials leadingMonomial c |
-	self isBroken ifTrue: [aStream nextPutAll: '(broken) '].
+	self isBroken
+		ifTrue: [ aStream nextPutAll: '(broken) ' ].
 	(self scalars isKindOf: ModularIntegerRing)
-		ifTrue: [self lift printOn: aStream. ^ self].
-	self isConstant ifTrue: [aStream print: self leadingCoefficient. ^ self].
+		ifTrue: [ self lift printOn: aStream.
+			^ self ].
+	self isConstant
+		ifTrue: [ aStream print: self leadingCoefficient.
+			^ self ].
 	monomials := self monomials asSortedCollection reversed.
 	c := self at: (leadingMonomial := monomials first).
-	(c printString first = $- or: [(c isKindOf: Number) and: [c negative]])
-		ifTrue: [c := c negated. aStream nextPut: $-].
-	(c ~= parent scalars one or: [leadingMonomial degree = 0]) ifTrue: [self printCoefficient: c on: aStream].
-	leadingMonomial degree > 0 ifTrue: [aStream print: leadingMonomial].
-	monomials allButFirst do: [:m|
-		c := self at: m.
-		(c printString first = $- or: [(c isKindOf: Number) and: [c negative]])
-			ifTrue: [aStream nextPutAll: ' - '. c := c negated]
-			ifFalse: [aStream nextPutAll: ' + '].
-		(c ~= parent scalars one or: [m degree = 0]) ifTrue: [self printCoefficient: c on: aStream].
-		m degree > 0 ifTrue: [aStream print: m]]
+	(c printString first = $-
+		or: [ (c isKindOf: Number) and: [ c negative ] ])
+		ifTrue: [ c := c negated.
+			aStream nextPut: $- ].
+	(c ~= parent scalars one or: [ leadingMonomial degree = 0 ])
+		ifTrue: [ self printCoefficient: c on: aStream ].
+	leadingMonomial degree > 0
+		ifTrue: [ aStream print: leadingMonomial ].
+	monomials allButFirst
+		do: [ :m | 
+			c := self at: m.
+			(c printString first = $-
+				or: [ (c isKindOf: Number) and: [ c negative ] ])
+				ifTrue: [ aStream nextPutAll: ' - '.
+					c := c negated ]
+				ifFalse: [ aStream nextPutAll: ' + ' ].
+			(c ~= parent scalars one or: [ m degree = 0 ])
+				ifTrue: [ self printCoefficient: c on: aStream ].
+			m degree > 0
+				ifTrue: [ aStream print: m ] ]
 ]
 
 { #category : #'remainder sequences' }

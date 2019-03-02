@@ -149,10 +149,10 @@ PolynomialTest >> testDivisionZ65535 [
 PolynomialTest >> testDomainError [
 	| f g |
 	f := ZZ polynomials atRandomBits: 10.
-	self should: [f / 2] raise: DomainError.
-	g := QQ polynomials atRandomBits: 100 maxDegree: 5. "will have denominators"
-	self should: [f + g] raise: DomainError.
-	self should: [f * g] raise: DomainError
+	self should: [ f / 2 ] raise: DomainError.
+	g := QQ polynomials atRandomBits: 100 maxDegree: 5.	"will have denominators"
+	self should: [ f + g ] raise: DomainError.
+	self should: [ f * g ] raise: DomainError
 ]
 
 { #category : #tests }
@@ -589,11 +589,13 @@ PolynomialTest >> testInterpolation2 [
 { #category : #tests }
 PolynomialTest >> testIsIrreducible [
 	"The polynomial x^4 + 1 is irreducible in Z[x] and Q[x], and it is reducible Z/p[x] for all prime numbers p."
+
 	| p |
-	'self assert: (ZZ polynomials ! [:x| x^4 + 1] :: isIrreducible).
-		self assert: (QQ polynomials ! [:x| x^4 + 1] :: isIrreducible)'.
+	self
+		assert: (ZZ polynomials ! [ :x | (x raisedTo: 4) + 1 ]) isIrreducible.
+	self assert: ((QQ polynomials ! [:x| (x raisedTo: 4) + 1] ) isIrreducible).
 	p := 1000 atRandom nextPrime.
-	'self deny: (ZZ/p :: polynomials ! [:x| x^4 + 1] :: isIrreducible)'
+	'self deny: (ZZ/p :: polynomials ! [:x| (x raisedTo: 4) + 1] :: isIrreducible)'
 ]
 
 { #category : #tests }

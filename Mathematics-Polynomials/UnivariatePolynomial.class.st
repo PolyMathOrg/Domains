@@ -823,12 +823,15 @@ UnivariatePolynomial >> lift [
 UnivariatePolynomial >> monomialsApply: aBlock [
 	| x monomials n newCoefficients |
 	x := self parent indeterminate.
-	monomials := (1 to: coefficients size) collect: [:i|
-		(aBlock value: (self parent monomials x: x to: i-1)) -> (coefficients at: i)].
-	n := monomials max: [:each| each key degree].
-	'newCoefficients := Array new: n+1 :: atAllPut: self scalars zero.'
-	monomials do: [:each| newCoefficients at: each key degree + 1 add: each value].
-	^ self parent coefficients: newCoefficients 
+	monomials := (1 to: coefficients size)
+		collect: [ :i | 
+			(aBlock value: (self parent monomials x: x to: i - 1))
+				-> (coefficients at: i) ].
+	n := monomials max: [ :each | each key degree ].
+	newCoefficients := (Array new: n+1) atAllPut: self scalars zero.
+		monomials
+		do: [ :each | newCoefficients at: each key degree + 1 add: each value ].
+	^ self parent coefficients: newCoefficients
 ]
 
 { #category : #enumerating }
