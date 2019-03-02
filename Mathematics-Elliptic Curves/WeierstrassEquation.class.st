@@ -116,13 +116,16 @@ WeierstrassEquation >> polynomial [
 { #category : #printing }
 WeierstrassEquation >> printOn: aStream [
 	| P x y |
-	P := self scalars polynomialsIn: #(x y) ordering: (MonomialOrdering glex: #(2 1)).
+	P := self scalars
+		polynomialsIn: #(x y)
+		ordering: (MonomialOrdering glex: #(2 1)).
 	x := P x.
 	y := P y.
-	'aStream print: y^2 + (x*y * self a1) + (y * self a3).
+	aStream print: (y raisedTo: 2) + (x*y * self a1) + (y * self a3).
 		aStream
-			nextPutAll: ' = ';
-			print: (x^3) + (x^2 * self a2) + (x * self a4) + self a6'
+			nextPutAll: '
+		= ';
+			print: (x raisedTo: 3) + ((x raisedTo: 2) * self a2) + (x * self a4) + self a6
 ]
 
 { #category : #accessing }
