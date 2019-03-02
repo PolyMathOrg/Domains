@@ -10,12 +10,13 @@ Class {
 { #category : #examples }
 AffinePlaneCurve class >> descartesFolium [
 	"This is the 'Descartes folium'."
-	^ 'AffinePlaneCurve polynomial: (QQ polynomialsIn: #(x y)) ! [:x :y| x^3 + (y^3) - (3*x*y)]'
+
+	^ AffinePlaneCurve polynomial: (QQ polynomialsIn: #(x y)) ! [:x :y| (x raisedTo: 3) + (y raisedTo: 3) - (3*x*y)]
 ]
 
 { #category : #examples }
 AffinePlaneCurve class >> iminus [
-	^ 'AffinePlaneCurve polynomial: (QQ polynomialsIn: #(x y)) ! [:x :y| x^3 + (y^3) - x - (2*y) - 1]'
+	^ AffinePlaneCurve polynomial: (QQ polynomialsIn: #(x y)) ! [:x :y| (x raisedTo:3) + (y raisedTo: 3) - x - (2*y) - 1]
 ]
 
 { #category : #morphic }

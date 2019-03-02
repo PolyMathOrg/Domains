@@ -17,7 +17,8 @@ AffineScheme class >> coordinateRing: aRing [
 { #category : #examples }
 AffineScheme class >> example1 [
 	"Spec(Z), the prime spectrum of the rational integers.
-	This is the initial object in the category of schemes."	
+	This is the initial object in the category of schemes."
+
 	^ ZZ spec
 ]
 
@@ -26,7 +27,8 @@ AffineScheme class >> example2 [
 	"Spec(Z/6Z), the prime spectrum of the residue class ring
 	of integers modulo 6, as a set it is the set of prime
 	ideals of Z/6Z:"
-	^ (ZZ/6) spec asSet
+
+	^ (ZZ / 6) spec asSet
 ]
 
 { #category : #comparing }

@@ -13,19 +13,22 @@ Class {
 
 { #category : #examples }
 AffineSpace class >> example1 [
-	"The rational affine plane:"
+"The rational affine plane:"
+
 	^ AffineSpace new: 2 over: QQ
 ]
 
 { #category : #examples }
 AffineSpace class >> example2 [
-	"Or assigning names to the indeterminates of the coordinate ring:"
+"Or assigning names to the indeterminates of the coordinate ring:"
+
 	^ AffineSpace new: #(x y) over: QQ
 ]
 
 { #category : #examples }
 AffineSpace class >> example3 [
-	"And equivalently:"
+"And equivalently:"
+
 	^ (QQ polynomialsIn: #(x y)) spec
 ]
 

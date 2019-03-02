@@ -15,7 +15,7 @@ ProductAffineSpace class >> components: anArray [
 
 { #category : #examples }
 ProductAffineSpace class >> example1 [
-	^ ProductAffineSpace new: #((x y z) (a b)) over: QQ
+	^ ProductAffineSpace new: #(#(x y z) #(a b)) over: QQ
 ]
 
 { #category : #examples }
@@ -30,7 +30,8 @@ ProductAffineSpace class >> example3 [
 
 { #category : #'instance creation' }
 ProductAffineSpace class >> new: anArray over: aRing [
-	^ self components: (anArray collect: [:each| AffineSpace new: each over: aRing])
+	^ self
+		components: (anArray collect: [ :each | AffineSpace new: each over: aRing ])
 ]
 
 { #category : #accessing }
