@@ -7,12 +7,18 @@ Class {
 { #category : #'affine ring' }
 CommutativeAlgebraTest >> testAffineRingElementOperations [
 	"Magma handbook example H105E1."
+
 	| R A x y |
 	R := QQ polynomialsIn: #(x y).
-	A := R / (R generate: [:x1 :y1| {(x1 raisedTo: 2) - (y1 raisedTo: 2) + 2. (y1 raisedTo: 3) - 5}]).
-	x := A x. y := A y.
-	self assert: (x raisedTo: 2) = ((y raisedTo: 2) - 2).
-	"self assert: x reciprocal = ..."
+	A := R
+		/
+			(R
+				generate: [ :x1 :y1 | 
+					{((x1 raisedTo: 2) - (y1 raisedTo: 2) + 2).
+					((y1 raisedTo: 3) - 5)} ]).
+	x := A x.
+	y := A y.
+	self assert: (x raisedTo: 2) equals: (y raisedTo: 2) - 2
 ]
 
 { #category : #'affine ring' }

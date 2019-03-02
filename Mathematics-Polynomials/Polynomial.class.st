@@ -734,13 +734,20 @@ Polynomial >> primitive [
 { #category : #printing }
 Polynomial >> printCoefficient: coefficient on: aStream [
 	| c |
-	((c := coefficient) printString first = $- "or: [coefficient isNumber and: [coefficient negative]]")
-		ifTrue: [aStream nextPut: $-. c := c negated].
-	((c isKindOf: Polynomial) and: [c isMonomial])
-		ifTrue: [aStream print: c. ^ self].
-	(c printString allSatisfy: [:each| each isAlphaNumeric or: ['{}()/' includes: each]])
-		ifTrue: [aStream print: c. ^ self].
-	aStream nextPut: $(; print: c; nextPut: $)
+	(c := coefficient) printString first = $-
+		ifTrue: [ aStream nextPut: $-.
+			c := c negated ].	"or: [coefficient isNumber and: [coefficient negative]]"
+	((c isKindOf: Polynomial) and: [ c isMonomial ])
+		ifTrue: [ aStream print: c.
+			^ self ].
+	(c printString
+		allSatisfy: [ :each | each isAlphaNumeric or: [ '{}()/' includes: each ] ])
+		ifTrue: [ aStream print: c.
+			^ self ].
+	aStream
+		nextPut: $(;
+		print: c;
+		nextPut: $)
 ]
 
 { #category : #printing }
@@ -781,18 +788,19 @@ Polynomial >> printOn: aStream [
 { #category : #'remainder sequences' }
 Polynomial >> prs: aPolynomial [
 	"Answer the Polynomial Remainder Sequence of the receiver with the argument."
+
 	| answer f0 f1 r |
-	self parent scalars isField ifFalse: [^ DomainError signal: 'scalars are not a field'].
+	self parent scalars isField
+		ifFalse: [ ^ DomainError signal: 'scalars are not a field' ].
 	answer := OrderedCollection new.
 	f1 := self.
 	answer add: f1.
 	r := aPolynomial.
-	[r isZero]
-		whileFalse:
-			[answer add: r.
+	[ r isZero ]
+		whileFalse: [ answer add: r.
 			f0 := f1.
 			f1 := r.
-			r := f0 \\ f1].
+			r := f0 \\ f1 ].
 	^ answer
 ]
 
@@ -812,14 +820,20 @@ Polynomial >> pseudoDivisionBy: aPolynomial in: anIndeterminate [
 { #category : #arithmetic }
 Polynomial >> pseudoQuo: aPolynomial [
 	"Answer the quotient of the pseudo-division of the receiver by the argument."
-	self isUnivariate ifFalse: [^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate) quotient asMultivariate].
+
+	self isUnivariate
+		ifFalse: [ ^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate)
+				quotient asMultivariate ].
 	^ (self pseudoDivisionBy: aPolynomial) quotient
 ]
 
 { #category : #arithmetic }
 Polynomial >> pseudoRem2: aPolynomial [
 	"Answer the remainder of the pseudo-division of the receiver by the argument."
-	self isUnivariate ifFalse: [^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate) remainder asMultivariate].
+
+	self isUnivariate
+		ifFalse: [ ^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate)
+				remainder asMultivariate ].
 	^ (self pseudoDivisionBy: aPolynomial) remainder
 ]
 
@@ -860,7 +874,10 @@ Polynomial >> pseudoRem4: aPolynomial [
 { #category : #arithmetic }
 Polynomial >> pseudoRem: aPolynomial [
 	"Answer the remainder of the pseudo-division of the receiver by the argument."
-	self isUnivariate ifFalse: [^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate) remainder asMultivariate].
+
+	self isUnivariate
+		ifFalse: [ ^ (self pseudoDivisionBy: aPolynomial in: self leadingIndeterminate)
+				remainder asMultivariate ].
 	^ (self pseudoDivisionBy: aPolynomial) remainder
 ]
 
@@ -907,7 +924,9 @@ Polynomial >> raisedTo: anInteger modulo: aPolynomial [
 { #category : #arithmetic }
 Polynomial >> reciprocal [
 	"Answer the reciprocal of the receiver, possibly as a rational function, assuming the scalars are a field."
-	self isConstant ifTrue: [^ self parent constant: self independentCoefficient reciprocal].
+
+	self isConstant
+		ifTrue: [ ^ self parent constant: self independentCoefficient reciprocal ].
 	^ self one / self
 ]
 

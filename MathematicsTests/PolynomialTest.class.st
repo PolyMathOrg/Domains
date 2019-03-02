@@ -15,8 +15,8 @@ PolynomialTest >> testAllMonomialsOfDegree [
 { #category : #tests }
 PolynomialTest >> testArithmeticOver: R [
 	| x f g |
-'	x := R polynomials x.
-	f := x^2 + (x*2) - 1.
+	x := R polynomials x.
+	'f := x^2 + (x*2) - 1.
 	g := x^2 - (x*2) + 1.
 	self assert: f+g = (x^2 * 2).
 	self assert: f-g = (x*4 - 2).
@@ -24,7 +24,6 @@ PolynomialTest >> testArithmeticOver: R [
 	self assert: f*g // g = f.
 	self assert: (f*g \\ g) isZero.
 	self assert: (f*g + (x - 1) \\ g) = (x - 1)'
-
 ]
 
 { #category : #tests }
@@ -570,20 +569,28 @@ PolynomialTest >> testIntegerFactorization [
 PolynomialTest >> testInterpolation [
 	| Qx f |
 	Qx := QQ polynomials.
-	f := Qx interpolate: {1 -> 2. 2 -> 3. 4 -> 5}.
-	self assert: (f value: 1) = 2.
-	self assert: (f value: 2) = 3.
-	self assert: (f value: 4) = 5
+	f := Qx
+		interpolate:
+			{(1 -> 2).
+			(2 -> 3).
+			(4 -> 5)}.
+	self assert: (f value: 1) equals: 2.
+	self assert: (f value: 2) equals: 3.
+	self assert: (f value: 4) equals: 5
 ]
 
 { #category : #tests }
 PolynomialTest >> testInterpolation2 [
 	| Qx f |
 	Qx := QQ polynomials.
-	f := Qx interpolate: {1 -> 2. 2 -> 4. 3 -> 9}.
-	self assert: (f value: 1) = 2.
-	self assert: (f value: 2) = 4.
-	self assert: (f value: 3) = 9
+	f := Qx
+		interpolate:
+			{(1 -> 2).
+			(2 -> 4).
+			(3 -> 9)}.
+	self assert: (f value: 1) equals: 2.
+	self assert: (f value: 2) equals: 4.
+	self assert: (f value: 3) equals: 9
 ]
 
 { #category : #tests }
@@ -1044,7 +1051,7 @@ PolynomialTest >> testUnivariateMultivariateConversion [
 	y := Qx y.
 	f := (x raisedTo: 2) * y.
 	self assert: f asUnivariate asMultivariate equals: f.
-	'self assert: (f asUnivariateIn: 2 :: asMultivariate) = f'
+	self assert: (f asUnivariateIn: 2) asMultivariate equals: f
 ]
 
 { #category : #tests }

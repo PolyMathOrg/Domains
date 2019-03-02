@@ -286,21 +286,30 @@ Monomial >> printExponent: anInteger on: aStream [
 { #category : #printing }
 Monomial >> printIndeterminate: indeterminate on: aStream [
 	indeterminate isInteger
-		ifFalse: [aStream nextPutAll: indeterminate printString. ^ self].
+		ifFalse: [ aStream nextPutAll: indeterminate .
+			^ self ].
 	aStream isText
-		ifTrue: [aStream nextPut: $x; nextPutAll: indeterminate printString]
-		ifFalse:[aStream nextPutAll: '{x', indeterminate printString, '}']
+		ifTrue: [ aStream
+				nextPut: $x;
+				nextPutAll: indeterminate printString ]
+		ifFalse: [ aStream
+				nextPutAll: '{x' , indeterminate printString;
+				nextPutAll: '}' ]
 ]
 
 { #category : #printing }
 Monomial >> printOn: aStream [
-	self degree = 0 ifTrue: [aStream print: 1. ^ self].
-	(self ordering indeterminates select: [:i| (self at: i) ~= 0])
-		do: [:i|
+	self degree = 0
+		ifTrue: [ aStream print: 1.
+			^ self ].
+	(self ordering indeterminates select: [ :i | (self at: i) ~= 0 ])
+		do: [ :i | 
 			| x |
-			x := self parent names ifNil: [i] ifNotNil: [:names| names at: i ifAbsent: [i]].
+			x := self parent names
+				ifNil: [ i ]
+				ifNotNil: [ :names | names at: i ifAbsent: [ i ] ].
 			self printIndeterminate: x on: aStream.
-			self printExponent: (self at: i) on: aStream]
+			self printExponent: (self at: i) on: aStream ]
 ]
 
 { #category : #operations }
