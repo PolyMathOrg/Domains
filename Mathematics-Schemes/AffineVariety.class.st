@@ -26,17 +26,19 @@ AffineVariety class >> circle [
 AffineVariety class >> clebschCubic [
 	"The Clebsch cubic as affine scheme in Q^3.
 	This is the unique cubic surface that has Sym(5) as symmetry group."
+
 	| A x y z f |
 	A := AffineSpace new: #(x y z) over: QQ.
 	x := A coordinateRing x.
 	y := A coordinateRing y.
 	z := A coordinateRing z.
-	'f := x^3 + (y^3) + (z^3) * 81
-				+ (x^2*y + (x^2*z) + (x*(y^2)) + (x*(z^2)) + (y^2*z) + (y*(z^2)) * -189)
-				+ (x*y*z * 54)
-				+ (x*y + (x*z) + (y*z) * 126)
-				+ (x^2 + (y^2) + (z^2) * -9)
-				+ 1'.
+	f := ((x raisedTo: 3) + (y raisedTo: 3) + (z raisedTo: 3)) * 81
+		+
+			(((x raisedTo: 2) * y + ((x raisedTo: 2) * z) + (x * (y raisedTo: 2))
+				+ (x * (z raisedTo: 2)) + ((y raisedTo: 2) * z)
+				+ (y * (z raisedTo: 2))) * -189) + (x * y * z * 54)
+		+ ((x * y + (x * z) + (y * z)) * 126)
+		+ (((x raisedTo: 2) + (y raisedTo: 2) + (z raisedTo: 2)) * -9) + 1.
 	^ A subscheme: f
 ]
 

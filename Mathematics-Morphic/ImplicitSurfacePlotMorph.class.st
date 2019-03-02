@@ -1,6 +1,6 @@
 Class {
 	#name : #ImplicitSurfacePlotMorph,
-	#superclass : #Object,
+	#superclass : #Morph,
 	#instVars : [
 		'polynomial',
 		'rotation',
