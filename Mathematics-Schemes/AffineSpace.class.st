@@ -81,7 +81,10 @@ AffineSpace >> pointsOver: aRing do: aBlock [
 
 { #category : #printing }
 AffineSpace >> printOn: aStream [
-	aStream print: self scalars; nextPutAll: self rank printString super
+	aStream
+		print: self scalars;
+		nextPut:$^;
+		print: self rank
 ]
 
 { #category : #morphisms }

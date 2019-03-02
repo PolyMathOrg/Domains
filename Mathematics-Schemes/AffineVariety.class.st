@@ -44,16 +44,20 @@ AffineVariety class >> clebschCubic [
 
 { #category : #'instance creation' }
 AffineVariety class >> coordinateRing: anAffineRing [
-	self == AffineVariety ifFalse: [^ super coordinateRing: anAffineRing].
-	(anAffineRing relators size = 1 and: [anAffineRing relators anyOne degree > 0]) ifTrue:
-		[anAffineRing rank = 2 ifTrue: [^ AffinePlaneCurve coordinateRing: anAffineRing].
-		^ AffineHypersurface coordinateRing: anAffineRing].
+	self == AffineVariety
+		ifFalse: [ ^ super coordinateRing: anAffineRing ].
+	(anAffineRing relators size = 1
+		and: [ anAffineRing relators anyOne degree > 0 ])
+		ifTrue: [ anAffineRing rank = 2
+				ifTrue: [ ^ AffinePlaneCurve coordinateRing: anAffineRing ].
+			^ AffineHypersurface coordinateRing: anAffineRing ].
 	^ super coordinateRing: anAffineRing
 ]
 
 { #category : #'instance creation' }
 AffineVariety class >> newFrom: anObject [
-	(anObject isKindOf: AffineVariety) ifTrue: [^ self coordinateRing: anObject coordinateRing].
+	(anObject isKindOf: AffineVariety)
+		ifTrue: [ ^ self coordinateRing: anObject coordinateRing ].
 	^ super newFrom: anObject
 ]
 
@@ -77,12 +81,13 @@ AffineVariety class >> romanSurface [
 { #category : #examples }
 AffineVariety class >> twistedCubic [
 	"This is the twisted cubic affine variety, parameterized by (x, x^2, x^3) in C^3."
+
 	| A x y z |
 	A := AffineSpace new: #(x y z) over: QQ algebraicClosure.
 	x := A coordinateRing x.
 	y := A coordinateRing y.
 	z := A coordinateRing z.
-	^ 'A subscheme: {y - (x^2). z - (x^3)}'
+	^ A subscheme: {y - (x raisedTo: 2). z - (x raisedTo: 3)}
 ]
 
 { #category : #examples }
