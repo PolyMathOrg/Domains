@@ -14,57 +14,69 @@ ProjectiveVariety class >> cayleyCubic [
 	"The Cayley cubic as projective surface.
 	This is the unique cubic surface that has 4 ordinary nodes.
 	It is a degeneration of the Clebsh cubic and has Sym(4) as its symmetry group."
+
 	| P |
 	P := ProjectiveSpace new: #(x y z w) over: QQ.
-	^ P subscheme: P coordinateRing ! [:x :y :z :w| x*y*z + (x*y*w) + (x*z*w) + (y*z*w)]
+	^ P
+		subscheme:
+			P coordinateRing
+				! [ :x :y :z :w | x * y * z + (x * y * w) + (x * z * w) + (y * z * w) ]
 ]
 
 { #category : #'instance creation' }
 ProjectiveVariety class >> coordinateRing: anAffineRing [
-	self == ProjectiveVariety ifFalse: [^ self new coordinateRing: anAffineRing].
-	anAffineRing relators size = 1 ifTrue:
-		[| f |
-		f := anAffineRing relators anyOne.
-		f degree > 0 ifTrue:
-			[anAffineRing rank = 3 ifTrue:
-				[f degree = 1 ifTrue: [^ RationalCurve coordinateRing: anAffineRing].
-				f degree = 2 ifTrue: [^ Conic coordinateRing: anAffineRing].
-				f degree = 3 ifTrue: ["elliptic curve"].
-				^ ProjectivePlaneCurve coordinateRing: anAffineRing].
-			^ ProjectiveHypersurface coordinateRing: anAffineRing]].
+	self == ProjectiveVariety
+		ifFalse: [ ^ self new coordinateRing: anAffineRing ].
+	anAffineRing relators size = 1
+		ifTrue: [ | f |
+			f := anAffineRing relators anyOne.
+			f degree > 0
+				ifTrue: [ anAffineRing rank = 3
+						ifTrue: [ f degree = 1
+								ifTrue: [ ^ RationalCurve coordinateRing: anAffineRing ].
+							f degree = 2
+								ifTrue: [ ^ Conic coordinateRing: anAffineRing ].
+							f degree = 3
+								ifTrue: [ "elliptic curve" ].
+							^ ProjectivePlaneCurve coordinateRing: anAffineRing ].
+					^ ProjectiveHypersurface coordinateRing: anAffineRing ] ].
 	^ self new coordinateRing: anAffineRing
 ]
 
 { #category : #examples }
 ProjectiveVariety class >> fermat4 [
 	"The 4th Fermat curve."
+
 	| P |
 	P := ProjectiveSpace new: #(x y z) over: QQ.
-	^ 'P subscheme: P coordinateRing ! [:x :y :z| x^4 + (y^4) - (z^4)]'
+	^ P subscheme: P coordinateRing ! [:x :y :z| (x raisedTo: 4) + (y raisedTo: 4) - (z raisedTo:4)]
 ]
 
 { #category : #examples }
 ProjectiveVariety class >> fermat: n [
 	"The n-th Fermat curve."
+
 	| P |
 	P := ProjectiveSpace new: #(x y z) over: QQ.
-	^ 'P subscheme: (P coordinateRing generate: [:x :y :z| x^n + (y^n) - (z^n)])'
+	^ P subscheme: (P coordinateRing generate: [:x :y :z| (x raisedTo: n) + (y raisedTo: n) - (z raisedTo: n)])
 ]
 
 { #category : #examples }
 ProjectiveVariety class >> kleinQuartic [
 	"This is a projective variety, a curve in P^2(C)."
+
 	| P x y z |
 	P := ProjectiveSpace new: 2 over: QQ.
 	x := P coordinateRing x.
 	y := P coordinateRing y.
 	z := P coordinateRing z.
-	^ 'P subscheme: {x^3*y + (y^3*z) + (z^3*x)}'
+	^ P subscheme: {(x raisedTo: 3)*y + ((y raisedTo: 3)*z) + ((z raisedTo: 3)*x)}
 ]
 
 { #category : #'instance creation' }
 ProjectiveVariety class >> newFrom: anObject [
-	(anObject isKindOf: ProjectiveVariety) ifTrue: [^ self coordinateRing: anObject coordinateRing].
+	(anObject isKindOf: ProjectiveVariety)
+		ifTrue: [ ^ self coordinateRing: anObject coordinateRing ].
 	^ super newFrom: anObject
 ]
 
