@@ -48,20 +48,22 @@ LLL class >> example2 [
 
 { #category : #initialization }
 LLL >> basis: aCollection [
-	| d |
+| d |
 	basis := Array withAll: aCollection.
 	d := basis size.
-	delta := 3/4 "(4/3 + 0.0000000001)^((d-1)/2)"
+	delta := 3 / 4	"(4/3 + 0.0000000001)^((d-1)/2)"
 ]
 
 { #category : #private }
 LLL >> computeMu [
 	| n bi oj |
 	n := basis size.
-	mu := ZZ matrix: n@n evaluating: [:i :j|
-		bi := basis at: i.
-		oj := orthogonalBasis at: j.
-		(bi dot: oj) / (oj dot: oj)]
+	mu := ZZ
+		matrix: n @ n
+		evaluating: [ :i :j | 
+			bi := basis at: i.
+			oj := orthogonalBasis at: j.
+			(bi dot: oj) / (oj dot: oj) ]
 ]
 
 { #category : #private }
@@ -69,9 +71,9 @@ LLL >> computeOrthogonalBasis [
 	| k vi vj vectors |
 	vectors := Array withAll: basis.
 	k := vectors size.
-	1 to: k do: [ :i |
+	1 to: k do: [ :i | 
 		vi := vectors at: i.
-		i+1 to: k do: [ :j |
+		i + 1 to: k do: [ :j | 
 			vj := vectors at: j.
 			vj := vj - (vi * ((vj dot: vi) / (vi dot: vi))).
 			vectors at: j put: vj ] ].
@@ -81,35 +83,39 @@ LLL >> computeOrthogonalBasis [
 { #category : #private }
 LLL >> computeReducedBasis [
 	| k mukj bj bk a b |
-	self computeOrthogonalBasis; computeMu.
+	self
+		computeOrthogonalBasis;
+		computeMu.
 	k := 1.
-	[k < basis size] whileTrue:
-		[k-1 to: 0 by: -1 do: [ :j |
-			mukj := mu at: k+1 @ (j+1).
-			bj := basis at: j+1.
-			bk := basis at: k+1.
-			mukj abs > (1/2) ifTrue:
-				[basis at: k+1 put: bk - (bj * mukj rounded).
-				self update: k+1]].
-		a := (orthogonalBasis at: k+1) norm2.
-		b := (orthogonalBasis at: k) norm2.
-		a >= ((delta - (mu at: k+1 @ k) squared) * b)
-			ifTrue: [k := k + 1]
-			ifFalse:
-				[basis swap: k+1 with: k.
-				self update: k+1.
-				k := k-1 max: 1]].
+	[ k < basis size ]
+		whileTrue: [ k - 1 to: 0 by: -1 do: [ :j | 
+				mukj := mu at: (k + 1) @ (j + 1).
+				bj := basis at: j + 1.
+				bk := basis at: k + 1.
+				mukj abs > (1 / 2)
+					ifTrue: [ basis at: k + 1 put: bk - (bj * mukj rounded).
+						self update: k + 1 ] ].
+			a := (orthogonalBasis at: k + 1) norm2.
+			b := (orthogonalBasis at: k) norm2.
+			a >= ((delta - (mu at: (k + 1) @ k) squared) * b)
+				ifTrue: [ k := k + 1 ]
+				ifFalse: [ basis swap: k + 1 with: k.
+					self update: k + 1.
+					k := k - 1 max: 1 ] ].
 	^ basis
 ]
 
 { #category : #accessing }
 LLL >> reducedBasis [
-	orthogonalBasis notNil ifFalse: [self computeReducedBasis].
+	orthogonalBasis notNil
+		ifFalse: [ self computeReducedBasis ].
 	^ basis
 ]
 
 { #category : #private }
 LLL >> update: k [
-	self flag: #fix. "don't need to recompute all"
-	self computeOrthogonalBasis; computeMu
+	self flag: #fix.	"don't need to recompute all"
+	self
+		computeOrthogonalBasis;
+		computeMu
 ]
