@@ -22,7 +22,9 @@ NTT class >> modulo: anInteger [
 { #category : #running }
 NTT >> inverseValue: input [
 	"naive algorithm, O(n^2)"
-	^ '1 to: input size :: collect: [:i| 1 to: input size :: sum: [:j| (primitive negated raisedTo: i*j modulo: modulus) * (input at: j) \\ modulus] :: \\ 7]'
+
+^ (1 to: input size) collect: [:i| ((1 to: input size) sum: [:j| (primitive negated raisedTo: i*j modulo: modulus) * (input at: j) \\ modulus]) \\ 7]
+
 ]
 
 { #category : #accessing }
@@ -49,5 +51,6 @@ NTT >> primitive [
 { #category : #running }
 NTT >> value: input [
 	"naive algorithm, O(n^2)"
-	^ '1 to: input size :: collect: [:i| 1 to: input size :: sum: [:j| (primitive raisedTo: i*j modulo: modulus) * (input at: j) \\ modulus] :: \\ 7]'
+
+	^ (1 to: input size) collect: [:i| ((1 to: input size )sum: [:j| (primitive raisedTo: i*j modulo: modulus) * (input at: j) \\ modulus] ) \\ 7]
 ]

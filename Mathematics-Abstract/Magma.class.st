@@ -15,21 +15,37 @@ Magma >> copyEmpty [
 { #category : #testing }
 Magma >> isCommutative [
 	| op X |
-	self propertyAt: #isCommutative ifPresent: [:aBoolean| ^ aBoolean].
+	self propertyAt: #isCommutative ifPresent: [ :aBoolean | ^ aBoolean ].
 	op := self operation.
-	X := self generators ifNil: [self].
-	X do: [:x| X do: [:y| (op value: {x.y}) = (op value: {y.x}) ifFalse: [^ false]]].
+	X := self generators ifNil: [ self ].
+	X
+		do: [ :x | 
+			X
+				do: [ :y | 
+					(op
+						value:
+							{x.
+							y})
+						=
+							(op
+								value:
+									{y.
+									x})
+						ifFalse: [ ^ false ] ] ].
 	^ true
 ]
 
 { #category : #morphic }
 Magma >> multiplicationTable [
 	| elements |
-	elements := self elements asArray asSortedCollection: [:a :b|
-		| str |
-		str := a printString.
-		({'id'. '0'. '1'} includes: str) or: [str <= b printString]].
-	^ MultiplicationTableMorph elements: elements operation: self operation
+	elements := self elements asArray
+		asSortedCollection: [ :a :b |
+			| str |
+			str := a printString.
+			({'id' . '0' . '1'} includes: str) or: [ str <= b printString ] ].
+	^ MultiplicationTableMorph
+		elements: elements
+		operation: self operation
 ]
 
 { #category : #morphic }

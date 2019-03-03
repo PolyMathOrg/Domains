@@ -18,14 +18,15 @@ Class {
 { #category : #'as yet unclassified' }
 TonelliShanks >> modulus: anInteger [
 	| n |
-	anInteger == 2 ifTrue: [self error: 'the modulus should be not 2'].
+	anInteger == 2
+		ifTrue: [ self error: 'the modulus should be not 2' ].
 	p := anInteger.
 	e := (p - 1) lowBit - 1.
 	q := p - 1 bitShift: e negated.
 	"find generator of the multiplicative group of units (Z/pZ)*"
-	[n := (p - 1) atRandom.
-	(n kronecker: p) == -1] whileFalse.
-	z := n raisedTo: q modulo: p.
+	[ n := (p - 1) atRandom.
+	(n kronecker: p) == -1 ] whileFalse.
+	z := n raisedTo: q modulo: p
 ]
 
 { #category : #'as yet unclassified' }
