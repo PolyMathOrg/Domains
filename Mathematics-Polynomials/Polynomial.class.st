@@ -179,6 +179,14 @@ Polynomial >> coefficients [
 	^ Iterator on: self performing: #coefficientsDo: 
 ]
 
+{ #category : #arithmetic }
+Polynomial >> compose: anObject [ "î"
+	anObject isBlock
+		ifTrue: [ ^ [ :x | self value: (anObject value: x) ] ].
+	"Answer the composition of the receiver with the argument."
+	^ self value: anObject
+]
+
 { #category : #factorization }
 Polynomial >> content [
 	"Answer the GCD of the coefficients of the receiver.
@@ -1085,11 +1093,4 @@ Polynomial >> | aPolynomial [
 	self scalars isField
 		ifTrue: [ ^ (aPolynomial \\ self) isZero ].
 	^ (aPolynomial pseudoRem: self) isZero 
-]
-
-{ #category : #arithmetic }
-Polynomial >> î [ anObject
-	"Answer the composition of the receiver with the argument."
-	anObject isBlock ifTrue: [^ [:x| self value: (anObject value: x)]].
-	^ self value: anObject
 ]

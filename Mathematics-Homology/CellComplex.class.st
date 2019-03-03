@@ -75,10 +75,13 @@ CellComplex >> gVector [
 { #category : #invariants }
 CellComplex >> hPolynomial [
 	"Answer the h-polynomial of this cell complex. This is the result of composing the f-polynomial with 'x - 1'."
+
 	| f x |
 	f := self fPolynomial.
 	x := f parent x.
-	^ 'f î (x - 1)'
+	^ f compose: (x-1)
+	
+	"f î (x - 1)"
 ]
 
 { #category : #invariants }

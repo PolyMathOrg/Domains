@@ -188,10 +188,18 @@ SimplicialComplexTest >> testSimplicialComplexExample [
 { #category : #tests }
 SimplicialComplexTest >> testSimplicialMap [
 	| S T f |
-	S := SimplicialComplex faces: #((0 2) (1 5) (3 4)).
-	T := SimplicialComplex faces: #((0 2) (1 3)).
-	f := S to: T map: ({0 -> 0. 1 -> 1. 2 -> 2. 3 -> 1. 4 -> 3. 5 -> 3} as: Dictionary).
-	self assert: f image = T.
+	S := SimplicialComplex faces: #(#(0 2) #(1 5) #(3 4)).
+	T := SimplicialComplex faces: #(#(0 2) #(1 3)).
+	f := S
+		to: T
+		map:
+			({(0 -> 0).
+			(1 -> 1).
+			(2 -> 2).
+			(3 -> 1).
+			(4 -> 3).
+			(5 -> 3)} as: Dictionary).
+	self assert: f image equals: T.
 	self assert: f isSurjective.
 	self assert: f isInjective not.
 	self assert: f isIdentity not
@@ -207,23 +215,35 @@ SimplicialComplexTest >> testStanleyReisnerIdealAndBack [
 { #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerIdealAndBack2 [
 	| X |
-	X := SimplicialComplex on: (1 to: 5) faces: #((1 3 2) (3 4) (2 4) (5)).
-	self assert: X stanleyReisnerIdeal asSimplicialComplex = X
+	X := SimplicialComplex
+		on: (1 to: 5)
+		faces: #(#(1 3 2) #(3 4) #(2 4) #(5)).
+	self assert: X stanleyReisnerIdeal asSimplicialComplex equals: X
 ]
 
 { #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerIdealAndFacetIdealDuality [
 	| X |
-	X := SimplicialComplex on: (1 to: 5) faces: #((1 2 4) (1 2 5) (2 3) (3 4)).
-	self assert: X dual stanleyReisnerIdeal = X complement facetIdeal
+	X := SimplicialComplex
+		on: (1 to: 5)
+		faces: #(#(1 2 4) #(1 2 5) #(2 3) #(3 4)).
+	self
+		assert: X dual stanleyReisnerIdeal
+		equals: X complement facetIdeal
 ]
 
 { #category : #tests }
 SimplicialComplexTest >> testStanleyReisnerRing [
 	| X R |
-	X := SimplicialComplex faces: #((0 1) (1 2) (2 3) (3 0)).
+	X := SimplicialComplex faces: #(#(0 1) #(1 2) #(2 3) #(3 0)).
 	R := QQ polynomialsIn: #(x y z w).
-	self assert: X stanleyReisnerRing relations generators asSet = (R generate: [:x :y :z :w| {y*w. x*z}]) asSet
+	self
+		assert: X stanleyReisnerRing relations generators asSet
+		equals:
+			(R
+				generate: [ :x :y :z :w | 
+					{(y * w).
+					(x * z)} ]) asSet
 ]
 
 { #category : #tests }
