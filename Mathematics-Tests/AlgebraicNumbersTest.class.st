@@ -22,14 +22,14 @@ AlgebraicNumbersTest >> testDivision [
 	| sqrt3 sqrt5 |
 	sqrt3 := ComplexAlgebraicNumber sqrt: 3.
 	sqrt5 := ComplexAlgebraicNumber sqrt: 5.
-	self assert: sqrt3 / sqrt5 / sqrt3 / sqrt5 = (1/5)
+	self assert: sqrt3 / sqrt5 / sqrt3 / sqrt5 equals: 1 / 5
 ]
 
 { #category : #tests }
 AlgebraicNumbersTest >> testMultiplicationByi [
 	| a |
 	a := ComplexAlgebraicNumber sqrt2.
-	self assert: a i i = a negated
+	self assert: a i i equals: a negated
 ]
 
 { #category : #tests }
@@ -71,8 +71,10 @@ AlgebraicNumbersTest >> testRealDivision [
 AlgebraicNumbersTest >> testRealNormalizationBug [
 	| f interval x |
 	x := QQ polynomials x.
-	f := 'x^4 * 1576875 - (x^2 * 877250) + 43923'.
-	interval := RealInterval open: (-260139/1345600) closed: (81631/134560).
+	f := (x raisedTo: 4) * 1576875 - ((x raisedTo: 2) * 877250) + 43923.
+	interval := RealInterval
+		open: -260139 / 1345600
+		closed: 81631 / 134560.
 	RealAlgebraicNumber polynomial: f bounds: interval
 ]
 
