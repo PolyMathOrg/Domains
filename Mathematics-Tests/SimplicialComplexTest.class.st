@@ -115,19 +115,25 @@ SimplicialComplexTest >> testSimplecialComplex [
 SimplicialComplexTest >> testSimplex [
 	| tetrahedron |
 	tetrahedron := Simplex vertices: #(a b c d).
-	self assert: tetrahedron dimension = 3.
-	self assert: (tetrahedron faces: 2) size = 4.
-	self assert: tetrahedron edges size = 6.
-	self assert: (tetrahedron faces: 3) size = 1
+	self assert: tetrahedron dimension equals: 3.
+	self assert: (tetrahedron faces: 2) size equals: 4.
+	self assert: tetrahedron edges size equals: 6.
+	self assert: (tetrahedron faces: 3) size equals: 1
 ]
 
 { #category : #tests }
 SimplicialComplexTest >> testSimplexComplement [
 	| V |
-	V := (0 to: 5).
-	self assert: ((Simplex vertices: #(1 2 3)) complementIn: V) = (Simplex vertices: #(0 4 5)).
-	self assert: ((Simplex vertices: #(0 1 3 4)) complementIn: V) = (Simplex vertices: #(2 5)).
-	self assert: ((Simplex vertices: #(0 4 1 3 )) complementIn: V) = (Simplex vertices: #(2 5))
+	V := 0 to: 5.
+	self
+		assert: ((Simplex vertices: #(1 2 3)) complementIn: V)
+		equals: (Simplex vertices: #(0 4 5)).
+	self
+		assert: ((Simplex vertices: #(0 1 3 4)) complementIn: V)
+		equals: (Simplex vertices: #(2 5)).
+	self
+		assert: ((Simplex vertices: #(0 4 1 3)) complementIn: V)
+		equals: (Simplex vertices: #(2 5))
 ]
 
 { #category : #tests }
@@ -143,8 +149,7 @@ SimplicialComplexTest >> testSimplexJoin [
 	| A B |
 	A := Simplex new: 2.
 	B := Simplex new: 3.
-	self assert: A*B ~ (Simplex new: 2+1+3+1-1)
-
+	self assert: A * B ~ (Simplex new: 2 + 1 + 3 + 1 - 1)
 ]
 
 { #category : #tests }
@@ -161,12 +166,23 @@ SimplicialComplexTest >> testSimplicalChainsBoundaryMap [
 { #category : #tests }
 SimplicialComplexTest >> testSimplicialComplexExample [
 	"Example from Herzog, 'Monomial Ideals', pag. 16."
+
 	| X |
-	X := SimplicialComplex on: (1 to: 5) faces: #((1 2 4) (1 2 5) (2 3) (3 4)).
-	self assert: X facets = (#((1 2 4) (1 2 5) (2 3) (3 4)) collect: [:each| Simplex vertices: each]) asSet.
-	self assert: X nonfaces = (#((1 3) (3 5) (4 5) (2 3 4)) collect: [:each| Simplex vertices: each]) asSet.
-	self assert: X fVector = (1,5,7,2).
-	self assert: X hVector = (1,2,0,-1)
+	X := SimplicialComplex
+		on: (1 to: 5)
+		faces: #(#(1 2 4) #(1 2 5) #(2 3) #(3 4)).
+	self
+		assert: X facets
+		equals:
+			(#(#(1 2 4) #(1 2 5) #(2 3) #(3 4))
+				collect: [ :each | Simplex vertices: each ]) asSet.
+	self
+		assert: X nonfaces
+		equals:
+			(#(#(1 3) #(3 5) #(4 5) #(2 3 4))
+				collect: [ :each | Simplex vertices: each ]) asSet.
+	self assert: X fVector equals: 1 , 5 , 7 , 2.
+	self assert: X hVector equals: 1 , 2 , 0 , -1
 ]
 
 { #category : #tests }

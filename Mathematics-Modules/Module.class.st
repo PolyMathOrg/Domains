@@ -156,7 +156,7 @@ Module >> printOn: aStream [
 	aStream nextPut: $<.
 	self generators do: [:each| aStream print: each] separatedBy: [aStream nextPutAll: '; '].
 	aStream nextPut: $>.
-	self scalars ~= self ambient scalars ifTrue: [aStream nextPutAll: self scalars printText sub]
+	self scalars ~= self ambient scalars ifTrue: [aStream nextPutAll: '_', self scalars printString]
 ]
 
 { #category : #operations }
