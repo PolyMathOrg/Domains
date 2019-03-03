@@ -12,50 +12,71 @@ Class {
 { #category : #examples }
 Lattice class >> A: n [
 	"Answer the lattice A_n = {(x0,...,xn) in Z^{n+1} : x0 + ... + xn = 0}."
+
 	| t B |
-	't := (-1,1), (QQ ^ (n-1)) zero'.
+	t := -1 , 1 , (QQ raisedTo: n - 1) zero.
 	B := OrderedCollection new.
-	n timesRepeat: [B add: t. t := t >> 1].
+	n
+		timesRepeat: [ B add: t.
+			t := t >> 1 ].
 	^ self basis: B
 ]
 
 { #category : #examples }
 Lattice class >> Adual: n [
 	"Answer the dual of A_n."
+
 	| V B |
-	'V := QQ ^ n'.
+	V := QQ raisedTo: n.
 	B := OrderedCollection new.
-	1 to: n do: [:i| B add: (1, (V e: i) negated)].
-	B add: (QQ tuple: n+1 evaluating: [:i| i=1 ifTrue: [n negated / (n+1)] ifFalse: [1 / (n+1)]]).
+	1 to: n do: [ :i | B add: 1 , (V e: i) negated ].
+	B
+		add:
+			(QQ
+				tuple: n + 1
+				evaluating: [ :i | 
+					i = 1
+						ifTrue: [ n negated / (n + 1) ]
+						ifFalse: [ 1 / (n + 1) ] ]).
 	^ self basis: B
 ]
 
 { #category : #examples }
 Lattice class >> D4 [
 	"Answer the D4 lattice, which is self-dual."
-	^ self basis: {(1,0,0,0). (0,1,0,0). (0,0,1,0). (1,1,1,1)/2}
+
+	^ self
+		basis:
+			{(1 , 0 , 0 , 0).
+			(0 , 1 , 0 , 0).
+			(0 , 0 , 1 , 0).
+			((1 , 1 , 1 , 1) / 2)}
 ]
 
 { #category : #examples }
 Lattice class >> D: n [
 	"Answer the checkboard lattice D_n = {(x1,...,xn) in Z^n : x0 + ... + xn is even}."
+
 	| t0 t B |
 	B := OrderedCollection new.
-	't0 := (-1,-1), (QQ ^ (n-2)) zero'.
+	t0 := -1 , -1 , (QQ raisedTo: n - 2) zero.
 	B add: t0.
-	't := (1,-1), (QQ ^ (n-2)) zero'.
-	n-1 timesRepeat: [B add: t. t := t >> 1].
+	t := 1 , -1 , (QQ raisedTo: n - 2) zero.
+	n - 1
+		timesRepeat: [ B add: t.
+			t := t >> 1 ].
 	^ self basis: B
 ]
 
 { #category : #examples }
 Lattice class >> Ddual: n [
 	"Answer the dual of D_n."
+
 	| V B |
-	V := 'QQ ^ n'.
+	V := QQ raisedTo: n.
 	B := OrderedCollection new.
-	1 to: n-1 do: [:i| B add: (V e: i)].
-	B add: (QQ tuple: n evaluating: [:i| 1/2]).
+	1 to: n - 1 do: [ :i | B add: (V e: i) ].
+	B add: (QQ tuple: n evaluating: [ :i | 1 / 2 ]).
 	^ self basis: B
 ]
 
@@ -63,79 +84,74 @@ Lattice class >> Ddual: n [
 Lattice class >> E8 [
 	| t0 t B answer |
 	B := OrderedCollection new.
-	t0 := (2,0,0,0,0,0,0,0).
+	t0 := 2 , 0 , 0 , 0 , 0 , 0 , 0 , 0.
 	B add: t0.
-	t := (-1,1,0,0,0,0,0,0).
-	6 timesRepeat: [B add: t. t := t >> 1].
-	B add: (1,1,1,1,1,1,1,1)/2.
+	t := -1 , 1 , 0 , 0 , 0 , 0 , 0 , 0.
+	6
+		timesRepeat: [ B add: t.
+			t := t >> 1 ].
+	B add: (1 , 1 , 1 , 1 , 1 , 1 , 1 , 1) / 2.
 	answer := self basis: B.
-	'answer properties
+	answer properties
 			at: #minimalNorm put: 2;
 			at: #kissingNumber put: 240;
 			at: #CoxeterNumber put: 30;
 			at: #packingRadius put: 1/2 sqrt;
-			at: #density put: Float pi ^ 4 / 384;
-			at: #thickness put: Float pi ^ 4 / 24'.
+			at: #density put: (Float pi raisedTo: 4) / 384;
+			at: #thickness put: (Float pi raisedTo: 4) / 24.
 	^ answer
 ]
 
 { #category : #examples }
 Lattice class >> Z: n [
 	"Answer the n-dimensional cubic or integer lattice Z^n."
-	^ 'self basis: (QQ ^ n) basis'
+
+	^ self basis: (QQ raisedTo: n) basis
 ]
 
 { #category : #'instance creation' }
 Lattice class >> basis: aCollection [
 	| V M |
 	M := Matrix rows: aCollection asArray.
-	V := (M scalars) raisedTo: (M width).
-	^ self new ambient: V; matrix: M
+	V := M scalars raisedTo: M width.
+	^ self new
+		ambient: V;
+		matrix: M
 ]
 
 { #category : #examples }
 Lattice class >> bcc [
 	"Answer the body-centered cubic lattice (bcc).
 	D*_3 is equivalent to bcc."
-	^ self basis: {(2,0,0). (0,2,0). (1,1,1)}
+
+	^ self
+		basis:
+			{(2 , 0 , 0).
+			(0 , 2 , 0).
+			(1 , 1 , 1)}
 ]
 
 { #category : #examples }
 Lattice class >> fcc [
 	"Answer the face-centered cubic lattice (fcc).
 	Both A_3 and D_3 are equivalent to the fcc."
-	^ self basis: {(-1,-1,0). (1,-1,0). (0,1,-1)}
+
+	^ self
+		basis:
+			{(-1 , -1 , 0).
+			(1 , -1 , 0).
+			(0 , 1 , -1)}
 ]
 
 { #category : #examples }
 Lattice class >> leech [
 	"The Leech lattice is the unique even unimodular lattice in R^24 with with no norm 2 vectors."
+
 	| G answer |
-	G := QQ matrix: 24 coefficients:
-#(8 4 4 4 4 4 4 2 4 4 4 2 4 2 2 2 4 2 2 2 0 0 0 -3
- 4 4 2 2 2 2 2 2 2 2 2 2 2 2 1 1 2 1 1 2 1 0 0 -1
- 4 2 4 2 2 2 2 2 2 2 2 2 2 1 2 1 2 2 1 1 1 0 0 -1
- 4 2 2 4 2 2 2 2 2 2 2 2 2 1 1 2 2 1 2 1 1 0 0 -1
- 4 2 2 2 4 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 1 0 0 -1
- 4 2 2 2 2 4 2 2 2 2 2 1 2 2 1 1 2 1 2 1 0 0 0 -1
- 4 2 2 2 2 2 4 2 2 2 2 1 2 1 2 1 2 1 1 2 0 0 0 -1
- 2 2 2 2 2 2 2 4 1 1 1 2 1 2 2 2 1 2 2 2 2 0 0 1
- 4 2 2 2 2 2 2 1 4 2 2 2 2 2 2 2 2 2 2 2 1 1 1 -1
- 4 2 2 2 2 2 2 1 2 4 2 2 2 2 1 1 2 2 1 1 0 1 0 -1
- 4 2 2 2 2 2 2 1 2 2 4 2 2 1 2 1 2 1 2 1 0 0 1 -1
- 2 2 2 2 1 1 1 2 2 2 2 4 1 2 2 2 1 2 2 2 2 1 1 1
- 4 2 2 2 2 2 2 1 2 2 2 1 4 2 2 2 2 1 1 1 1 1 1 -1
- 2 2 1 1 2 2 1 2 2 2 1 2 2 4 2 2 1 2 2 2 2 2 1 1
- 2 1 2 1 2 1 2 2 2 1 2 2 2 2 4 2 1 2 2 2 2 1 2 1
- 2 1 1 2 2 1 1 2 2 1 1 2 2 2 2 4 1 2 2 2 2 1 1 1
- 4 2 2 2 2 2 2 1 2 2 2 1 2 1 1 1 4 2 2 2 1 1 1 -1
- 2 1 2 1 2 1 1 2 2 2 1 2 1 2 2 2 2 4 2 2 2 2 1 1
- 2 1 1 2 2 2 1 2 2 1 2 2 1 2 2 2 2 2 4 2 2 1 2 1
- 2 2 1 1 2 1 2 2 2 1 1 2 1 2 2 2 2 2 2 4 2 1 1 1
- 0 1 1 1 1 0 0 2 1 0 0 2 1 2 2 2 1 2 2 2 4 2 2 2
- 0 0 0 0 0 0 0 0 1 1 0 1 1 2 1 1 1 2 1 1 2 4 2 2
- 0 0 0 0 0 0 0 0 1 0 1 1 1 1 2 1 1 1 2 1 2 2 4 2
- -3 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 1 -1 1 1 1 -1 1 1 1 2 2 2 4).
+	G := QQ
+		matrix: 24
+		coefficients:
+			#(8 4 4 4 4 4 4 2 4 4 4 2 4 2 2 2 4 2 2 2 0 0 0 -3 4 4 2 2 2 2 2 2 2 2 2 2 2 2 1 1 2 1 1 2 1 0 0 -1 4 2 4 2 2 2 2 2 2 2 2 2 2 1 2 1 2 2 1 1 1 0 0 -1 4 2 2 4 2 2 2 2 2 2 2 2 2 1 1 2 2 1 2 1 1 0 0 -1 4 2 2 2 4 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 1 0 0 -1 4 2 2 2 2 4 2 2 2 2 2 1 2 2 1 1 2 1 2 1 0 0 0 -1 4 2 2 2 2 2 4 2 2 2 2 1 2 1 2 1 2 1 1 2 0 0 0 -1 2 2 2 2 2 2 2 4 1 1 1 2 1 2 2 2 1 2 2 2 2 0 0 1 4 2 2 2 2 2 2 1 4 2 2 2 2 2 2 2 2 2 2 2 1 1 1 -1 4 2 2 2 2 2 2 1 2 4 2 2 2 2 1 1 2 2 1 1 0 1 0 -1 4 2 2 2 2 2 2 1 2 2 4 2 2 1 2 1 2 1 2 1 0 0 1 -1 2 2 2 2 1 1 1 2 2 2 2 4 1 2 2 2 1 2 2 2 2 1 1 1 4 2 2 2 2 2 2 1 2 2 2 1 4 2 2 2 2 1 1 1 1 1 1 -1 2 2 1 1 2 2 1 2 2 2 1 2 2 4 2 2 1 2 2 2 2 2 1 1 2 1 2 1 2 1 2 2 2 1 2 2 2 2 4 2 1 2 2 2 2 1 2 1 2 1 1 2 2 1 1 2 2 1 1 2 2 2 2 4 1 2 2 2 2 1 1 1 4 2 2 2 2 2 2 1 2 2 2 1 2 1 1 1 4 2 2 2 1 1 1 -1 2 1 2 1 2 1 1 2 2 2 1 2 1 2 2 2 2 4 2 2 2 2 1 1 2 1 1 2 2 2 1 2 2 1 2 2 1 2 2 2 2 2 4 2 2 1 2 1 2 2 1 1 2 1 2 2 2 1 1 2 1 2 2 2 2 2 2 4 2 1 1 1 0 1 1 1 1 0 0 2 1 0 0 2 1 2 2 2 1 2 2 2 4 2 2 2 0 0 0 0 0 0 0 0 1 1 0 1 1 2 1 1 1 2 1 1 2 4 2 2 0 0 0 0 0 0 0 0 1 0 1 1 1 1 2 1 1 1 2 1 2 2 4 2 -3 -1 -1 -1 -1 -1 -1 1 -1 -1 -1 1 -1 1 1 1 -1 1 1 1 2 2 2 4).
 	answer := self basis: G rows.
 	answer properties
 		at: #minimalNorm put: 4;
@@ -147,32 +163,12 @@ Lattice class >> leech [
 { #category : #examples }
 Lattice class >> leech2 [
 	"Another version of the Leech lattice."
+
 	| G answer |
-	G := QQ matrix: 24 coefficients:
-#(4 -2 -2 2 2 2 -1 -1 2 2 -2 2 -2 1 -1 1 1 2 0 -1 0 -2 -2 2
--2 4 0 0 -2 0 -1 2 0 0 2 -1 1 1 -1 1 -2 -2 -1 1 1 2 1 -2
--2 0 4 0 0 -2 0 0 0 0 2 0 0 -2 1 -1 -1 -1 1 -1 -1 1 0 -1
-2 0 0 4 0 0 -2 -1 2 2 0 2 -2 1 0 2 -1 0 -1 0 1 -1 -1 0
-2 -2 0 0 4 0 -1 -1 1 1 -1 1 -1 0 0 -1 0 2 0 -2 -2 -1 -2 2
-2 0 -2 0 0 4 0 0 1 1 -1 1 -1 1 -1 1 1 0 1 0 1 0 -1 1
--1 -1 0 -2 -1 0 4 1 -1 -1 0 -2 2 0 0 0 2 -1 0 0 -1 1 2 -1
--1 2 0 -1 -1 0 1 4 1 1 2 -1 1 0 -1 1 -1 -1 -1 -1 -1 1 1 -1
-2 0 0 2 1 1 -1 1 4 2 0 2 -2 1 0 1 -1 0 -1 -2 0 -1 -1 0
-2 0 0 2 1 1 -1 1 2 4 0 1 -2 0 -1 1 -1 1 0 -1 -1 -1 -1 1
--2 2 2 0 -1 -1 0 2 0 0 4 0 1 -1 0 1 -1 -2 0 0 0 2 1 -2
-2 -1 0 2 1 1 -2 -1 2 1 0 4 -2 0 1 0 0 1 0 -1 1 -2 -2 1
--2 1 0 -2 -1 -1 2 1 -2 -2 1 -2 4 0 -1 0 1 -1 -1 1 0 2 2 -2
-1 1 -2 1 0 1 0 0 1 0 -1 0 0 4 -1 1 0 -1 -2 0 0 0 0 0
--1 -1 1 0 0 -1 0 -1 0 -1 0 1 -1 -1 4 -1 -1 0 0 0 0 -1 0 0
-1 1 -1 2 -1 1 0 1 1 1 1 0 0 1 -1 4 0 -1 -1 0 1 1 0 -1
-1 -2 -1 -1 0 1 2 -1 -1 -1 -1 0 1 0 -1 0 4 1 1 0 0 0 0 0
-2 -2 -1 0 2 0 -1 -1 0 1 -2 1 -1 -1 0 -1 1 4 1 -1 -1 -2 -2 2
-0 -1 1 -1 0 1 0 -1 -1 0 0 0 -1 -2 0 -1 1 1 4 0 0 0 -1 1
--1 1 -1 0 -2 0 0 -1 -2 -1 0 -1 1 0 0 0 0 -1 0 4 2 0 2 -1
-0 1 -1 1 -2 1 -1 -1 0 -1 0 1 0 0 0 1 0 -1 0 2 4 0 1 -1
--2 2 1 -1 -1 0 1 1 -1 -1 2 -2 2 0 -1 1 0 -2 0 0 0 4 1 -2
--2 1 0 -1 -2 -1 2 1 -1 -1 1 -2 2 0 0 0 0 -2 -1 2 1 1 4 -2
-2 -2 -1 0 2 1 -1 -1 0 1 -2 1 -2 0 0 -1 0 2 1 -1 -1 -2 -2 4).
+	G := QQ
+		matrix: 24
+		coefficients:
+			#(4 -2 -2 2 2 2 -1 -1 2 2 -2 2 -2 1 -1 1 1 2 0 -1 0 -2 -2 2 -2 4 0 0 -2 0 -1 2 0 0 2 -1 1 1 -1 1 -2 -2 -1 1 1 2 1 -2 -2 0 4 0 0 -2 0 0 0 0 2 0 0 -2 1 -1 -1 -1 1 -1 -1 1 0 -1 2 0 0 4 0 0 -2 -1 2 2 0 2 -2 1 0 2 -1 0 -1 0 1 -1 -1 0 2 -2 0 0 4 0 -1 -1 1 1 -1 1 -1 0 0 -1 0 2 0 -2 -2 -1 -2 2 2 0 -2 0 0 4 0 0 1 1 -1 1 -1 1 -1 1 1 0 1 0 1 0 -1 1 -1 -1 0 -2 -1 0 4 1 -1 -1 0 -2 2 0 0 0 2 -1 0 0 -1 1 2 -1 -1 2 0 -1 -1 0 1 4 1 1 2 -1 1 0 -1 1 -1 -1 -1 -1 -1 1 1 -1 2 0 0 2 1 1 -1 1 4 2 0 2 -2 1 0 1 -1 0 -1 -2 0 -1 -1 0 2 0 0 2 1 1 -1 1 2 4 0 1 -2 0 -1 1 -1 1 0 -1 -1 -1 -1 1 -2 2 2 0 -1 -1 0 2 0 0 4 0 1 -1 0 1 -1 -2 0 0 0 2 1 -2 2 -1 0 2 1 1 -2 -1 2 1 0 4 -2 0 1 0 0 1 0 -1 1 -2 -2 1 -2 1 0 -2 -1 -1 2 1 -2 -2 1 -2 4 0 -1 0 1 -1 -1 1 0 2 2 -2 1 1 -2 1 0 1 0 0 1 0 -1 0 0 4 -1 1 0 -1 -2 0 0 0 0 0 -1 -1 1 0 0 -1 0 -1 0 -1 0 1 -1 -1 4 -1 -1 0 0 0 0 -1 0 0 1 1 -1 2 -1 1 0 1 1 1 1 0 0 1 -1 4 0 -1 -1 0 1 1 0 -1 1 -2 -1 -1 0 1 2 -1 -1 -1 -1 0 1 0 -1 0 4 1 1 0 0 0 0 0 2 -2 -1 0 2 0 -1 -1 0 1 -2 1 -1 -1 0 -1 1 4 1 -1 -1 -2 -2 2 0 -1 1 -1 0 1 0 -1 -1 0 0 0 -1 -2 0 -1 1 1 4 0 0 0 -1 1 -1 1 -1 0 -2 0 0 -1 -2 -1 0 -1 1 0 0 0 0 -1 0 4 2 0 2 -1 0 1 -1 1 -2 1 -1 -1 0 -1 0 1 0 0 0 1 0 -1 0 2 4 0 1 -1 -2 2 1 -1 -1 0 1 1 -1 -1 2 -2 2 0 -1 1 0 -2 0 0 0 4 1 -2 -2 1 0 -1 -2 -1 2 1 -1 -1 1 -2 2 0 0 0 0 -2 -1 2 1 1 4 -2 2 -2 -1 0 2 1 -1 -1 0 1 -2 1 -2 0 0 -1 0 2 1 -1 -1 -2 -2 4).
 	answer := self basis: G rows.
 	answer properties
 		at: #minimalNorm put: 4;
@@ -250,7 +246,8 @@ Lattice >> innerProduct [
 
 { #category : #testing }
 Lattice >> isEven [
-	^ self isIntegral and: [self gramian diagonal allSatisfy: [:each| each even]]
+	^ self isIntegral
+		and: [ self gramian diagonal allSatisfy: [ :each | each even ] ]
 ]
 
 { #category : #testing }
@@ -283,12 +280,22 @@ Lattice >> isUnimodular [
 	^ self isIntegral and: [self determinant abs = 1]
 ]
 
+{ #category : #invariants }
+Lattice >> kissingNumber [
+	^ self propertyAt: #kissingNumber
+]
+
 { #category : #private }
 Lattice >> matrix: aMatrix [
 	| M |
 	M := aMatrix HNF.
 	M := Matrix rows: (M rows select: [:each| each isZero not]).	
 	super matrix: M
+]
+
+{ #category : #invariants }
+Lattice >> minimalNorm [
+	^ self propertyAt: #minimalNorm
 ]
 
 { #category : #invariants }

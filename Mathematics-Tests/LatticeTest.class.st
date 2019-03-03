@@ -58,7 +58,7 @@ LatticeTest >> testLatticeDnDual [
 	D := Lattice D: 5.
 	R := Lattice Ddual: 5.
 	self assert: D reciprocal equals: R.
-	self assert: D = R reciprocal
+	self assert: D equals: R reciprocal
 ]
 
 { #category : #accessing }
@@ -78,26 +78,31 @@ LatticeTest >> testLatticeDual [
 	self assert: R matrix * L matrix transposed equals: I
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLatticeDual2 [
 	| L R |
-	L := Lattice basis: {(-1,0,0). (0,1,2)}. "not full rank"
+	L := Lattice
+		basis:
+			{(-1 , 0 , 0).
+			(0 , 1 , 2)}.	"not full rank"
 	R := L reciprocal.
-	self assert: (L ambient span: L basis) = (R ambient span: R basis).
-	self assert: L determinant = (1 / R determinant).
+	self
+		assert: (L ambient span: L basis)
+		equals: (R ambient span: R basis).
+	self assert: L determinant equals: 1 / R determinant.
 	self assert: (R matrix * L matrix transposed) isIdentity
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LatticeTest >> testLeech [
 	| L |
 	L := Lattice leech.
-"	a := L atRandomBits: 100.
-	self assert: ((a allSatisfy: [:x| x isInteger]) or: [a allSatisfy: [:x| x isInteger not and: [(x*2) isInteger]]]).
-	self assert: (a sum isInteger and: [a sum even])."
-	self assert: L determinant = 1.
-	self assert: L kissingNumber = 196560.
-	self assert: L minimalNorm = 4.
+	"	a := L atRandomBits: 100.
+		self assert: ((a allSatisfy: [:x| x isInteger]) or: [a allSatisfy: [:x| x isInteger not and: [(x*2) isInteger]]]).
+		self assert: (a sum isInteger and: [a sum even])."
+	self assert: L determinant equals: 1.
+	self assert: L kissingNumber equals: 196560.
+	self assert: L minimalNorm equals: 4.
 	self assert: L isIntegral.
 	self assert: L isUnimodular.
 	self assert: L isEven
