@@ -382,26 +382,30 @@ UnivariatePolynomial >> equalDegreeFactorization2: d [
 { #category : #factorization }
 UnivariatePolynomial >> equalDegreeFactorization: d [
 	"Cantor-Zassenhaus algorithm. Answer the equal-degree factorization of a monic squarefree univariate polynomial which has r>=2 pairwise distinct irreducible factors each of degree d."
+
 	| f r q h g one factors c |
 	f := self.
 	q := f scalars size.
-	q odd ifFalse: [^ self equalDegreeFactorization2: d].
+	q odd
+		ifFalse: [ ^ self equalDegreeFactorization2: d ].
 	r := f degree / d.
 	one := f parent one.
 	factors := OrderedCollection with: f.
-	[factors size < r]
+	[ factors size < r ]
 		whileTrue:
-			[h := (f parent atRandomMaxDegree: 2*d-1) monic. "should be monic? should: d <= deg(h) <= 2d-1"
+			[ h := (f parent atRandomMaxDegree: 2 * d - 1) monic.	"should be monic? should: d <= deg(h) <= 2d-1"
 			h := h monic.
-			g := (h raisedTo: 'q^d' - 1 / 2 modulo: f) - one. "<- most time is spent here"
-			factors do: [:u|
-				u degree > d
-					ifTrue:
-						[c := g gcd: u.
-						(c ~= one and: [c ~= u])
-							ifTrue: "found non-trivial common factor c"
-								[factors := factors copyWithout: u.
-								factors add: c; add: u // c]]]].
+			g := (h raisedTo: ((q raisedTo: d) - 1) / 2 modulo: f) - one.	"<- most time is spent here"
+			factors
+				do: [ :u | 
+					u degree > d
+						ifTrue: [ c := g gcd: u.
+							(c ~= one and: [ c ~= u ])
+								ifTrue: [ "found non-trivial common factor c"
+									factors := factors copyWithout: u.
+									factors
+										add: c;
+										add: u // c ] ] ] ].
 	^ factors
 ]
 
@@ -533,6 +537,7 @@ UnivariatePolynomial >> factorizationZassenhauss [
 	r = 1
 		ifTrue: [ ^ {f} ].	"if irreducible mod p, also irreducible over Z"
 	self assert: (self % p - (factors product * b)) isZero.
+	
 	"hensel lifting"
 	k := (2 * B + 1 log: p) abs ceiling.	"p^k > 2B"
 	factors := f henselLift: factors asArray to: k.	"lift to p^k"	"<- about 20% of time is spent here"

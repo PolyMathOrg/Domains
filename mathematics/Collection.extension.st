@@ -120,3 +120,8 @@ Collection >> isInfinite [
 Collection >> plot: aFunction [
 	^ FunctionPlotMorph new evaluationPoints: self; function: aFunction
 ]
+
+{ #category : #'*mathematics' }
+Collection >> product [
+	^ self fold: [ :a :b | a * b ]
+]

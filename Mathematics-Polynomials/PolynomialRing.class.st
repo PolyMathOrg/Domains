@@ -229,8 +229,10 @@ PolynomialRing >> atRandomDegree: d [
 { #category : #random }
 PolynomialRing >> atRandomMaxDegree: d [
 	"Answer a polynomial of degree at most d choosen at random with a uniform distribution."
-	self isUnivariate ifFalse: [^ self notYetImplemented].
-	^ self coefficients: ('self scalars ^ (d+1)') atRandom
+
+	self isUnivariate
+		ifFalse: [ ^ self notYetImplemented ].
+	^ self coefficients: ((self scalars) raisedTo: (d+1)) atRandom
 ]
 
 { #category : #accessing }
