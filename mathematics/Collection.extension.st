@@ -125,3 +125,8 @@ Collection >> plot: aFunction [
 Collection >> product [
 	^ self fold: [ :a :b | a * b ]
 ]
+
+{ #category : #'*mathematics' }
+Collection >> product: aBlock [
+	^ (self collect:aBlock) fold: [ :a :b | a * b ]
+]

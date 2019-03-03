@@ -544,7 +544,7 @@ UnivariatePolynomial >> factorizationZassenhauss [
 	1 to: k do: [ :i | 
 		self
 			assert:
-				((self - ((factors product: [ :fi | fi lift ]) * b)) % (p raiseTo: i))
+				((self - ((factors product: [ :fi | fi lift ]) * b)) % (p raisedTo: i))
 					isZero ].
 	"recombination"
 	answer := Bag new.
@@ -627,7 +627,7 @@ UnivariatePolynomial >> henselLift: factors to: k [
 	p := factors anyOne scalars characteristic.
 	r := factors size.
 	r = 1 ifTrue: "can be optimized, compute inverse modulo p using extended euclid, then lift to p^k with newton iteration algorithm 9.10 (modern computer algebra)"
-		[^ {(self % (p raiseTo: k) / self leadingCoefficient)}].
+		[^ {(self % (p raisedTo: k) / self leadingCoefficient)}].
 	mid := r//2.
 	gFactors := factors copyFrom: 1 to: mid.
 	hFactors := factors copyFrom: mid+1 to: r.
