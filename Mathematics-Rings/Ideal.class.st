@@ -30,12 +30,14 @@ Ideal class >> example2 [
 	x := R x.
 	y := R y.
 	z := R z.
-	^ 'R * {x^2 + (y^2). x*y + (y^2) + (y*z). y^2 + (z^2) + z}'
+	^ R * {(x raisedTo: 2) + (y raisedTo: 2). x*y + (y raisedTo: 2) + (y*z). (y raisedTo: 2) + (z raisedTo: 2) + z}
 ]
 
 { #category : #'instance creation' }
 Ideal class >> over: aRing generators: aCollection [
-	^ self new scalars: aRing; generators: aCollection
+	^ self new
+		scalars: aRing;
+		generators: aCollection
 ]
 
 { #category : #operations }

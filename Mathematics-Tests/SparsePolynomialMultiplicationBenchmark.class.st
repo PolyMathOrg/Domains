@@ -40,12 +40,12 @@ SparsePolynomialMultiplicationBenchmark >> setUp [
 	x := P x.
 	y := P y.
 	z := P z.
-	'p := (1+x+y+z)^20.
-		pBigCoefficients := 10000000001*(1+x+y+z)^20. "big coefficients"
-		pBigExponents := 1 + (x^2147483647) + (y^2147483647) + (z^2147483647) ^ 20. "big exponents"
+	p := (1+x+y+z) raisedTo: 20.
+		pBigCoefficients := (10000000001*(1+x+y+z)) raisedTo:20. "big coefficients"
+		pBigExponents := (1 + (x raisedTo: 2147483647) + (y raisedTo: 2147483647) + (z raisedTo: 2147483647)) raisedTo: 20. "big exponents"
 		pPlusOne := p + 1.
 		pBigCoefficientsPlusOne := pBigCoefficients + 1.
-		pBigExponentsPlusOne := pBigExponents + 1'
+		pBigExponentsPlusOne := pBigExponents + 1
 ]
 
 { #category : #'as yet unclassified' }

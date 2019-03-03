@@ -48,7 +48,7 @@ RationalIntegerIdeal >> isSemiprime [
 { #category : #printing }
 RationalIntegerIdeal >> printOn: aStream [
 	self isZero ifTrue: [aStream nextPutAll: '{0}'. ^ self].
-	aStream print: self generator; nextPut: Character ZZ
+	aStream print: self generator; nextPut: $ℤ
 ]
 
 { #category : #operations }

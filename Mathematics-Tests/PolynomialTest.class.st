@@ -16,14 +16,14 @@ PolynomialTest >> testAllMonomialsOfDegree [
 PolynomialTest >> testArithmeticOver: R [
 	| x f g |
 	x := R polynomials x.
-	'f := x^2 + (x*2) - 1.
-	g := x^2 - (x*2) + 1.
-	self assert: f+g = (x^2 * 2).
+	f := (x raisedTo: 2) + (x*2) - 1.
+	g := (x raisedTo: 2) - (x*2) + 1.
+	self assert: f+g = ((x raisedTo: 2) * 2).
 	self assert: f-g = (x*4 - 2).
-	self assert: f*g = (x^4 - (x^2 * 4) + (x*4) - 1).
+	self assert: f*g = ((x raisedTo: 4) - ((x raisedTo: 2) * 4) + (x*4) - 1).
 	self assert: f*g // g = f.
 	self assert: (f*g \\ g) isZero.
-	self assert: (f*g + (x - 1) \\ g) = (x - 1)'
+	self assert: (f*g + (x - 1) \\ g) = (x - 1)
 ]
 
 { #category : #tests }

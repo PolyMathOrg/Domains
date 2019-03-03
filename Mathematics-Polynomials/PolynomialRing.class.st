@@ -34,7 +34,7 @@ PolynomialRing class >> example12 [
 { #category : #examples }
 PolynomialRing class >> example13 [
 	"Creating a polynomial in Z[x] from a block."
-	^ 'ZZ polynomials ! [:x| x^2 - x + 3]'
+	^ ZZ polynomials ! [:x| (x raisedTo: 2) - x + 3]
 ]
 
 { #category : #examples }

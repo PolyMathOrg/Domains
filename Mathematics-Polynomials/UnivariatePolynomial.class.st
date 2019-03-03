@@ -689,8 +689,8 @@ UnivariatePolynomial >> isIrreducibleBenOr [
 	q := self scalars characteristic.
 	x := self parent x.
 	one := self one.
-	'1 to: self degree // 2 do: [:i|
-			(self gcd: x^(q^i) - x \\ self) = one ifTrue: [^ false]]'.
+	1 to: self degree // 2 do: [:i|
+			(self gcd: (x raisedTo: (q raisedTo: i)) - x \\ self) = one ifTrue: [^ false]].
 	^ true
 ]
 

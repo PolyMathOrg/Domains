@@ -11,12 +11,13 @@ Class {
 
 { #category : #examples }
 AlgebraicExtension class >> example [
-	^ 'QQ extension: QQ polynomials x^4 - 2'
+	^ QQ extension: ((QQ polynomials x) raisedTo: 4) - 2
 ]
 
 { #category : #'instance creation' }
 AlgebraicExtension class >> polynomial: aPolynomial [
 	"Answer a new algebraic field extension K(f) where f is the given polynomial in K[x]. The polynomial must be irreducible, otherwise there would be zero divisors."
+
 	^ self new polynomial: aPolynomial
 ]
 

@@ -13,9 +13,9 @@ MonomialTest >> testAntigradedLexOrdering [
 	y := M x: 2.
 	self assert: M identity > x.
 	self assert: x > y.
-	'self assert: x^2 > (x*y).
-		self assert: x*y > (y raiseTo: 2).
-		self assert: (y^2) > (x raiseTo: 3)'
+	self assert: (x raisedTo: 2) > (x*y).
+		self assert: x*y > (y raisedTo: 2).
+		self assert: (y raisedTo: 2) > (x raisedTo: 3)
 ]
 
 { #category : #tests }
@@ -31,10 +31,10 @@ MonomialTest >> testAntigradedRevlexOrdering [
 	self assert: M identity > x.
 	self assert: x > y.
 	self assert: y > z.
-'	self assert: x^2 > (x*y).
-	self assert: x*y > (y^2).
+	self assert: (x raisedTo: 2) > (x*y).
+	self assert: x*y > (y raisedTo: 2).
 	self assert: (x*z) > (y*z).
-	self assert: (y*z) > (z^2)'
+	self assert: (y*z) > (z raisedTo: 2)
 ]
 
 { #category : #tests }

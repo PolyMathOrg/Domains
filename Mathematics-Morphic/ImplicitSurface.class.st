@@ -13,15 +13,16 @@ Class {
 { #category : #examples }
 ImplicitSurface class >> example1 [
 	^ self new
-		polynomial: '(RR polynomialsIn: #(x y z) :: generate: [:x :y :z| (x raisedTo: 2) + (y raisedTo: 2) + (z raisedTo: 3) + (x*y*z*2) - 1])';
+		polynomial:
+			((RR polynomialsIn: #(x y z)) generate: [:x :y :z| (x raisedTo: 2) + (y raisedTo: 2) + (z raisedTo: 3) + (x*y*z*2) - 1]);
 		radius: 1.0
 ]
 
 { #category : #examples }
 ImplicitSurface class >> example2 [
-	^ 'self new
-			polynomial: (RR polynomialsIn: #(x y z) :: generate: [:x :y :z| x^2 - ((y^2)*(z^2))]);
-			radius: 5.0'
+	^ self new
+			polynomial: ((RR polynomialsIn: #(x y z)) generate: [:x :y :z| (x raisedTo: 2) - ((y raisedTo: 2)*(z raisedTo: 2))]);
+			radius: 5.0
 ]
 
 { #category : #accessing }

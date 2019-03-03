@@ -96,7 +96,7 @@ Domain class >> example42AffineRing [
 	x := R x: 1.
 	y := R x: 2.
 	z := R x: 3.
-	I := 'R * {(x^2) - y. (x^3) - z}'.
+	I := R * {(x raisedTo: 2) - y. (x raisedTo: 3) - z}.
 	^ R / I
 ]
 
@@ -108,7 +108,7 @@ Domain class >> example43AffineVariety [
 	x := R x: 1.
 	y := R x: 2.
 	z := R x: 3.
-	I := 'R * {(x^2) - y. (x^3) - z}'.
+	I := R * {(x raisedTo: 2) - y. (x raisedTo: 3) - z}.
 	^ (R / I) spec
 ]
 

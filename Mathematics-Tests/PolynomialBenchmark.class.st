@@ -202,8 +202,8 @@ PolynomialBenchmark >> testDivisionOverQ [
 	| P x f g |
 	P := QQ polynomials.
 	x := P x.
-	'f := x^2 + x + 1 ^ 10.
-		g := 1 - x ^ 10'.
+	f := ((x raisedTo: 2) + x + 1) raisedTo: 10.
+		g := (1 - x) raisedTo: 10.
 	2000 timesRepeat: [f // g. f \\ g]
 ]
 
