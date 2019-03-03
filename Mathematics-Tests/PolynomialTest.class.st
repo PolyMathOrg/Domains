@@ -477,42 +477,50 @@ PolynomialTest >> testGCDMultivariate [
 { #category : #tests }
 PolynomialTest >> testGCDMultivariate2 [
 	"Example from Sage documentation."
+
 	| R x y f g |
 	R := QQ polynomialsIn: #(x y).
-	x := R x. y := R y.
-	'f := x^2*y*(x+y)*3.
-		g := x*(y^2 - (x^2))*9'.
-	self assert: '(f gcd: g) = (x^2 + (x*y))'
+	x := R x.
+	y := R y.
+	f := (x raisedTo: 2) * y * (x + y) * 3.
+	g := x * ((y raisedTo: 2) - (x raisedTo: 2)) * 9.
+	self assert: (f gcd: g) equals: (x raisedTo: 2) + (x * y)
 ]
 
 { #category : #tests }
 PolynomialTest >> testGCDMultivariateOverQ [
 	| R x y f g |
 	R := QQ polynomialsIn: #(x y).
-	x := R x. y := R y.
-	'f := x^2*y*6.
-		g := x*(y^2)*15 + (x^3*(y^2)*21)'.
-	self assert: (f gcd: g) = (x*y)
+	x := R x.
+	y := R y.
+	f := (x raisedTo: 2) * y * 6.
+	g := x * (y raisedTo: 2) * 15
+		+ ((x raisedTo: 3) * (y raisedTo: 2) * 21).
+	self assert: (f gcd: g) equals: x * y
 ]
 
 { #category : #tests }
 PolynomialTest >> testGCDMultivariateOverZ [
 	| R x y f g |
 	R := ZZ polynomialsIn: #(x y).
-	x := R x. y := R y.
-'	f := x^2*y*6.
-	g := x*(y^2)*15 + (x^3*(y^2)*21)'.
-	self assert: (f gcd: g) = (x*y*3)
+	x := R x.
+	y := R y.
+	f := (x raisedTo: 2) * y * 6.
+	g := x * (y raisedTo: 2) * 15
+		+ ((x raisedTo: 3) * (y raisedTo: 2) * 21).
+	self assert: (f gcd: g) equals: x * y * 3
 ]
 
 { #category : #tests }
 PolynomialTest >> testGCDOverRationalFunctions [
 	| R x y f g |
-	R := 'QQ polynomialsIn: #(y) :: fractions polynomials'.
-	x := R x. y := R scalars x.
-'	f := x^2*y*6.
-	g := x*(y^2)*15 + (x^3*(y^2)*21)'.
-	self assert: (f gcd: g) = x
+	R := (QQ polynomialsIn: #(y)) fractions polynomials.
+	x := R x.
+	y := R scalars x.
+	f := (x raisedTo: 2) * y * 6.
+	g := x * (y raisedTo: 2) * 15
+		+ ((x raisedTo: 3) * (y raisedTo: 2) * 21).
+	self assert: (f gcd: g) equals: x
 ]
 
 { #category : #tests }
@@ -527,11 +535,11 @@ PolynomialTest >> testGCDOverZ [
 { #category : #tests }
 PolynomialTest >> testGCDOverZ2 [
 	| x f g h |
-	x := 'ZZ/2 :: polynomials x'.
-	'h := x^3 - x + 1.
-		f := h * (x + 1) * x.
-		g := h * (x + 1) * (x^2 + 1)'.
-	self assert: (f gcd: g) = (h * (x + 1))
+	x := (ZZ / 2) polynomials x.
+	h := (x raisedTo: 3) - x + 1.
+	f := h * (x + 1) * x.
+	g := h * (x + 1) * ((x raisedTo: 2) + 1).
+	self assert: (f gcd: g) equals: h * (x + 1)
 ]
 
 { #category : #tests }
