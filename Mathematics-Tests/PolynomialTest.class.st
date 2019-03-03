@@ -1061,11 +1061,8 @@ PolynomialTest >> testUnivariateMultivariateConversion2 [
 	x := Qx x.
 	y := Qx y.
 	f := Qx zero.
-	10
-		timesRepeat: [ f := f
-				+
-					((10 atRandom - 5)
-						* (x raisedTo: (3 atRandom - 1) * (y raisedTo: 3 atRandom - 1))) ].
+	10 timesRepeat: [f := f + (10 atRandom - 5 * ((x raisedTo: (3 atRandom - 1)) * (y raisedTo: (3 atRandom - 1))))].
+	
 	f2 := f asUnivariate.
 	self assert: f2 asMultivariate equals: f.
 	x0 := (-100 to: 100) atRandom.
