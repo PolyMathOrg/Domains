@@ -67,12 +67,12 @@ ModularIntegerRing >> includes: anObject [
 
 { #category : #testing }
 ModularIntegerRing >> isField [
-	^ self propertyAt: #isField ifAbsentPut: [self modulus isPrime]
+	^ self propertyAt: #isField ifAbsentPut: [ self modulus isPrime ]
 ]
 
 { #category : #testing }
 ModularIntegerRing >> isFinite [
-	^ true
+	^ true 
 ]
 
 { #category : #testing }
@@ -90,6 +90,7 @@ ModularIntegerRing >> isReduced [
 { #category : #testing }
 ModularIntegerRing >> isUnit: anElement [
 	"Answer true if the argument is invertible."
+
 	^ (anElement representative gcd: self modulus) = 1
 ]
 
@@ -97,6 +98,7 @@ ModularIntegerRing >> isUnit: anElement [
 ModularIntegerRing >> isZeroDivisor: anElement [
 	"Answer true if there exists a nonzero element that multiplied by the argument is zero.
 	An element in a finite ring is either a unit or a zero-divisor."
+
 	^ (self isUnit: anElement) not
 ]
 
@@ -135,14 +137,12 @@ ModularIntegerRing >> modulusFactors [
 { #category : #enumerating }
 ModularIntegerRing >> primeIdealsDo: aBlock [
 	| p |
-"	aBlock value: self * self zero."
+	"	aBlock value: self * self zero."
 	p := 2.
-	[p > modulus]
-		whileFalse:
-			[p | modulus ifTrue: [aBlock value: self * (self project: p)].
-			p := p nextPrime]
-
-
+	[ p > modulus ]
+		whileFalse: [ p | modulus
+				ifTrue: [ aBlock value: self * (self project: p) ].
+							p := p nextPrime ]
 ]
 
 { #category : #printing }
@@ -161,7 +161,7 @@ ModularIntegerRing >> project: anInteger [
 
 { #category : #accessing }
 ModularIntegerRing >> relations [
-	^ self propertyAt: #relations ifAbsentPut: [ZZ * modulus]
+	^ self propertyAt: #relations ifAbsentPut: [ ZZ * modulus ]
 ]
 
 { #category : #'accessing-private' }
