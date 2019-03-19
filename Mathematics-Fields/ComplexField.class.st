@@ -9,23 +9,24 @@ Class {
 
 { #category : #initialization }
 ComplexField class >> initialize [
-	super initialize.
 	Smalltalk at: #CC put: self new
 ]
 
 { #category : #comparing }
 ComplexField >> = anObject [
-	^ anObject class == self class
+	^ anObject class == self class 
 ]
 
 { #category : #comparing }
 ComplexField >> > aDomain [
-	^ (aDomain isKindOf: RationalField) or: [(aDomain isKindOf: RationalIntegerRing) or: [aDomain isKindOf: RealField]]
+	^ (aDomain isKindOf: RationalField)
+		or: [ (aDomain isKindOf: RationalIntegerRing)
+				or: [ aDomain isKindOf: RealField ] ] 
 ]
 
 { #category : #accessing }
 ComplexField >> characteristic [
-	^ 0
+	^ 0 
 ]
 
 { #category : #accessing }

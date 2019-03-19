@@ -78,7 +78,10 @@ RationalIntegerRing >> do: aBlock [
 	| i |
 	aBlock value: 0.
 	i := 1.
-	[ aBlock value: i; value: i negated. i := i + 1 ] repeat
+	[ aBlock
+		value: i;
+		value: i negated.
+	i := i + 1 ] repeat 
 ]
 
 { #category : #operations }
@@ -88,7 +91,7 @@ RationalIntegerRing >> fractions [
 
 { #category : #comparing }
 RationalIntegerRing >> hash [
-	^ self class hash
+	^ self class hash 
 ]
 
 { #category : #private }

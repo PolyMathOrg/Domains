@@ -84,31 +84,40 @@ Domain class >> example3DirectProductOfGroups [
 { #category : #examples }
 Domain class >> example41Polynomials [
 	"Polynomials in two variables with integer coefficients."
-	^ ZZ polynomialsIn: #(a b)
+
+	^ ZZ polynomialsIn: #(a b) 
 ]
 
 { #category : #examples }
 Domain class >> example42AffineRing [
 	"The quotient of a polynomial ring by an ideal.
 	This is an affine ring, in particular it is the coordinate ring of the twisted cubic."
+
 	| R x y z I |
-	R := CC polynomialsIn: #(x y z).
+	R := CC polynomialsIn: #(x y z). 
 	x := R x: 1.
 	y := R x: 2.
 	z := R x: 3.
-	I := R * {(x raisedTo: 2) - y. (x raisedTo: 3) - z}.
+	I := R
+		*
+			{((x raisedTo: 2) - y).
+			((x raisedTo: 3) - z)}.
 	^ R / I
 ]
 
 { #category : #examples }
 Domain class >> example43AffineVariety [
 	"This is the twisted cubic affine variety, parameterized by (x, x^2, x^3) in C^3."
+
 	| R x y z I |
 	R := CC polynomialsIn: #(x y z).
-	x := R x: 1.
+	x := R x: 1. 
 	y := R x: 2.
 	z := R x: 3.
-	I := R * {(x raisedTo: 2) - y. (x raisedTo: 3) - z}.
+	I := R
+		*
+			{((x raisedTo: 2) - y).
+			((x raisedTo: 3) - z)}.
 	^ (R / I) spec
 ]
 
@@ -119,12 +128,13 @@ Domain class >> example5GL [
 	This is the automorphisms group of the vector space, and
 	its elements are linear maps, not matrices."
 
-	^ (QQ raisedTo: 3) automorphisms
+	^ (QQ raisedTo: 3) automorphisms 
 ]
 
 { #category : #examples }
 Domain class >> example5GLAsMatrixGroup [
 	"The matrix group GL(3,Q) of 3x3 matrices with rational coefficients."
+
 	^ GeneralLinearMatrixGroup new: 3 over: QQ
 ]
 

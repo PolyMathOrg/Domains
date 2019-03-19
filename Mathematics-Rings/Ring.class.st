@@ -90,19 +90,25 @@ Ring >> conjugation [
 { #category : #operations }
 Ring >> cyclotomicRing: n [
 	"Answer the n-th cyclotomic ring on the receiver."
-	| Fx phi |
+
+	| Fx phi | 
 	Fx := self polynomials.
-	phi := Fx cyclotomic: n. "cyclotomic polynomial of order n"
-	^ Fx / phi "answer the quotient ring modulo <phi>"
+	phi := Fx cyclotomic: n.	"cyclotomic polynomial of order n"
+	^ Fx / phi	"answer the quotient ring modulo <phi>"
 ]
 
 { #category : #accessing }
 Ring >> dimension [
 	"Answer the Krull dimension of the receiver."
-	self isField ifTrue: [^ 0].
-	self isPID ifTrue: [^ 1].
-	self isIntegralDomain ifTrue: [^ 1].
-	self isDedekindDomain ifTrue: [^ 1].
+
+	self isField
+		ifTrue: [ ^ 0 ].
+	self isPID
+		ifTrue: [ ^ 1 ].
+	self isIntegralDomain 
+		ifTrue: [ ^ 1 ].
+	self isDedekindDomain
+		ifTrue: [ ^ 1 ].
 	^ self propertyAt: #dimension
 ]
 

@@ -17,19 +17,21 @@ ModularIntegerRing class >> new: anInteger [
 
 { #category : #comparing }
 ModularIntegerRing >> = anObject [
-	self == anObject ifTrue: [^ true].
-	(anObject isKindOf: ModularIntegerRing) ifFalse: [^ false].
-	^ self modulus = anObject modulus
+	self == anObject
+		ifTrue: [ ^ true ].
+	(anObject isKindOf: ModularIntegerRing)
+		ifFalse: [ ^ false ].
+	^ self modulus = anObject modulus 
 ]
 
 { #category : #random }
 ModularIntegerRing >> atRandom: aRandom [
-	^ self project: (self modulus atRandom: aRandom) - 1
+	^ self project: (self modulus atRandom: aRandom) - 1 
 ]
 
 { #category : #random }
 ModularIntegerRing >> atRandom: aRandom bits: bitSize [
-	^ self atRandom: aRandom
+	^ self atRandom: aRandom 
 ]
 
 { #category : #accessing }
@@ -39,12 +41,12 @@ ModularIntegerRing >> base [
 
 { #category : #accessing }
 ModularIntegerRing >> characteristic [
-	^ self modulus
+	^ self modulus 
 ]
 
 { #category : #enumerating }
 ModularIntegerRing >> do: aBlock [
-	0 to: self modulus - 1 do: [:i| aBlock value: (self project: i)]
+	0 to: self modulus - 1 do: [ :i | aBlock value: (self project: i) ] 
 ]
 
 { #category : #private }
@@ -143,7 +145,7 @@ ModularIntegerRing >> printOn: aStream [
 
 { #category : #morphisms }
 ModularIntegerRing >> project: anInteger [
-	^ self representative: anInteger \\ modulus
+	^ self representative: anInteger \\ modulus 
 ]
 
 { #category : #accessing }
