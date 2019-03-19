@@ -124,8 +124,8 @@ MathematicsTest >> testCyclotomicPolynomials2 [
 { #category : #tests }
 MathematicsTest >> testExtendedEuclid [
 	| a b euclid |
-	a := '-1000 to: 1000 :: atRandom'.
-	b := '-1000 to: 1000 :: atRandom'.
+	a := (-1000 to: 1000) atRandom.
+	b := (-1000 to: 1000) atRandom.
 	euclid := ExtendedEuclid
 		on:
 			{a.
@@ -150,15 +150,15 @@ MathematicsTest >> testFieldAutomorphisms [
 
 { #category : #tests }
 MathematicsTest >> testFreeAlgebra [
-	| A f g h |
-	A := QQ freeAlgebraIn: #(x y z).
-	f := A atRandomBits: 100.
-	g := A atRandomBits: 100.
-	h := A atRandomBits: 100.
-	self assert: (f*g)*h = (f*(g*h)). "associativity"
-	self assert: (f+g)*h = (f*h + (g*h)). "distributivity"
-	self assert: f * A one = f.
-	self assert: A one * f = f
+	| a f g h |
+	a := QQ freeAlgebraIn: #(x y z).
+	f := a atRandomBits: 100.
+	g := a atRandomBits: 100.
+	h := a atRandomBits: 100.
+	self assert: f * g * h equals: f * (g * h).
+	self assert: (f + g) * h equals: f * h + (g * h).
+	self assert: f * a one equals: f.
+	self assert: a one * f equals: f
 ]
 
 { #category : #tests }
@@ -192,7 +192,7 @@ MathematicsTest >> testFunctionComposition3 [
 { #category : #tests }
 MathematicsTest >> testFunctionNewFrom [
 	| f g |
-	'f := (QQ raisedTo: 3) endomorphisms atRandomBits: 1000'.	"f is a LinearMap"
+	f := (QQ raisedTo: 3) endomorphisms atRandomBits: 1000.	"f is a LinearMap"
 	g := f as: Function.	"downgrade it to a simple Function, not a LinearMap any more"
 	self assert: (g as: LinearMap) equals: f
 ]
@@ -423,18 +423,29 @@ MathematicsTest >> testRealIntervalIntersects [
 MathematicsTest >> testSmallPrimeField [
 	| p F E |
 	p := 20 atRandom nextPrime.
-	F := ZZ/p.
+	F := ZZ / p.
 	E := SmallPrimeField new: p.
-	F do: [:a|
-		F do: [:b| | c d |
-			c := E ! a representative.
-			d := E ! b representative.
-			self assert: (a+b) representative = (c+d) representative.
-			self assert: (a-b) representative = (c-d) representative.
-			self assert: (a*b) representative = (c*d) representative.
-			b isZero ifFalse:
-				[self assert: (a/b) representative = (c/d) representative.
-				self assert: b reciprocal representative = d reciprocal representative]]]
+	F
+		do: [ :a | 
+			F
+				do: [ :b | 
+					| c d |
+					c := E ! a representative.
+					d := E ! b representative.
+					self
+						assert: (a + b) representative
+						equals: (c + d) representative.
+					self
+						assert: (a - b) representative
+						equals: (c - d) representative.
+					self
+						assert: (a * b) representative
+						equals: (c * d) representative.
+					b isZero
+						ifFalse: [ self assert: (a / b) representative equals: (c / d) representative.
+							self
+								assert: b reciprocal representative
+								equals: d reciprocal representative ] ] ]
 ]
 
 { #category : #tests }
@@ -443,18 +454,20 @@ MathematicsTest >> testSmallPrimeFieldTables [
 	p := 20 atRandom nextPrime.
 	F := SmallPrimeField new: p.
 	g := F primitiveRoot.
-	1 to: p-1 do: [:n| self assert: (F expTable at: n) = (g raiseTo: n) representative].
-	0 to: p-2 do: [:n| self assert: (F logTable at: (g raiseTo: n) representative) = n]
+	1 to: p - 1 do:
+		[ :n | self assert: (F expTable at: n) equals: (g raisedTo: n) representative ].
+	0 to: p - 2 do:
+		[ :n | self assert: (F logTable at: (g raisedTo: n) representative) equals: n ]
 ]
 
 { #category : #tests }
 MathematicsTest >> testSquareRootModp [
 	| F a |
-	100 timesRepeat:
-		[F := PrimeField new: (1000 atRandom + 1) nextPrime.
-		a := F atRandom.
-		a := a squared.
-		self assert: a squareRoot * a squareRoot = a]
+	100
+		timesRepeat: [ F := PrimeField new: (1000 atRandom + 1) nextPrime.
+			a := F atRandom.
+			a := a squared.
+			self assert: a squareRoot * a squareRoot equals: a ]
 ]
 
 { #category : #tests }
@@ -462,11 +475,13 @@ MathematicsTest >> testWord [
 	| x y |
 	x := Word x: #x.
 	y := Word x: #y.
-	self assert: (x*y) * y reciprocal = x.
-	self assert: (x*y * (y reciprocal * x reciprocal)) isEmpty.
-	self assert: x*y*y * (y reciprocal * y reciprocal * x) = (x raisedTo: 2).
-	self assert: x * (y * y * x) = (x * y * (y * x)).
-	self assert: (x*y * (x*y) reciprocal) isEmpty
+	self assert: x * y * y reciprocal equals: x.
+	self assert: (x * y * (y reciprocal * x reciprocal)) isEmpty.
+	self
+		assert: x * y * y * (y reciprocal * y reciprocal * x)
+		equals: (x raisedTo: 2).
+	self assert: x * (y * y * x) equals: x * y * (y * x).
+	self assert: (x * y * (x * y) reciprocal) isEmpty
 ]
 
 { #category : #tests }
@@ -486,9 +501,9 @@ MathematicsTest >> testWordOrdering [
 { #category : #tests }
 MathematicsTest >> testYoungTableauxSemistandard [
 	| T |
-	T := YoungTableau rows: #((1 1 2 2 3) (2 3 4 4) (4) (5)).
+	T := YoungTableau rows: #(#(1 1 2 2 3) #(2 3 4 4) #(4) #(5)).
 	self assert: T isSemistandard.
-	self assert: T shape = #(5 4 1 1)
+	self assert: T shape equals: #(5 4 1 1)
 ]
 
 { #category : #tests }

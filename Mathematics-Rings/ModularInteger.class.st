@@ -201,6 +201,6 @@ ModularInteger >> squareRoot [
 	p == 2
 		ifTrue: [ ^ self ].
 	(p bitAnd: 3) == 3
-		ifTrue: [ ^ self raiseTo: (p + 1) // 4 ].
+		ifTrue: [ ^ self raisedTo: (p + 1) // 4 ].
 	^ self parent squareRootOf: self
 ]

@@ -37,8 +37,8 @@ TonelliShanks >> squareRootOf: anInteger [
 	y := z. r := e. x := a raisedTo: q-1 // 2 modulo: p. b := a*x squared \\ p. x := a*x \\ p.
 	[b == 1 ifTrue: [^ x].
 	b2 := b. m := 1. [(b2 := b2 squared \\ p) == 1] whileFalse: [m := m + 1].
-	(b raisedTo: (2 raiseTo: m) modulo: p) == 1 ifFalse: [self halt].
-	(m > 1 and: [(b raisedTo: (2 raiseTo: (m-1)) modulo: p) == 1]) ifTrue: [self halt].
+	(b raisedTo: (2 raisedTo: m) modulo: p) == 1 ifFalse: [self halt].
+	(m > 1 and: [(b raisedTo: (2 raisedTo: (m-1)) modulo: p) == 1]) ifTrue: [self halt].
 	m = r ifTrue: [^ nil]. "the input is not a quadratic residue modulo p"
 	t := y. r - m - 1 timesRepeat: [t := t squared \\ p]. "t := y ^ (2 ^ (r - m - 1)) mod p"
 	y := t squared \\ p. r := m. x := x * t \\ p. b := b * y \\ p] repeat
