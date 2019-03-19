@@ -163,15 +163,6 @@ ModularInteger >> printOn: aStream [
 ]
 
 { #category : #operations }
-ModularInteger >> raiseTo: anInteger [ "^ "
-	^ self class in: parent representative: (representative raisedTo: anInteger modulo: self modulus)
-"	anInteger = 1 ifTrue: [^ self].
-	anInteger = 0 ifTrue: [^ self one].
-	anInteger < 0 ifTrue: [^ self reciprocal ^ anInteger negated].
-	^ (self * self ^ (anInteger // 2)) * (self ^ (anInteger \\ 2))"
-]
-
-{ #category : #operations }
 ModularInteger >> raisedTo: anInteger [
 
 	^ self class
@@ -202,10 +193,14 @@ ModularInteger >> representative: anInteger [
 { #category : #operations }
 ModularInteger >> squareRoot [
 	"Assuming the receiver is a quadratic residue, answer a square root."
+
 	| p |
-	representative == 0 ifTrue: [^ self].
+	representative == 0
+		ifTrue: [ ^ self ].
 	p := self modulus.
-	p == 2 ifTrue: [^ self].
-	(p bitAnd: 3) == 3 ifTrue: [^ self raiseTo: (p + 1 // 4)].
+	p == 2
+		ifTrue: [ ^ self ].
+	(p bitAnd: 3) == 3
+		ifTrue: [ ^ self raiseTo: (p + 1) // 4 ].
 	^ self parent squareRootOf: self
 ]

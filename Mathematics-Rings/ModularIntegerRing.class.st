@@ -179,11 +179,14 @@ ModularIntegerRing >> tuple: anInteger evaluating: aBlock [
 
 { #category : #tuples }
 ModularIntegerRing >> tupleClass [
-	^ self modulus = 2 ifTrue: [^ BitTuple] ifFalse: [ModularTuple]
+	^ self modulus = 2
+		ifTrue: [ ^ BitTuple ]
+		ifFalse: [ ModularTuple ] 
 ]
 
 { #category : #operations }
 ModularIntegerRing >> units [
 	"Answer the multiplicative group of units of the receiver (i.e., elements that have multiplicative inverse)."
-	^ ModularIntegersUnitGroup on: self
+
+	^ ModularIntegersUnitGroup on: self 
 ]

@@ -22,7 +22,7 @@ ModularTest >> testGamma0NumberOfCusps [
 
 { #category : #tests }
 ModularTest >> testGammaIndex [
-	'self assert: (1 to: 19 :: collect: [:each| PrincipalCongruenceSubgroup new: each :: index]) =  #(1 6 24 48 120 144 336 384 648 720 1320 1152 2184 2016 2880 3072 4896 3888 6840)'
+	self assert: ((1 to: 19) collect: [:each| (PrincipalCongruenceSubgroup new: each) index]) =  #(1 6 24 48 120 144 336 384 648 720 1320 1152 2184 2016 2880 3072 4896 3888 6840)
 ]
 
 { #category : #tests }
