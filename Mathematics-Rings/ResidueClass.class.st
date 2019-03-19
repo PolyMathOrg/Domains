@@ -13,7 +13,9 @@ Class {
 
 { #category : #'instance creation' }
 ResidueClass class >> in: aQuotientRing representative: anObject [
-	^ self new parent: aQuotientRing; representative: anObject
+	^ self new
+		parent: aQuotientRing;
+		representative: anObject
 ]
 
 { #category : #operations }

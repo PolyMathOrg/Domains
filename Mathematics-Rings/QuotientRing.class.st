@@ -42,26 +42,29 @@ QuotientRing class >> mod: anIdeal [
 
 { #category : #comparing }
 QuotientRing >> = anObject [
-	self == anObject ifTrue: [^ true].
-	(anObject isKindOf: QuotientRing) ifFalse: [^ false].
-	^ self relations = anObject relations
+	self == anObject
+		ifTrue: [ ^ true ].
+	(anObject isKindOf: QuotientRing)
+		ifFalse: [ ^ false ].
+	^ self relations = anObject relations 
 ]
 
 { #category : #random }
 QuotientRing >> atRandom: aRandom [
 	^ self project: (self relations remainderAtRandom: aRandom)
-"	^ self project: (self base atRandom: aRandom)"
+	"	^ self project: (self base atRandom: aRandom)" 
 ]
 
 { #category : #random }
 QuotientRing >> atRandom: aRandom bits: bitSize [
-"	^ self atRandom: aRandom"
-	^ self project: (self base atRandom: aRandom bits: bitSize)
+	"	^ self atRandom: aRandom"
+
+	^ self project: (self base atRandom: aRandom bits: bitSize) 
 ]
 
 { #category : #accessing }
 QuotientRing >> base [
-	^ self relations scalars
+	^ self relations scalars 
 ]
 
 { #category : #private }
@@ -80,13 +83,15 @@ QuotientRing >> buildProjection [
 { #category : #accessing }
 QuotientRing >> codimension [
 	"Answer the Krull codimension of the receiver."
+
 	^ self base dimension - self dimension
 ]
 
 { #category : #morphisms }
 QuotientRing >> conjugation [
 	"Answer the companion automorphism of the receiver, i.e. the Frobenius automorphism."
-	^ self frobenius
+
+	^ self frobenius 
 ]
 
 { #category : #enumerating }
@@ -107,12 +112,12 @@ QuotientRing >> elementClass [
 
 { #category : #accessing }
 QuotientRing >> generators [
-	^ (self base generators ifNil: [^ nil]) apply: self projection
+	^ (self base generators ifNil: [ ^ nil ]) apply: self projection 
 ]
 
 { #category : #comparing }
 QuotientRing >> hash [
-	^ self relations hash
+	^ self relations hash 
 ]
 
 { #category : #private }
@@ -197,6 +202,7 @@ QuotientRing >> isUnit: anElement [
 { #category : #morphisms }
 QuotientRing >> lifting [
 	"Answer the map from the receiver to the base ring lifting the canonical projection."
+
 	^ self projection section
 ]
 
@@ -277,6 +283,7 @@ QuotientRing >> relators [
 { #category : #private }
 QuotientRing >> representative: anElement [
 	"Answer the residue class corresponding to the given representative (which is already reduced)."
+
 	^ self elementClass in: self representative: anElement
 ]
 

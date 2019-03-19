@@ -36,12 +36,13 @@ RationalIntegerRing >> / anInteger [
 
 { #category : #comparing }
 RationalIntegerRing >> <= aDomain [
-	^ aDomain isRing and: [(aDomain includes: 1) and: [aDomain includes: 0]]
+	^ aDomain isRing
+		and: [ (aDomain includes: 1) and: [ aDomain includes: 0 ] ] 
 ]
 
 { #category : #comparing }
 RationalIntegerRing >> = anObject [
-	^ anObject class == self class
+	^ anObject class == self class 
 ]
 
 { #category : #operations }
@@ -62,13 +63,14 @@ RationalIntegerRing >> atRandom: aRandom bits: bitSize [
 
 { #category : #accessing }
 RationalIntegerRing >> characteristic [
-	^ 0
+	^ 0 
 ]
 
 { #category : #accessing }
 RationalIntegerRing >> dimension [
 	"Answer the Krull dimension of the receiver."
-	^ 1
+
+	^ 1 
 ]
 
 { #category : #enumerating }
@@ -81,7 +83,7 @@ RationalIntegerRing >> do: aBlock [
 
 { #category : #operations }
 RationalIntegerRing >> fractions [
-	^ QQ
+	^ QQ 
 ]
 
 { #category : #comparing }
@@ -137,19 +139,21 @@ RationalIntegerRing >> isNoetherian [
 
 { #category : #testing }
 RationalIntegerRing >> isReal [
-	^ true
+	^ true 
 ]
 
 { #category : #testing }
 RationalIntegerRing >> isReduced [
 	"Answer true if the receiver has no non-zero nilpotent elements, or equivalently if it has no non-zero elements with square zero, i.e. x^2 = 0 implies x = 0."
-	^ true
+
+	^ true 
 ]
 
 { #category : #testing }
 RationalIntegerRing >> isUnit: anInteger [
 	"Answer true if the argument is invertible."
-	^ anInteger = 1 or: [anInteger = -1]
+
+	^ anInteger = 1 or: [ anInteger = -1 ] 
 ]
 
 { #category : #testing }

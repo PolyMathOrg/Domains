@@ -59,7 +59,8 @@ ModularIntegerRing >> hash [
 
 { #category : #testing }
 ModularIntegerRing >> includes: anObject [
-	^ anObject class = self elementClass and: [anObject modulus = self modulus]
+	^ anObject class = self elementClass
+		and: [ anObject modulus = self modulus ]
 ]
 
 { #category : #testing }
@@ -80,7 +81,8 @@ ModularIntegerRing >> isIntegralDomain [
 { #category : #testing }
 ModularIntegerRing >> isReduced [
 	"Answer true if the receiver has no non-zero nilpotent elements, or equivalently if it has no non-zero elements with square zero, i.e. x^2 = 0 implies x = 0."
-	^ modulus = 0 or: [modulus isSquareFree]
+
+	^ modulus = 0 or: [ modulus isSquareFree ]
 ]
 
 { #category : #testing }
@@ -116,7 +118,9 @@ ModularIntegerRing >> modulus: anInteger [
 
 { #category : #private }
 ModularIntegerRing >> modulusFactors [
-	^ self propertyAt: #modulusFactors ifAbsentPut: [self modulus factors]
+	^ self
+		propertyAt: #modulusFactors
+		ifAbsentPut: [ self modulus factors ]
 ]
 
 { #category : #enumerating }
