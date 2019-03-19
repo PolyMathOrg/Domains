@@ -107,7 +107,7 @@ QuotientRing >> do: aBlock [
 
 { #category : #private }
 QuotientRing >> elementClass [
-	^ ResidueClass
+	^ ResidueClass 
 ]
 
 { #category : #accessing }
@@ -153,7 +153,9 @@ QuotientRing >> isCommutative [
 { #category : #testing }
 QuotientRing >> isField [
 	"Answer true if the receiver forms a residue field."
-	^ self base isTrivial not and: [self base isCommutative and: [self relations isMaximal]]
+
+	^ self base isTrivial not
+		and: [ self base isCommutative and: [ self relations isMaximal ] ]
 ]
 
 { #category : #testing }

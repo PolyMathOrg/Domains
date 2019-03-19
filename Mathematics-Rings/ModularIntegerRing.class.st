@@ -36,7 +36,7 @@ ModularIntegerRing >> atRandom: aRandom bits: bitSize [
 
 { #category : #accessing }
 ModularIntegerRing >> base [
-	^ ZZ
+	^ ZZ 
 ]
 
 { #category : #accessing }
@@ -103,9 +103,16 @@ ModularIntegerRing >> isZeroDivisor: anElement [
 { #category : #morphisms }
 ModularIntegerRing >> lifting [
 	"Answer the map from the receiver to the rational integers lifting the canonical projection."
+
 	| h |
 	h := modulus // 2.
-	^ self to: self base evaluating: [:f| | r | (r := f representative) > h ifTrue: [r - modulus] ifFalse: [r]]
+	^ self
+		to: self base
+		evaluating: [ :f | 
+			| r |
+			(r := f representative) > h
+				ifTrue: [ r - modulus ]
+				ifFalse: [ r ] ]
 ]
 
 { #category : #accessing }
@@ -140,7 +147,11 @@ ModularIntegerRing >> primeIdealsDo: aBlock [
 
 { #category : #printing }
 ModularIntegerRing >> printOn: aStream [
-	aStream print: self base; nextPut: $/; print: self modulus; print: self base
+	aStream
+		print: self base;
+		nextPut: $/;
+		print: self modulus;
+		print: self base 
 ]
 
 { #category : #morphisms }

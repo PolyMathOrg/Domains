@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #tests }
-ModularIntegerRingTest >> testModularTestRing [
+ModularIntegerRingTest >> testModularIntegerRing [
 	"Reproduce example from SAGE
 	 http://doc.sagemath.org/html/en/tutorial/tour_numtheory.html"
 

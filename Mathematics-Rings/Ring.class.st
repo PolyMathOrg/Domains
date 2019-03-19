@@ -496,8 +496,13 @@ Ring >> polynomialsIn: anIntegerOrCollection ordering: aMonomialOrdering [
 
 { #category : #enumerating }
 Ring >> primeIdealsDo: aBlock [
-	self isField ifTrue: [aBlock value: self zeroIdeal. ^ self].
-	self idealsDo: [:each| each isPrime ifTrue: [aBlock value: each]]
+	self isField
+		ifTrue: [ aBlock value: self zeroIdeal.
+			^ self ].
+	self
+		idealsDo: [ :each |  
+			each isPrime
+				ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #operations }
@@ -593,7 +598,10 @@ Ring >> units [
 
 { #category : #enumerating }
 Ring >> unitsDo: aBlock [
-	self do: [:each| (self isUnit: each) ifTrue: [aBlock value: each]]
+	self
+		do: [ :each |  
+			(self isUnit: each)
+				ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : #accessing }
