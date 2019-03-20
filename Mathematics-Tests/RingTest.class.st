@@ -275,13 +275,15 @@ RingTest >> testPrimeFieldLogarithm [
 RingTest >> testPrimeFieldPrimitiveRoot [
 	| p F g i x |
 	p := 100 atRandom nextPrime.
-	F := ZZ/p.
+	F := ZZ / p.
 	g := F primitiveRoot.
-	self assert: g multiplicativeOrder = (p-1).
+	self assert: g multiplicativeOrder equals: p - 1.
 	i := 1.
 	x := g.
-	[x = F one] whileFalse: [x := x*g. i := i+1].
-	self assert: i = (p-1)
+	[ x = F one ]
+		whileFalse: [ x := x * g.
+			i := i + 1 ].
+	self assert: i equals: p - 1
 ]
 
 { #category : #'finite rings' }
@@ -299,13 +301,14 @@ RingTest >> testPrimeRing [
 { #category : #'finite rings' }
 RingTest >> testPrimeRingCanonicalProjections [
 	"Canonical homomorphism from ZZ/<p^n> to ZZ/<p^m> with 1 <= m <= n."
+
 	| p n m A B phi a b |
 	p := 100 atRandom nextPrime.
 	n := 4 atRandom.
-	'A := ZZ/(p^n).
-		m := n atRandom.
-		B := ZZ/(p^m).
-		phi := A  B'.
+	A := ZZ / (p raised: n).
+	m := n atRandom.
+	B := ZZ / (p raised: m).
+	"phi := A  B'"
 	a := A atRandom.
 	b := phi value: a.
 	self assert: (B includes: b).
@@ -347,9 +350,9 @@ RingTest >> testQuotientRing2 [
 	pi := Q projection.
 	self assert: (pi value: g) isZero.
 	self assert: (Q includes: (pi value: f)).
-	self testRingHomomorphism: pi.
-"	self assert: (pi value: f) = (pi value: f + g)."
-"	h := Q atRandomBits: 100.
+	self testRingHomomorphism: pi
+	"	self assert: (pi value: f) = (pi value: f + g)."
+	"	h := Q atRandomBits: 100.
 	self assert: (pi value: (pi section value: h)) = h"
 ]
 
@@ -378,16 +381,17 @@ RingTest >> testRing: R [
 	a := R atRandomBits: 100.
 	b := R atRandomBits: 100.
 	c := R atRandomBits: 100.
-	self assert: a * one = a.
-	self assert: one * a = a.
-	self assert: zero * a = zero.
-	self assert: a * zero = zero.
-	self assert: zero + a = a.
-	self assert: a + zero = a.
-	self assert: a + b = (b + a). "commutativity of addition"
-	self assert: (a + b + c) = (a + (b + c)). "associativity of addition"
-	self assert: (a * b * c) = (a * (b * c)). "associativity of multiplication"
-	R isCommutative ifTrue: [self assert: a * b = (b * a)]. "commutativity of multiplication"
+	self assert: a * one equals: a.
+	self assert: one * a equals: a.
+	self assert: zero * a equals: zero.
+	self assert: a * zero equals: zero.
+	self assert: zero + a equals: a.
+	self assert: a + zero equals: a.
+	self assert: a + b equals: b + a.
+	self assert: a + b + c equals: a + (b + c).
+	self assert: a * b * c equals: a * (b * c).
+	R isCommutative
+		ifTrue: [ "commutativity of multiplication" self assert: a * b equals: b * a ]
 ]
 
 { #category : #general }
@@ -397,10 +401,14 @@ RingTest >> testRingHomomorphism: phi [
 	S := phi codomain.
 	a := R atRandomBits: 10.
 	b := R atRandomBits: 10.
-	self assert: (phi value: R zero) = S zero.
-	self assert: (phi value: R one) = S one.
-	self assert: (phi value: a + b) = ((phi value: a) + (phi value: b)).
-	self assert: (phi value: a * b) = ((phi value: a) * (phi value: b)) "this sometimes fails because f and -f are not equal regular functions, for example"
+	self assert: (phi value: R zero) equals: S zero.
+	self assert: (phi value: R one) equals: S one.
+	self
+		assert: (phi value: a + b)
+		equals: (phi value: a) + (phi value: b).
+	self
+		assert: (phi value: a * b)
+		equals: (phi value: a) * (phi value: b)	"this sometimes fails because f and -f are not equal regular functions, for example"
 ]
 
 { #category : #general }

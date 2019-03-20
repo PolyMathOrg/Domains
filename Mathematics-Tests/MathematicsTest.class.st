@@ -54,15 +54,14 @@ MathematicsTest >> testCartesianProduct [
 { #category : #tests }
 MathematicsTest >> testContinuedFractions [
 	| x |
-	x := ContinuedFraction fromFraction: 415/93.
-	self assert: x coefficients = (4, 2, 6, 7).
-	self assert: x asFraction = (415/93)
+	x := ContinuedFraction fromFraction: 415 / 93.
+	self assert: x coefficients equals: 4 , 2 , 6 , 7.
+	self assert: x asFraction equals: 415 / 93
 ]
 
 { #category : #tests }
 MathematicsTest >> testContinuedFractions2 [
-	-2 to: 2 by: 1/2 do:
-		[:x| self assert: (ContinuedFraction fromFraction: x) asFraction = x]
+	-2 to: 2 by: 1 / 2 do: [ :x | self assert: (ContinuedFraction fromFraction: x) asFraction equals: x ]
 ]
 
 { #category : #tests }
@@ -70,30 +69,30 @@ MathematicsTest >> testContinuedFractionsE [
 	| x e |
 	e := ContinuedFraction e.
 	x := e convergentAt: 20.
-	self assert: (x asFloat - 1 exp) abs < 0.0000001
+	self assert: (x asFloat - 1 exp) abs < 0.0000001 
 ]
 
 { #category : #tests }
 MathematicsTest >> testContinuedFractionsGoldenRatio [
 	| x phi |
 	phi := ContinuedFraction phi.
-	x := phi convergentAt: 20.
+	x := phi convergentAt: 20. 
 	self assert: (x asFloat - 1.6180339887) abs < 0.000001
 ]
 
 { #category : #tests }
 MathematicsTest >> testContinuedFractionsGoldenRatio2 [
-	| phi denominators |
+	| phi denominators | 
 	phi := ContinuedFraction phi.
-	denominators := phi convergents collect: [:each| each denominator].
+	denominators := phi convergents collect: [ :each | each denominator ].
 	self assert: (denominators equals: Sequence fibonacci << 1 upTo: 100)
 ]
 
 { #category : #tests }
 MathematicsTest >> testContinuedFractionsNegated [
 	| x |
-	x := ContinuedFraction fromFraction: 415/93.
-	self assert: x negated asFraction = (-415/93)
+	x := ContinuedFraction fromFraction: 415 / 93.
+	self assert: x negated asFraction equals: -415 / 93
 ]
 
 { #category : #tests }
