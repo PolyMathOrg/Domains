@@ -127,7 +127,7 @@ RootSystem >> coxeterElement [
 	| O answer |
 	O := ambient automorphisms orthogonal.
 	answer := ambient id.
-	'self simpleRoots do: [:each| answer := answer î (O reflectionAt: each)]'.
+	self simpleRoots do: [:each| answer := answer compose: (O reflectionAt: each)].
 	^ answer
 ]
 
