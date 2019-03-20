@@ -18,12 +18,16 @@ ComplexDisk class >> center: aComplex radius: aNumber [
 
 { #category : #arithmetic }
 ComplexDisk >> * aDisk [
-	^ self class center: aDisk center * self center radius: self radius * aDisk radius
+	^ self class
+		center: aDisk center * self center
+		radius: self radius * aDisk radius 
 ]
 
 { #category : #arithmetic }
 ComplexDisk >> + aDisk [
-	^ self class center: aDisk center + self center radius: self radius + aDisk radius
+	^ self class
+		center: aDisk center + self center 
+		radius: self radius + aDisk radius
 ]
 
 { #category : #accessing }
@@ -33,42 +37,49 @@ ComplexDisk >> center [
 
 { #category : #'accessing-private' }
 ComplexDisk >> center: aComplex [
-	center := aComplex
+	center := aComplex 
 ]
 
 { #category : #accessing }
 ComplexDisk >> enclosingBox [
 	"Answer a ComplexBox that encloses the receiver."
+
 	^ ComplexBox center: self center radius: self radius
 ]
 
 { #category : #testing }
 ComplexDisk >> includes: anObject [
-	^ (anObject - center) norm2 <= radius squared
+	^ (anObject - center) norm2 <= radius squared 
 ]
 
 { #category : #testing }
 ComplexDisk >> intersects: aBall [
 	self flag: #fix.
-	^ (aBall center - center) norm2 <= (self radius + aBall radius) squared
+	^ (aBall center - center) norm2
+		<= (self radius + aBall radius) squared
 ]
 
 { #category : #accessing }
 ComplexDisk >> midpoint [
-	^ self center
+	^ self center 
 ]
 
 { #category : #printing }
 ComplexDisk >> printOn: aStream [
-	aStream nextPutAll: 'D('; print: self center; nextPut: $,; print: self radius; nextPut: $)
+	aStream
+		nextPutAll: 'D(';
+		print: self center;
+		nextPut: $,; 
+		print: self radius;
+		nextPut: $)
 ]
 
 { #category : #accessing }
 ComplexDisk >> radius [
-	^ radius
+	^ radius 
 ]
 
 { #category : #'accessing-private' }
 ComplexDisk >> radius: aNumber [
-	radius := aNumber
+	radius := aNumber 
 ]
