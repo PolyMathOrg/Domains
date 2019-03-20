@@ -25,7 +25,7 @@ OrthogonalGroup >> atRandom: aRandom [
 	space dimension "heuristic"
 		timesRepeat:
 			[[(v := space atRandom: aRandom) isZero] whileTrue.
-			answer := 'answer î (self reflectionAt: v)'].
+			answer := answer compose: (self reflectionAt: v)].
 	^ answer
 ]
 
@@ -36,7 +36,7 @@ OrthogonalGroup >> atRandom: aRandom bits: bitSize [
 	space dimension "heuristic"
 		timesRepeat:
 			[[(v := space atRandom: aRandom bits: bitSize / space dimension) isZero] whileTrue.
-			answer := 'answer î (self reflectionAt: v)'].
+			answer := answer compose: (self reflectionAt: v)].
 	^ answer
 ]
 

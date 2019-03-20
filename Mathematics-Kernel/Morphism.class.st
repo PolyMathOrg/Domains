@@ -117,9 +117,10 @@ Morphism >> cokernel [
 ]
 
 { #category : #operations }
-Morphism >> comp: aMorphism [
+Morphism >> compose: aMorphism [
 	"Answer the composition of the receiver with the argument.
 	Given the argument f:X -> Y and the receiver g:Y -> Z, answer gîf:X -> Z."
+
 	^ self subclassResponsibility
 ]
 
