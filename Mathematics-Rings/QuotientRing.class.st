@@ -127,7 +127,7 @@ QuotientRing >> idealClass [
 
 { #category : #testing }
 QuotientRing >> includes: anObject [
-	(anObject is: #ResidueClass) ifFalse: [^ false].
+	(anObject class == #ResidueClass) ifFalse: [^ false].
 	^ self base includes: anObject representative
 ]
 

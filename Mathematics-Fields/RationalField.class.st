@@ -7,21 +7,22 @@ Class {
 	#category : #'Mathematics-Fields'
 }
 
-{ #category : #initialization }
+{ #category : #'class initialization' }
 RationalField class >> initialize [
-	super initialize.
 	Smalltalk at: #QQ put: self new
 ]
 
 { #category : #elements }
 RationalField >> ! anObject [
-	(anObject isInteger or: [anObject isFraction]) ifTrue: [^ anObject].
-	^ super ! anObject
+	(anObject isInteger or: [ anObject isFraction ])
+		ifTrue: [ ^ anObject ].
+	^ super ! anObject 
 ]
 
 { #category : #comparing }
 RationalField >> <= aDomain [
-	^ aDomain isField and: [(aDomain includes: 1) and: [aDomain includes: 0]]
+	^ aDomain isField
+		and: [ (aDomain includes: 1) and: [ aDomain includes: 0 ] ]
 ]
 
 { #category : #comparing }
@@ -31,7 +32,7 @@ RationalField >> = anObject [
 
 { #category : #operations }
 RationalField >> adic: aPrime [
-	^ AdicField p: aPrime
+	^ AdicField p: aPrime 
 ]
 
 { #category : #operations }
@@ -58,8 +59,13 @@ RationalField >> degree [
 { #category : #enumerating }
 RationalField >> do: aBlock [
 	"Iterate over the rational numbers by breadth-first traversal of the Calkin-Wilf tree. This is an extension of the Calkin-Wilf sequence to include 0 and the negative numbers."
+
 	aBlock value: 0.
-	self positiveDo: [:each| aBlock value: each; value: each negated]
+	self
+		positiveDo: [ :each | 
+			aBlock
+				value: each;
+				value: each negated ]
 ]
 
 { #category : #morphisms }
@@ -69,7 +75,9 @@ RationalField >> embed: anInteger [
 
 { #category : #morphisms }
 RationalField >> embedding [
-	^ self propertyAt: #embedding ifAbsentPut: [(self integers to: self evaluating: [:x| x]) name: 'i'] "because in Smalltalk Fractions of denominator 1 are always reduced to their Integer numerator"
+	^ self
+		propertyAt: #embedding
+		ifAbsentPut: [ "because in Smalltalk Fractions of denominator 1 are always reduced to their Integer numerator" (self integers to: self evaluating: [ :x | x ]) name: 'i' ]
 ]
 
 { #category : #operations }
@@ -98,53 +106,58 @@ RationalField >> ideal [
 
 { #category : #testing }
 RationalField >> includes: anObject [
-	^ anObject isNumber and: [anObject isRational or: [anObject isFloat]]
+	^ anObject isNumber
+		and: [ anObject isRational or: [ anObject isFloat ] ]
 ]
 
 { #category : #accessing }
 RationalField >> integers [
-	^ ZZ
+	^ ZZ 
 ]
 
 { #category : #testing }
 RationalField >> isField [
-	^ true
+	^ true 
 ]
 
 { #category : #testing }
 RationalField >> isFinite [
-	^ false
+	^ false 
 ]
 
 { #category : #testing }
 RationalField >> isPrime [
 	"Q is a prime field (it has no proper subfields)."
-	^ true
+
+	^ true 
 ]
 
 { #category : #testing }
 RationalField >> isReal [
-	^ true
+	^ true 
 ]
 
 { #category : #testing }
 RationalField >> isUnit: anIntegerOrFraction [
 	"Answer true if the argument is invertible."
+
 	^ anIntegerOrFraction ~= 0
 ]
 
 { #category : #elements }
 RationalField >> one [
-	^ 1
+	^ 1 
 ]
 
 { #category : #enumerating }
 RationalField >> positiveDo: aBlock [
 	"Iterate over the rational numbers by breadth-first traversal of the Calkin-Wilf tree.
 	The nodes of the Calkin-Wilf tree of any given depth level have height strictly greater than the height of their parents."
+
 	| q |
 	q := 1.
-	[aBlock value: q. q := 1 / (2 * q floor - q + 1)] repeat
+	[ aBlock value: q.
+	q := 1 / (2 * q floor - q + 1) ] repeat
 ]
 
 { #category : #printing }
@@ -154,7 +167,7 @@ RationalField >> printOn: aStream [
 
 { #category : #operations }
 RationalField >> realClosure [
-	^ RR
+	^ RR 
 ]
 
 { #category : #accessing }

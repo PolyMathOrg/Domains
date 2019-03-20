@@ -517,7 +517,8 @@ Domain >> into: aCodomain evaluating: aBlock [
 
 { #category : #testing }
 Domain >> is: aSymbol [
-	^ aSymbol == #Set or: [aSymbol == #Domain or: [super is: aSymbol]]
+	^ aSymbol == #Set
+		or: [ aSymbol == #Domain or: [ super is: aSymbol ] ]
 ]
 
 { #category : #'testing-category' }

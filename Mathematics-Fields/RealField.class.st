@@ -86,7 +86,7 @@ RealField >> one [
 
 { #category : #printing }
 RealField >> printOn: aStream [
-	aStream nextPut: Character RR
+	aStream nextPut: $ℝ
 ]
 
 { #category : #accessing }
