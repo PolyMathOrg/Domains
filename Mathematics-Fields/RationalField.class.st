@@ -172,19 +172,28 @@ RationalField >> realClosure [
 
 { #category : #accessing }
 RationalField >> size [
-	^ Aleph new
+	^ Aleph new 
 ]
 
 { #category : #accessing }
 RationalField >> valuation [
 	"Answer the absolute value valuation."
-	^ Function from: self to: self evaluating: [:x| x abs]
+	
+	^ Function from: self to: self evaluating: [ :x | x abs ]
 ]
 
 { #category : #accessing }
 RationalField >> valuation: p [
 	"Answer the p-adic valuation."
-	^ Function from: self to: NN evaluating: [:x| p / ((x numerator factors occurrencesOf: p) - (x denominator factors occurrencesOf: p))]
+
+	^ Function
+		from: self
+		to: NN
+		evaluating: [ :x | 
+			p
+				/
+					((x numerator factors occurrencesOf: p)
+						- (x denominator factors occurrencesOf: p)) ]
 ]
 
 { #category : #elements }
