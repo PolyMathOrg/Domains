@@ -98,15 +98,18 @@ Group >> \ aSubgroup [
 { #category : #operations }
 Group >> \\ aSubgroup [
 	"Answer the set of right cosets of the receiver by aSubgroup."
+
 	| answer |
 	answer := Set new.
-	self do: [:each| answer add: (RightCoset on: aSubgroup representative: each)].
+	self
+		do: [ :each | answer add: (RightCoset on: aSubgroup representative: each) ].
 	^ answer
 ]
 
 { #category : #operations }
 Group >> abelianization [
 	"Answer the receiver 'made abelian'."
+
 	^ (self / self commutator)
 		propertyAt: #isCommutative put: true;
 		yourself
@@ -114,12 +117,15 @@ Group >> abelianization [
 
 { #category : #private }
 Group >> additiveInverseMap [
-	^ (self to: self evaluating: [:each| each negated]) name: '-id'
+	^ (self to: self evaluating: [ :each | each negated ]) name: '-id'
 ]
 
 { #category : #private }
 Group >> additiveOperation [
-	^ (GroupAction from: (self, self) to: self evaluatingWithArguments: [:x :y| x + y]) name: '+'
+	^ (GroupAction
+		from: self , self
+		to: self
+		evaluatingWithArguments: [ :x :y | x + y ]) name: '+'
 ]
 
 { #category : #morphisms }
@@ -139,8 +145,13 @@ Group >> adjointAction [
 
 { #category : #random }
 Group >> atRandom: aRandom bits: bitSize [
-	self propertyAt: #elements ifPresent: [:aCollection| ^ aCollection atRandom: aRandom bits: bitSize].
-	self generators notNil ifTrue: [^ (GroupRandomGenerator on: self random: aRandom) bits: bitSize; next].
+	self
+		propertyAt: #elements
+		ifPresent: [ :aCollection | ^ aCollection atRandom: aRandom bits: bitSize ].
+	self generators notNil
+		ifTrue: [ ^ (GroupRandomGenerator on: self random: aRandom)
+				bits: bitSize;
+				next ].
 	^ self subclassResponsibility
 ]
 
@@ -167,15 +178,31 @@ Group >> cayleyGraphMorph [
 Group >> cayleyGraphMorph: generators [
 	"Answer the colored Cayley graph of the receiver for the given set of generators.
 	The set of generators is usually assumed to be symmetric (contains all inverses too) and to not contain the identity."
+
 	| G answer colors |
 	G := self cayleyGraph: generators.
 	answer := G asMorph.
 	colors := AutomaticPalette new.
-	answer nodesDo: [:each| each color: Color transparent; radius: 0].
-	generators do: [:each| colors at: each].
-	generators do: [:each| (answer nodeAt: each) color: (colors at: each); radius: 10].
-	answer edgesAndLabelsDo: [:each :label| each hideLabel; color: (colors at: label)].
-	(answer nodeAt: self identity) color: Color white; shape: #square; radius: 10.
+	answer
+		nodesDo: [ :each | 
+			each
+				color: Color transparent;
+				radius: 0 ].
+	generators do: [ :each | colors at: each ].
+	generators
+		do: [ :each | 
+			(answer nodeAt: each)
+				color: (colors at: each);
+				radius: 10 ].
+	answer
+		edgesAndLabelsDo: [ :each :label | 
+			each
+				hideLabel;
+				color: (colors at: label) ].
+	(answer nodeAt: self identity)
+		color: Color white;
+		shape: #square;
+		radius: 10.
 	^ answer
 ]
 
@@ -188,15 +215,28 @@ Group >> center [
 Group >> centralizerOf: aCollection [
 	| op |
 	op := self operation.
-	^ self select: [:x| aCollection allSatisfy: [:y| (op value: {x. y}) = (op value: {y. x})]]
+	^ self
+		select: [ :x | 
+			aCollection
+				allSatisfy: [ :y | 
+					(op
+						value:
+							{x.
+							y})
+						=
+							(op
+								value:
+									{y.
+									x}) ] ]
 ]
 
 { #category : #enumerating }
 Group >> collect: aBlock [
 	"Answer the subgroup resulting of mapping the elements of the receiver by aBlock."
+
 	| elements |
 	elements := Set new.
-	self do: [:each| elements add: (aBlock value: each)].
+	self do: [ :each | elements add: (aBlock value: each) ].
 	^ self copyEmpty elements: elements
 ]
 
@@ -204,6 +244,7 @@ Group >> collect: aBlock [
 Group >> commutator [
 	"Answer the commutator group [G,G] of the receiver G, also called the derived group and noted G'.
 	This is the smallest normal subgroup of G such that the quotient G / [G,G] is commutative."
+
 	^ self commutator: self
 ]
 
