@@ -385,9 +385,10 @@ AlgebraicGeometryTest >> testProjectiveEmbedding [
 
 { #category : #'finite rings' }
 AlgebraicGeometryTest >> testProjectiveLineOverFiniteRing [
+	"P(Z/6Z) has 12 points: [0:1], [1:1], [2:1], [3:1], [4:1], [5:1], [1:2], [3:2], [5:2], [1:3], [2:3] and [1:0] (Henri Cohen, 'A Course in Computational Algebraic Number Theory', 478p)"
+	
 	| P |
 	P := ProjectiveLine over: ZZ / 6.
-	"P(Z/6Z) has 12 points: [0:1], [1:1], [2:1], [3:1], [4:1], [5:1], [1:2], [3:2], [5:2], [1:3], [2:3] and [1:0] (Henri Cohen, 'A Course in Computational Algebraic Number Theory', 478p)"
 	self assert: P points size equals: 12.
 	self assert: (Iterator on: P points performing: #do:) size equals: 12
 ]
