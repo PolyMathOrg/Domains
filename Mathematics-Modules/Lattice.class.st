@@ -186,7 +186,8 @@ Lattice >> associatedQuadraticForm [
 { #category : #invariants }
 Lattice >> coveringNormalizedThinkness [
 	"Answer the normalized thickness (or central density) of the covering."
-	^ 'self coveringRadius ^ self rank / self fundamentalVolume'
+
+	^ ((self coveringRadius) raisedTo: (self rank)) / (self fundamentalVolume)
 ]
 
 { #category : #invariants }
@@ -196,14 +197,15 @@ Lattice >> coveringRadius [
 
 { #category : #invariants }
 Lattice >> coveringSphereVolume [
-	| n Vn pi p |
+| n Vn pi p |
 	pi := Float pi.
 	n := self rank.
-	'Vn := n even
-			ifTrue: [pi ^ (n/2) / (n/2) factorial]
-			ifFalse: [2^n * pi ^ ((n-1)/2) * ((n-1)/2) factorial / n factorial]'.
+	Vn := n even
+		ifTrue: [ (pi raisedTo: n / 2) / (n / 2) factorial ]
+		ifFalse: [ ((2 raisedTo: n) * pi raisedTo: (n - 1) / 2)
+				* ((n - 1) / 2) factorial / n factorial ].
 	p := self coveringRadius.
-	^ 'p ^ n * Vn'
+	^ (p raisedTo: n) * Vn
 ]
 
 { #category : #invariants }
@@ -214,28 +216,34 @@ Lattice >> coveringThickness [
 
 { #category : #invariants }
 Lattice >> determinant [
-	"The determinant det(L) of a lattice L is defined as the volume of its fundamental paralleleliped."
-	self matrix isSquare ifTrue: [^ self matrix determinant abs].
+"The determinant det(L) of a lattice L is defined as the volume of its fundamental paralleleliped."
+
+	self matrix isSquare
+		ifTrue: [ ^ self matrix determinant abs ].
 	^ self gramian determinant squareRoot
 ]
 
 { #category : #invariants }
 Lattice >> determinant2 [
-	"The determinant det(L) of a lattice L is defined as the volume of its fundamental paralleleliped."
+"The determinant det(L) of a lattice L is defined as the volume of its fundamental paralleleliped."
+
 	| B |
 	B := self matrix.
 	"B square means the lattice is full-rank:"
-	^ B isSquare ifTrue: [B determinant abs] ifFalse: [(B transposed * B) determinant squareRoot]
+	^ B isSquare
+		ifTrue: [ B determinant abs ]
+		ifFalse: [ (B transposed * B) determinant squareRoot ]
 ]
 
 { #category : #invariants }
 Lattice >> fundamentalParallelepiped [
-	^ self notYetImplemented
+^ self notYetImplemented
 ]
 
 { #category : #invariants }
 Lattice >> fundamentalVolume [
-	"Answer the volume of the fundamental region."
+"Answer the volume of the fundamental region."
+
 	^ self determinant sqrt
 ]
 
@@ -252,8 +260,12 @@ Lattice >> isEven [
 
 { #category : #testing }
 Lattice >> isIntegral [
-	"Answer true if the receiver is integral, i.e. if the inner product of any two lattice vectors is an integer. This is true iff the Gram matrix contains only integer entries. Equivalently, a lattice L is integral if and only if it is contained in its dual L*: L <= L*. Also, an integral lattice L has the property: L <= L* <= L / det(L)."
-	self gramian do: [:each| each isInteger ifFalse: [^ false]].
+"Answer true if the receiver is integral, i.e. if the inner product of any two lattice vectors is an integer. This is true iff the Gram matrix contains only integer entries. Equivalently, a lattice L is integral if and only if it is contained in its dual L*: L <= L*. Also, an integral lattice L has the property: L <= L* <= L / det(L)."
+
+	self gramian
+		do: [ :each | 
+			each isInteger
+				ifFalse: [ ^ false ] ].
 	^ true
 ]
 
@@ -300,12 +312,13 @@ Lattice >> minimalNorm [
 
 { #category : #invariants }
 Lattice >> packingCenterDensity [
-	^ 'self packingRadius ^ self rank / self fundamentalVolume'
+	^ ((self packingRadius) raisedTo: (self rank)) / self fundamentalVolume
 ]
 
 { #category : #invariants }
 Lattice >> packingDensity [
-	"Answer the density of the lattice packing, i.e. the volume of a sphere / the volume of the fundamental region."
+"Answer the density of the lattice packing, i.e. the volume of a sphere / the volume of the fundamental region."
+
 	^ self packingSphereVolume / self fundamentalVolume
 ]
 
@@ -319,16 +332,17 @@ Lattice >> packingSphereVolume [
 	| n Vn pi p |
 	pi := Float pi.
 	n := self rank.
-	'Vn := n even
-			ifTrue: [pi ^ (n/2) / (n/2) factorial]
-			ifFalse: [2^n * pi ^ ((n-1)/2) * ((n-1)/2) factorial / n factorial]'.
+	Vn := n even
+			ifTrue: [(pi raisedTo: (n/2)) / (n/2) factorial]
+			ifFalse: [(((2 raisedTo: n) * pi) raisedTo: ((n-1)/2)) * ((n-1)/2) factorial / n factorial].
 	p := self packingRadius.
-	^ 'p ^ n * Vn'
+	^ (p raisedTo: n) * Vn
 ]
 
 { #category : #operations }
 Lattice >> reciprocal [
-	"Answer the dual lattice of the receiver (or reciprocal lattice, or polar lattice)."
+"Answer the dual lattice of the receiver (or reciprocal lattice, or polar lattice)."
+
 	| B D |
 	B := self matrix.
 	D := B * (B transposed * B) leftInverse.
@@ -337,21 +351,24 @@ Lattice >> reciprocal [
 
 { #category : #basis }
 Lattice >> reducedBasis [
-	^ self propertyAt: #reducedBasis ifAbsentPut: [(LLL basis: self basis) reducedBasis]
+^ self
+		propertyAt: #reducedBasis
+		ifAbsentPut: [ (LLL basis: self basis) reducedBasis ]
 ]
 
 { #category : #accessing }
 Lattice >> scalars [
-	^ ZZ
+^ ZZ
 ]
 
 { #category : #accessing }
 Lattice >> shortVector [
-	^ self reducedBasis first
+^ self reducedBasis first
 ]
 
 { #category : #invariants }
 Lattice >> thetaSeries [
-	"Answer the theta series of the lattice."
+"Answer the theta series of the lattice."
+
 	^ self propertyAt: #thetaSeries
 ]

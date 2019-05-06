@@ -107,3 +107,18 @@ LatticeTest >> testLeech [
 	self assert: L isUnimodular.
 	self assert: L isEven
 ]
+
+{ #category : #accessing }
+LatticeTest >> testLeech2 [
+	| L |
+	L := Lattice leech2.
+	"	a := L atRandomBits: 100.
+		self assert: ((a allSatisfy: [:x| x isInteger]) or: [a allSatisfy: [:x| x isInteger not and: [(x*2) isInteger]]]).
+		self assert: (a sum isInteger and: [a sum even])."
+	self assert: L determinant equals: 1.
+	self assert: L kissingNumber equals: 196560.
+	self assert: L minimalNorm equals: 4.
+	self assert: L isIntegral.
+	self assert: L isUnimodular.
+	self assert: L isEven
+]
