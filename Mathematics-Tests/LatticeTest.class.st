@@ -27,14 +27,12 @@ LatticeTest >> testE8 [
 ]
 
 { #category : #accessing }
-LatticeTest >> testFundamentalVolutmOfLeechLatticeIsOne [
+LatticeTest >> testFundamentalVolumeOfLeechLatticeIsOne [
 	| l1 l2 |
 	l1 := Lattice leech.
 	l2 := Lattice leech2.
-
-		self assert: l1 fundamentalVolume  equals: 1.
-			self assert: l2 fundamentalVolume  equals: 1.
-
+	self assert: l1 fundamentalVolume equals: 1.
+	self assert: l2 fundamentalVolume equals: 1
 ]
 
 { #category : #accessing }
