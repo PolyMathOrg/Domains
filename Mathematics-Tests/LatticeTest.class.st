@@ -4,6 +4,15 @@ Class {
 	#category : #'Mathematics-Tests'
 }
 
+{ #category : #accessing }
+LatticeTest >> testCoveringRadiusOfLeechLatticeIsSqrtOfTwo [
+	| l1 l2 |
+	l1 := Lattice leech.
+	l2 := Lattice leech2.
+	self assert: l1 coveringRadius closeTo: 2 sqrt.
+	self assert: l2 coveringRadius closeTo: 2 sqrt
+]
+
 { #category : #'as yet unclassified' }
 LatticeTest >> testE8 [
 	| E8 a |
@@ -15,6 +24,17 @@ LatticeTest >> testE8 [
 	self assert: E8 isUnimodular.
 	self assert: E8 isEven.
 	self assert: E8 isSelfDual
+]
+
+{ #category : #accessing }
+LatticeTest >> testFundamentalVolutmOfLeechLatticeIsOne [
+	| l1 l2 |
+	l1 := Lattice leech.
+	l2 := Lattice leech2.
+
+		self assert: l1 fundamentalVolume  equals: 1.
+			self assert: l2 fundamentalVolume  equals: 1.
+
 ]
 
 { #category : #accessing }
