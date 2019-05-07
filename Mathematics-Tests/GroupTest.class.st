@@ -58,8 +58,8 @@ GroupTest >> testAlternatingIsSymmetricCommutator [
 	| S A |
 	S := Group symmetric: (1 to: 3).
 	A := Group alternating: (1 to: 3).
-	self assert: A = S commutator.
-	self assert: (S indexOf: A) = 2
+	self assert: A equals: S commutator.
+	self assert: (S indexOf: A) equals: 2
 ]
 
 { #category : #tests }
@@ -243,8 +243,20 @@ GroupTest >> testGroupHomomorphism: phi [
 	H := phi codomain.
 	a := G atRandomBits: 100.
 	b := G atRandomBits: 100.
-	self assert: (phi value: G identity) = H identity.
-	self assert: (phi value: (G operation value: {a. b})) = (H operation value: {phi value: a. phi value: b})
+	self assert: (phi value: G identity) equals: H identity.
+	self
+		assert:
+			(phi
+				value:
+					(G operation
+						value:
+							{a.
+							b}))
+		equals:
+			(H operation
+				value:
+					{(phi value: a).
+					(phi value: b)})
 ]
 
 { #category : #tests }
@@ -298,21 +310,21 @@ GroupTest >> testHessian [
 
 { #category : #tests }
 GroupTest >> testIsSolvable [
-	| G |
+| G |
 	G := Group symmetric: (1 to: 3).
 	self assert: G isSolvable
 ]
 
 { #category : #tests }
 GroupTest >> testIsSolvableNot [
-	| G |
+| G |
 	G := Group alternating: (1 to: 5).
 	self assert: G isSolvable not
 ]
 
 { #category : #tests }
 GroupTest >> testKleinFour [
-	| V S A |
+| V S A |
 	V := PermutationGroup klein.
 	self testGroup: V.
 	S := SymmetricGroup new: 4.
@@ -324,6 +336,7 @@ GroupTest >> testKleinFour [
 { #category : #tests }
 GroupTest >> testLagrangeTheorem [
 	"G finite group, H subgroup of G, then |H| divides |G|."
+
 	| G H |
 	G := self smallGroupAtRandom.
 	H := G span: (G random next: 3 atRandom) asSet.
@@ -344,9 +357,14 @@ GroupTest >> testOrbitStabilizerTheorem [
 	| X G phi p |
 	X := 1 to: 4.
 	G := Group alternating: X.
-	phi := GroupAction from: (G, X) to: X evaluatingWithArguments: [:f :x| f value: x].
+	phi := GroupAction
+		from: G , X
+		to: X
+		evaluatingWithArguments: [ :f :x | f value: x ].
 	p := X atRandom.
-	self assert: (phi stabilizerOf: p) order * (phi orbitOf: p) size = G order
+	self
+		assert: (phi stabilizerOf: p) order * (phi orbitOf: p) size
+		equals: G order
 ]
 
 { #category : #tests }
